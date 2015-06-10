@@ -1,0 +1,86 @@
+/*
+li a {
+    color: green;
+}
+
+body {
+    background: white url("images/pulpo.gif") no-repeat right bottom;
+}
+*/
+html {
+    overflow-y: scroll;
+    height: 100%;
+}
+
+body {
+    padding: 0px;
+    min-height: 100%;
+    position: relative;
+    color: #000;
+    background-color: #FFC;
+}
+
+#div_header, #div_footer {
+    width: 100%;
+    left: 0px;
+}
+
+#div_header{
+    background-color: #12A9C7;
+    height: 80px;
+    top: 0px;
+}
+#div_menu1{
+    float: left;
+    display: inline;
+    margin-left: 20px; ;
+}
+
+#wrapper{
+    margin-bottom: 100px;
+}
+
+#div_user{
+    margin: 20px;
+    float: right;
+    display: inline;
+}
+
+#div_footer {
+    background-color: #12A9C7;
+	height:100px;
+	bottom:0;
+    float: left;
+    display: None;
+}
+
+.div_coment {
+    position: relative;
+    margin-left: 30px;
+    border-width: 2px;
+    border-left-style: dotted;
+    background-color: #ffffff;
+    border-color: #00399C;
+    margin-top: 6px;
+}
+
+/*#div_content {*/
+    /*padding-bottom:100px; *//* Height of the footer element */
+    /*margin:20px;*/
+    /*min-width: 700px;*/
+    /*margin: 20px;*/
+    /*float:left;*/
+
+/*}*/
+
+/*#wrapper {*/
+    /*width: 100%;*/
+    /*overflow: hidden;*/
+
+/*}*/
+
+
+
+
+
+/* https://color.adobe.com/es */

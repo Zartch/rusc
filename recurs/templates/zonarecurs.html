@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% csrf_token %}
+{% block content %}
+    {% for zona in zona_recursos %}
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail" >
+              <div class="caption">
+                <h3><a href="zona/{{ zona.pk }}" > {{ zona.nom }} </a></h3>
+                <p>{{ zona.descripcio }}</p>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+{% endblock %}

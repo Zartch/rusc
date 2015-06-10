@@ -1,0 +1,84 @@
+from post.models import Post
+from django.contrib.auth.models import User
+from etiqueta.models import Etiqueta
+from recurs.models import Recurs
+from cela.models import Cela
+
+us= User.objects.filter(id=1).first()
+
+c1 = Cela.objects.create(pregunta='Es el futuro el cyborg?',descripcio='LAFH style YeAh!',tipus = 'P')
+
+#Etiquetes Etiquetes
+tg1= Etiqueta.objects.create(nom='e1',descripcio= 'd1',usuari=us, tipologia = 'E',cela=c1)
+tg2= Etiqueta.objects.create(nom='e2',descripcio= 'd2',usuari=us, tipologia = 'E',cela=c1)
+tg3= Etiqueta.objects.create(nom='e3',descripcio= 'd3',usuari=us, tipologia = 'E',cela=c1)
+tg4= Etiqueta.objects.create(nom='e4',descripcio= 'd4',usuari=us, tipologia = 'E',cela=c1)
+
+#Etiquetes Moderació
+tgm1= Etiqueta.objects.create(nom='I+D',descripcio= 'recursos relacionados con el I+D',usuari=us, tipologia = 'M',cela=c1)
+tgm2= Etiqueta.objects.create(nom='Bibliografia',descripcio= 'recursos relacionados con la Bibliografia',usuari=us, tipologia = 'M',cela=c1)
+tgm3= Etiqueta.objects.create(nom='Informes',descripcio= 'recursos estadisticos, unicamente informes',usuari=us, tipologia = 'M',cela=c1)
+tgm4= Etiqueta.objects.create(nom='Experiencias',descripcio= 'Paginas de blog donde se habla de experiencias personales relacionadas',usuari=us, tipologia = 'M',cela=c1)
+
+p1=Post.objects.create(cela=c1 ,autor=us, titol='Era se una vez la vida', text='La vida es así.. la vida es así')
+p11=Post.objects.create(cela=c1 ,autor=us, titol='La Sangre', pare = p1, text='La sangre es una cosa viscosa y roja')
+p111=Post.objects.create(cela=c1 ,autor=us, titol='Las plaquetas', pare = p11, text='Las Plaquetas sirven para tapar heridas')
+p112=Post.objects.create(cela=c1 ,autor=us, titol='los globulos blancos', pare = p11, text='Los globulos blancos matan virus')
+p113=Post.objects.create(cela=c1 ,autor=us, titol='los globulos rojos', pare = p11, text='Los globulos rojos transportan sangre')
+p12 =Post.objects.create(cela=c1 ,autor=us, titol='Los huesos', pare = p1,  text='Los huesos matienen el esqueleto')
+p13 =Post.objects.create(cela=c1 ,autor=us, titol='El sistema digestivo ', pare = p1, text='El sistema digestivo absorve nutrientes de la comida')
+p1.save()
+p1.etiquetes.add(tg1)
+
+
+
+p2=Post.objects.create(cela=c1 ,autor=us, titol='Era se una vez los exploradores', text='Los exploradores exploran como dora la exploradora')
+p21= Post.objects.create(cela=c1 ,autor=us, titol='Colón', pare = p2, text='Colón no descubrió america, america fue invadida y saqueada')
+p220= Post.objects.create(cela=c1 ,autor=us, titol='Vikingos', pare = p2,  text='Ellos descubrieron america')
+p2.save()
+p2.etiquetes.add(tg1)
+p2.etiquetes.add(tg2)
+
+p3=Post.objects.create(cela=c1 ,autor=us, titol='Era se una vez los inventores',text='Los inventores inventan')
+p31=Post.objects.create(cela=c1 ,autor=us, titol='Leonardo Davinchi', pare = p3, text='Un tipo excentrico')
+p32=Post.objects.create(cela=c1 ,autor=us, titol='Nicola Tesla', pare = p3, text='El mejor inventor de todos')
+p3.save()
+p3.etiquetes.add(tg1)
+p3.etiquetes.add(tg2)
+p3.etiquetes.add(tg3)
+
+p4 = Post.objects.create(cela=c1 ,autor=us, titol='Django',  text='Django Discussion')
+p4.save()
+p4.etiquetes.add(tg1)
+p4.etiquetes.add(tg2)
+p4.etiquetes.add(tg3)
+p4.etiquetes.add(tg4)
+
+R1 = Recurs.objects.create(url='www.reddit.com', descripcio='Sitio de encuentro de experiencias',usuari=us,cela=c1)
+R2 = Recurs.objects.create(url='www.youtube.com', descripcio='Sitio dedicado al video',usuari=us,cela=c1)
+R3 = Recurs.objects.create(url='www.m1l3.net/Blog', descripcio='Blog personal dedicado a la tecnologia',usuari=us,cela=c1)
+R4 = Recurs.objects.create(url='www.Django.com', descripcio='Inovación i desarrollo en el ambito de la creación de software',usuari=us,cela=c1)
+R5 = Recurs.objects.create(url='www.miblog.es', descripcio='Blog de experiencias personales de un viajero',usuari=us,cela=c1)
+R6 = Recurs.objects.create(url='www.miexperiencia.com', descripcio='Biblioteca de experiencias colectivas',usuari=us,cela=c1)
+R7 = Recurs.objects.create(url='www.todoI+D.net', descripcio='Referencias a proyectod de inovación',usuari=us,cela=c1)
+R8 = Recurs.objects.create(url='www.ordenadores.net', descripcio='Todo sobre ordenadores, wiki colaborativa de reparación de hardware',usuari=us,cela=c1)
+
+R1.save()
+R1.etiquetes.add(tgm1)
+R1.etiquetes.add(tgm2)
+R2.save()
+R2.etiquetes.add(tgm4)
+R2.etiquetes.add(tgm2)
+R3.save()
+R3.etiquetes.add(tgm4)
+R3.etiquetes.add(tgm1)
+R4.save()
+R4.etiquetes.add(tgm3)
+R4.etiquetes.add(tgm1)
+R5.save()
+R5.etiquetes.add(tgm4)
+R5.etiquetes.add(tgm2)
+R6.save()
+R6.etiquetes.add(tgm4)
+R7.save()
+R7.etiquetes.add(tgm1)

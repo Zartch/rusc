@@ -1,0 +1,18 @@
+{% extends extensVar %}
+
+
+{% csrf_token %}
+{% block content %}
+
+    {{ cela.pregunta }}<br />
+    {{ cela.descripcio }}
+
+    {% if cela.tipus != 'P' %}
+        Solicitar entrada acceso a la red. <a href="{% url 'acces_cela' %}">Solicitar Acceso</a>
+    {% else %}
+        <a href="{% url 'forum' %}" > Entrar </a>
+    {% endif %}
+
+
+
+{% endblock %}

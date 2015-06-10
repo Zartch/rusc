@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block headers %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% for post in reply_root %}
+            {% for branch, obj in post.as_tree %}
+                {% if obj %}
+                    <li>
+                        {# ToDo El if ha de trencar el Branch i no deixar d emostrar el titol  #}
+                        {% if obj.pk <= id_pare %}
+                          {{ obj.titol }}
+
+                        {% endif %}
+                    {% if branch %}
+                        <ul>
+                    {% else %}
+                    </li>
+                    {% endif %}
+                {% else %}
+                    {% if branch %}
+                        </ul>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ formPost.as_p }}
+        <p class="submit"><input type="submit" value="OK"></p>
+    </form>
+{% endblock %}

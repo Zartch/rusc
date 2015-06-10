@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+    {{ usuari.pk }}<br />
+    <a href="{% url 'messages_compose_to' usuari %} " > Enviar mensaje </a><br />
+    {{ usuario }}<br />
+    {{ perfilusuari.website }}<br />
+    {{ perfilusuari.usuari }}<br />
+     <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="42" width="42">
+{% endblock %}

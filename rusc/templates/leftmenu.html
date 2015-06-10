@@ -1,0 +1,273 @@
+
+<!--
+<link rel="stylesheet" href="/resources/demos/style.css">
+-->
+<style>
+
+  #swatch {
+    width: 120px;
+    height: 100px;
+    margin-top: 18px;
+    margin-left: 50px;
+    background-image: none;
+  }
+  #red .ui-slider-range { background: #ef2929; }
+  #red .ui-slider-handle { border-color: #ef2929; }
+  #green .ui-slider-range { background: #8ae234; }
+  #green .ui-slider-handle { border-color: #8ae234; }
+  #blue .ui-slider-range { background: #729fcf; }
+  #blue .ui-slider-handle { border-color: #729fcf; }
+
+
+      nav.sidebar, .main{
+    -webkit-transition: margin 200ms ease-out;
+      -moz-transition: margin 200ms ease-out;
+      -o-transition: margin 200ms ease-out;
+      transition: margin 200ms ease-out;
+  }
+
+  .main{
+    padding: 10px 10px 0 10px;
+  }
+
+ @media (min-width: 765px) {
+
+    .main{
+      position: absolute;
+      width: calc(100% - 40px);
+      margin-left: 40px;
+      float: right;
+    }
+
+    nav.sidebar:hover + .main{
+      margin-left: 200px;
+    }
+
+    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+      margin-left: 0px;
+    }
+
+    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+      text-align: center;
+      width: 100%;
+      margin-left: 0px;
+    }
+
+    nav.sidebar a{
+      padding-right: 13px;
+    }
+
+    nav.sidebar .navbar-nav > li:first-child{
+      border-top: 1px #e5e5e5 solid;
+    }
+
+    nav.sidebar .navbar-nav > li{
+      border-bottom: 1px #e5e5e5 solid;
+    }
+
+    nav.sidebar .navbar-nav .open .dropdown-menu {
+      position: static;
+      float: none;
+      width: auto;
+      margin-top: 0;
+      background-color: transparent;
+      border: 0;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+
+    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
+      padding: 0 0px 0 0px;
+    }
+
+    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+      color: #777;
+    }
+
+    nav.sidebar{
+      width: 200px;
+      height: 100%;
+      margin-left: -160px;
+      float: left;
+      margin-bottom: 0px;
+    }
+
+    nav.sidebar li {
+      width: 100%;
+    }
+
+    nav.sidebar:hover{
+      margin-left: 0px;
+    }
+
+    .forAnimate{
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 1330px) {
+
+    .main{
+      width: calc(100% - 200px);
+      margin-left: 200px;
+    }
+
+    nav.sidebar{
+      margin-left: 0px;
+      float: left;
+    }
+
+    nav.sidebar .forAnimate{
+      opacity: 1;
+    }
+  }
+
+  nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+    color: #CCC;
+    background-color: transparent;
+  }
+
+  nav:hover .forAnimate{
+    opacity: 1;
+  }
+  section{
+    padding-left: 15px;
+  }
+
+</style>
+  <script>
+  function hexFromRGB(r, g, b) {
+    var hex = [
+      r.toString( 16 ),
+      g.toString( 16 ),
+      b.toString( 16 )
+    ];
+    $.each( hex, function( nr, val ) {
+      if ( val.length === 1 ) {
+        hex[ nr ] = "0" + val;
+      }
+    });
+    return hex.join( "" ).toUpperCase();
+  }
+  function refreshSwatch() {
+    var red = $( "#red" ).slider( "value" ),
+      green = $( "#green" ).slider( "value" ),
+      blue = $( "#blue" ).slider( "value" ),
+      hex = hexFromRGB( red, green, blue );
+    $( "#swatch" ).css( "background-color", "#" + hex );
+  }
+  $(function() {
+    $( "#red, #green, #blue,#a,#b" ).slider({
+      orientation: "horizontal",
+      range: "min",
+      max: 255,
+      value: 127,
+      slide: refreshSwatch,
+      change: refreshSwatch
+    });
+    $( "#red" ).slider( "value", 255 );
+    $( "#green" ).slider( "value", 140 );
+    $( "#blue" ).slider( "value", 60 );
+    $( "#a" ).slider( "value", 30 );
+    $( "#b" ).slider( "value", 40 );
+  });
+
+    <!-- Script per oucultar el menu -->
+
+  $("#busk-toggle").click(function(e) {
+      e.preventDefault();
+      $("#div_bsk_extend").toggleClass("toggled");
+
+      var $this = $(this).toggleClass('toggled');
+      if($(this).hasClass('toggled')){
+          $(this).text('');
+      } else {
+          $(this).text('');
+      }
+
+  });
+</script>
+
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/">
+                        RUSC (U->V)
+                    </a>
+                </li>
+
+                <li>
+
+                <a href="#demo4" class="list-group-item list-group-item-success" data-toggle="collapse" >Item 4</a>
+                <div class="collapse" id="demo4">
+                  <a href="" class="list-group-item">Subitem 1</a>
+                  <a href="" class="list-group-item">Subitem 2</a>
+                  <a href="" class="list-group-item">Subitem 3</a>
+                </div>
+                 </li>
+               <li>
+
+                   <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#leftMenu" href="#collapseSix">
+                                <i class="icon-file"></i> Templates
+                            </a>
+                        </div>
+                        <div id="collapseSix" class="accordion-body collapse" style="height: 0px; ">
+                            <div class="accordion-inner">
+                                <ul>
+                                    <li>This is one</li>
+                                    <li>This is two</li>
+                                    <li>This is Three</li>
+                                </ul>
+                            </div>
+                         </div>
+                    </div>
+
+               </li>
+
+                <li><a href="{% url 'forum' %}" class="left_menu" >Zona Debat</a></li>
+                <li><a href="{% url 'zonarecurs' %}" class="left_menu" >Zona Recursos</a></li>
+                <li><a href="{% url 'todo' %}" class="left_menu" >ToDo</a></li>
+                {% if user in cela.moderadors.all %}
+                    <li><a href="{% url 'edicio_cela' cela.pk %}" class="left_menu" >Editar Cela</a></li>
+                    <li><a href="{% url 'mode_post' %}" class="left_menu" >Moderar Post</a></li>
+                    <li><a href="{% url 'mode_usuaris' %}" class="left_menu" >Solicituts Ingrés</a></li>
+                    <li><a href="{% url 'usuaris_cela' %}" class="left_menu" >Usuaris Cela</a></li>
+                {% endif %}
+                <li><a href="/admin" class="left_menu" >Admin</a></li>
+
+
+
+                <div id="div_busk" >
+                    <form action="/busk/" method="post">
+                    {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control"  name="searchString" width="40px" />
+                          <span class="input-group-btn">
+                              <button type="submit" class="btn btn-default">Busk</button>
+                          </span>
+                        </div>
+                    <br />
+
+                        <a id="busk-toggle"  image="glyphicon glyphicon-arrow-down" ><</a>
+
+                    <div id="div_bsk_extend" class="collapse" >
+                        Proximitat social<div id="red"></div><br />
+                        Activitat Propia<div id="green"></div><br />
+                        Visites<div id="blue"></div><br />
+                        Valoració<div id="a"></div><br />
+                        Mes Comentats<div id="b"></div>
+                        <div id="swatch" class="ui-widget-content ui-corner-all"></div>
+                    </div>
+                    </form>
+
+                </div>
+
+
+
+            </ul>
+
+
+
+
+        <!-- /#sidebar-wrapper -->

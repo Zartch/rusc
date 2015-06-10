@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% csrf_token %}
+{% block content %}
+    <ul>
+
+        {% for post in posts %}
+            {% for branch, obj in post.as_tree %}
+                {% if obj %}
+                    <div class="div_coment">
+                        <form method="post" action="{% url 'vote' %}" class="vote_form">
+
+                             [{{ obj.votes }}]
+
+                            {% csrf_token %}
+                             <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ obj.pk }}" />
+                             <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+                             {% if not user.is_authenticated %}
+                                <button disabled title="Please login to vote">+</button>
+                             {% elif obj.pk not in voted %}
+                                <button>+</button>
+                             {% else %}
+                                <button>-</button>
+                             {% endif %}
+
+                        ({{ obj.pk }}) <b>{{ obj.titol }}</b> {{ obj.pare_id }}
+                        <a href="{% url 'perfil' obj.autor.pk %}"> {{ obj.autor }}</a>)<br />
+                        {% for etiqueta in obj.etiquetes.all %}
+                            {{ etiqueta.nom}}/{{etiqueta.descripcio}}
+                        {% endfor %}
+                        <a href="{% url 'post_respon' obj.pk  %}">Re</a>
+                         {{ obj.text  }}
+                        </form>
+                    </div>
+                    {% if branch %}
+                        <div class="div_coment">
+                    {% else %}
+
+
+                    {% endif %}
+
+                {% else %}
+                    {% if branch %}
+                         </div >
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endblock %}

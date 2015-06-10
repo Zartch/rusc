@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% csrf_token %}
+{% block content %}
+
+    <input type="checkbox" name="chk_all" />
+    <form name="frm_acceptusers" action="" method="post">{% csrf_token %}
+
+         <select name="slc_modaction">
+          <option value="A">Acceptar</option>
+          <option value="R">Rebutjar</option>
+        </select>
+        <input type="submit" value="GO" />
+        {% for usuari in usuaris %}
+            <div class="row">
+                <div class="col-md-1">
+                    <input type="checkbox" name="chk_usuaris" value="{{ usuari.pk }}" />
+                </div>
+                <div class="col-md-2">
+                    <b><a href="{% url 'perfil' usuari.pk  %}"> {{ usuari.user.username }}</a></b>
+                </div>
+
+            </div>
+        {% endfor %}
+
+
+    </form>
+    
+
+{% endblock %}

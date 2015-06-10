@@ -1,0 +1,128 @@
+{% load notifications_tags %}
+
+
+{% if user.is_authenticated %}
+<script type="text/javascript" >
+    $(document).ready(function()
+    {
+        $("#notificationLink").click(function() {
+            $("#notificationContainer").fadeToggle(300);
+            $("#notification_count").fadeOut("slow");
+            return false;
+        });
+
+        //Document Click
+        $(document).click(function() {
+            $("#notificationContainer").hide();
+        });
+        //Popup Click
+        $("#notificationContainer").click(function() {
+            return false
+        });
+
+    });
+</script>
+<style>
+
+#notification_li{position:relative}
+#notificationContainer {
+    background-color: #fff;
+    border: 1px solid rgba(100, 100, 100, .4);
+    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+    overflow: visible;
+    position: absolute;
+    top: 70px;
+    margin-left: -300px;
+    width: 300px;
+    z-index: 999;
+    display: none;
+}
+#notificationContainer:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    color: transparent;
+    border-color: transparent transparent white;
+    margin-top: -20px;
+    margin-left: 188px;
+    }
+#notificationTitle {
+    z-index: 1000;
+    font-weight: bold;
+    padding: 8px;
+    font-size: 13px;
+    background-color: #ffffff;
+    border: 1px solid rgba(100, 100, 100, .4);
+}
+#notificationsBody {
+    padding: 33px 0px 0px 0px !important;
+    min-height:300px;
+}
+#notificationFooter {
+    background-color: #e9eaed;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px;
+    font-size: 12px;
+    border-top: 1px solid #dddddd;
+}
+#notification_count {
+    padding: 2px 4px 2px 4px;
+    background: #cc0000;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 9px;
+    position: absolute;
+    float: left;
+    font-size: 9px;
+}
+a {
+    color: #0600ae;
+}
+
+</style>
+
+
+     <a href="/usuari/perfil">{{ user.username }}</a>
+     <a href="{% url 'auth_logout' %}?next=/rusc/"><span class="glyphicon glyphicon-log-out"></span></a><br />
+
+
+     <a href="{% url 'messages_inbox' %}" >
+        {% load inbox %} {% inbox_count %}
+         <span class="glyphicon glyphicon-envelope"></span>
+     </a>
+
+    {% notifications_unread as unread_count %}
+    <a href="{% url 'all' %}" > {{ unread_count }} <span class="glyphicon glyphicon-inbox"></span></a>
+    <br />
+
+    <span id="notification_count">{{ unread_count }}</span>
+    <a href="#" id="notificationLink"> <span class="glyphicon glyphicon-inbox"></span></a>
+    <div id="notificationContainer">
+        <div id="notificationTitle">
+            Notifications
+        </div>
+        <div id="notificationsBody" class="notifications">
+
+        </div>
+        <div id="notificationFooter">
+            <a href="/forum"> See All</a></a>
+        </div>
+    </div>
+
+
+
+
+
+
+
+{% else %}
+    <a href="{% url 'auth_login' %}"><span class="glyphicon glyphicon-log-in"></span></a> /
+
+    <a href="{% url 'registration_register' %}">Register</a>
+
+{% endif %}
+
+
