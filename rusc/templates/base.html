@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 {% load staticfiles %}
 <html lang="en">
@@ -13,13 +14,21 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
 
+    <!--Jquey / UI-->
     <link rel="stylesheet" href="{% static 'js/jquery-ui-1.11.4/jquery-ui.css' %}">
     <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
     <script src="{% static 'js/jquery-ui-1.11.4/jquery-ui.js'%}"></script>
+    <!--Bootstrap-->
     <link href="{% static 'js/bootstrap-3.3.4/css/bootstrap.min.css' %}" rel="stylesheet">
-	<link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
 
+    <!--JS Generales-->
+    <script  src="{% static 'js/generic.js' %}" ></script>
+    <!--CSS Generales-->
+    <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <!-- CSS Notificacións -->
+    <script  src="{% static 'js/notifIt.js' %}" ></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/notifIt.css' %}">
 
 
     {% block headers %}{% endblock %}
@@ -36,8 +45,9 @@
                 <a href="#">Valoració</a>/
                 <a href="#">Mes Comentats</a>/
                 <a href="#">Prox.Social</a>
+                {{ cela_context.pregunta }}
 
-               <h3><a href="{% url 'forum' %}">{{ cela.pregunta }}</a></h3>
+               <h3><a href="{% url 'forum' %}">{{ cela.pregunta }}</a>  <small>{{ cela.descripcio }}</small> </h3>
 
         </div>
 
@@ -78,26 +88,27 @@
         </div>
     </div>
     <!-- /#wrapper -->
-	
 
-
-
-
-    <!-- Script per oucultar el menu -->
     <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
 
-        var $this = $(this).toggleClass('toggled');
-       if($(this).hasClass('toggled')){
-           $(this).text('>');
-       } else {
-           $(this).text('<');
-       }
+        {% if messages %}
 
-    });
-</script>
+            {% for message in messages %}
+                CallNotification('{{ message }}', '{{ message.extra_tags }}');
+            {% endfor %}
+
+        {% endif %}
+{##}
+{#        /* Dialeg amb la xarxa */#}
+{#        if ('{{ noti.text }}'){#}
+{#            /* si pasém un objecte definit així a la view, funcionará#}
+{#            noti = {'text':"textHeare", 'type':"typeHeare"}*/#}
+{#            CallNotification('{{ noti.text }}', '{{ noti.type }}');#}
+{#        } else{#}
+{#            /*CallNotification("Sin Notificaciones", "");*/#}
+{#        }#}
+
+    </script>
 
 </body>
 

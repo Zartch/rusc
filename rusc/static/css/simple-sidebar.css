@@ -14,9 +14,7 @@
     transition: all 0.5s ease;
 }
 
-#wrapper.toggled {
-    padding-left: 250px;
-}
+
 
 #sidebar-wrapper {
     z-index: 1000;
@@ -32,7 +30,9 @@
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }
-
+#wrapper.toggled {
+    padding-left: 250px;
+}
 #wrapper.toggled #sidebar-wrapper {
     width: 250px;
 }
@@ -52,6 +52,12 @@
 #div_busk {
     margin: 20px;
 }
+#div_bsk_extend {
+    display: none;
+}
+
+
+
 
 .sidebar-nav {
     position: absolute;

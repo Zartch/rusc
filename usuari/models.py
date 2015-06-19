@@ -4,6 +4,7 @@ from django.db import models
 from post.models import Post
 from cela.models import Cela
 from django.shortcuts import render,get_object_or_404,redirect
+from django.core.urlresolvers import reverse
 
 class UserProfile(models.Model):
 
@@ -26,7 +27,7 @@ class UserProfile(models.Model):
     }
 
     # This line is required. Links UserProfile to a User model instance.
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True )
     # The additional attributes we wish to include.
     website = models.URLField(blank=True)
     avatar = models.ImageField(upload_to='/Usuario/profile_images', blank=True)
@@ -35,14 +36,21 @@ class UserProfile(models.Model):
     cela= models.ForeignKey(Cela)
     estat = models.CharField(max_length=1, choices=ESTAT_SUBSCRIPCIO, default='A')
     mailConf = models.CharField(max_length=1,choices=ENVIAMENT_MAIL,default='E')
+    #Aquest camp serveix per a guardarnos el email dels usuaris convidats que encara no estan
+    #registrats a RUSC. Quan es registrin sels incloura directament a la cela
+    email_p = models.EmailField(blank=True)
 
 
-    #añadido para referenciar al objeto de usuario #ToDo Saber exactamente que es esto
-    #http://stackoverflow.com/questions/8177289/django-profiles
-    #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0]0
+    class Meta:
+        unique_together = (("cela", "user"),)
+
 
     def __str__(self):
         return self.user.username
+
+
+    def get_absolute_url(self):
+        return reverse('forum')
 
     #Sempre subscriurem al post root
     def subscriure(self, post_pk):
@@ -62,15 +70,28 @@ from registration.signals import user_registered
 
 def user_registered_callback(sender, user, request, **kwargs):
     cela_pk = request.session.get('cell', 'NoCell')
+    #Preguntem si el e-mail ja está associat a algún userprofile per afergir les celes
+    # a las que s'ha convidat
+    Up = UserProfile.objects.filter(email_p = user.email)
+    for userp in Up:
+        userp.user = user
+        userp.save()
+
     if cela_pk != 'NoCell':
         cela = get_object_or_404(Cela, pk=cela_pk)
 
         #control per que el estat dels usuaris a les celes no publiques es crein correctament
+        #Alimentem el camp email_p del user profile pq ens serveix per a crear la clau primaria de la taula UserProfile
         if cela.tipus != 'P':
-            profile = UserProfile(user = user, cela = cela, estat='E')
+            profile = UserProfile(user = user, cela = cela, estat='E',email_p= user.email)
         else:
-            profile = UserProfile(user = user, cela = cela)
+            profile = UserProfile(user = user, cela = cela, email_p= user.email)
 
         profile.save()
 user_registered.connect(user_registered_callback)
+
+
+
+
+
 

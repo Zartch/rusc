@@ -1,5 +1,5 @@
 from django.contrib import admin
-from post.models import Post,Vote
+from post.models import Post,Vote,PostRecurs
 # Register your models here.
 
 class postAdmin(admin.ModelAdmin):
@@ -15,4 +15,11 @@ class voteAdmin(admin.ModelAdmin):
     list_filter = ['voter','post']
 
 admin.site.register(Vote, voteAdmin)
+
+class PostRecursAdmin(admin.ModelAdmin):
+    list_display = ('post','recurs')
+    search_fields = ['post','recurs']
+    list_filter = ['post','recurs']
+
+admin.site.register(PostRecurs, PostRecursAdmin)
 

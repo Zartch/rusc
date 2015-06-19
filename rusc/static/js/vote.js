@@ -10,11 +10,16 @@ jQuery(document).ready(function($)
 			  function(data) {
 			      if(data["voteobj"]) {
 				     btn.text("-");
+                     CallNotification("Has votado","success")
 			      }
 			      else {
-				      btn.text("+");
+				     btn.text("+");
+                     CallNotification("Has retirado tu voto","success")
 			      }
 			  });
 		    btn.attr('disabled', false);
 		});
+
+
     });
+

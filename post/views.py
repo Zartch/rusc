@@ -6,8 +6,12 @@ from post.forms import postForm, VoteForm
 from etiqueta.forms import etiquetaForm
 from django.contrib.auth.models import User
 from usuari.models import UserProfile
-
-
+from django.contrib import messages as notif_messages
+from django.forms.formsets import BaseFormSet
+from django.forms.formsets import formset_factory
+from recurs.forms import RecursForm
+from recurs.models import Recurs
+from notifications import notify
 
 # Create your views here.
 def forum(request):
@@ -17,18 +21,24 @@ def forum(request):
     posts = Post.with_votes.get_queryset().filter(pare=None, cela = cela.pk).exclude(moderacio='R')
     #Generem la queryset on es recullen tots els vots del passat i la tornem llistat de nombres
     #això ens serveix per saber si l'usuari ha votat abans o no al post en concret
-    voted = Vote.objects.filter(voter=request.user)
-    voted = voted.values_list('post_id', flat=True)
+    if not request.user.is_anonymous():
+        voted = Vote.objects.filter(voter=request.user)
+        voted = voted.values_list('post_id', flat=True)
+    else:
+        voted= []
 
     return render(request, "forum.html", {'posts': posts, 'cela': cela, 'voted':voted })
 
 def postView(request, pkpost):
     # comentaris = Post.objects.filter(post = pkpost, pare = None)
     cela= get_cela(request)
-
     posts = Post.with_votes.get_queryset().filter(pk=pkpost).exclude( moderacio='R')
-    voted = Vote.objects.filter(voter=request.user)
-    voted = voted.values_list('post_id', flat=True)
+
+    if not request.user.is_anonymous():
+        voted = Vote.objects.filter(voter=request.user)
+        voted = voted.values_list('post_id', flat=True)
+    else:
+        voted= []
     return render(request, "post.html", {'posts': posts, 'cela':cela,'voted':voted})
 
 
@@ -45,6 +55,7 @@ def postCreateView(request, pk=None):
     titol = ""
     reply_root = []
 
+
     if pk:
         # Bloc per que prengui el titol de el comentari al que respón
         re = "Re:"
@@ -55,6 +66,8 @@ def postCreateView(request, pk=None):
 
     formPost = postForm(request.POST or None, initial={'titol': titol})
     formEtiqueta = etiquetaForm(request.POST or None)
+    RecursFormSet = formset_factory(RecursForm, formset=BaseFormSet)
+
 
     if formPost.is_valid():
 
@@ -79,6 +92,8 @@ def postCreateView(request, pk=None):
         f.cela = cela
 
         f.save()
+
+        notif_messages.add_message(request, notif_messages.INFO, "Has creat un nou post", 'success')
 
         #si el usuario no tiene un tipo de subscripción restrictrivo le añadimos:
         if (perfilusuari.tipusSubscripcio != 'X'):
@@ -107,9 +122,24 @@ def postCreateView(request, pk=None):
                     objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta, usuari=request.user, cela=cela)
                 f.etiquetes.add(objEtq)
 
-        from notifications import notify
 
-        #Enviem les notificacions als usuaris subscrits
+        #Affegim els recursos
+        recurs_formset = RecursFormSet(request.POST)
+
+        for recurs_form in recurs_formset:
+            if recurs_form.is_valid():
+                url = recurs_form.cleaned_data['url']
+                descripcio = recurs_form.cleaned_data['descripcio']
+
+                if url:
+                    rec,bool = Recurs.objects.get_or_create(cela = get_cela(request), descripcio=descripcio, url=url)
+                    f.recursos.add(rec)
+
+
+
+
+
+#Enviem les notificacions als usuaris subscrits
         if f.get_root() == f.pk:
             verbn = 'creat'
         else:
@@ -123,7 +153,7 @@ def postCreateView(request, pk=None):
 
             #Enviem el mail als subscrits, que tinguin activada la opció del mail
             up = UserProfile.objects.filter(user=usr, cela = f.cela).exclude(mailConf='N').first()
-            enviarMail(f,up.user.email)
+            #enviarMailPost(f,up.user.email)
 
 
         #Un cop hem creat o respós a un comentari, redirigim a la pagina del debat
@@ -140,15 +170,15 @@ def postCreateView(request, pk=None):
 
 
     return render(request, 'post/post_form.html',
-                  {'id_pare': int(pk), 'reply_root': reply_root, 'formPost': formPost, 'formEtiqueta': formEtiqueta, 'cela':cela})
+                  {'id_pare': int(pk), 'reply_root': reply_root, 'formPost': formPost,
+                   'formEtiqueta': formEtiqueta, 'cela':cela,'recurs_formset': RecursFormSet})
 
 
 
 
-
-#enviament únic del mail a un usuari concret
+#enviament únic del mail a un usuari concret (notificacio mail)
 from django.core.mail import send_mail
-def enviarMail(post,user):
+def enviarMailPost(post,user):
     #Todo Añadir las cabeceras a los mails para que los mails creen los arboles correctamente
     #Todo Modificar sistema para que se pueda responder desde el mail
 
@@ -185,6 +215,7 @@ class VoteFormBaseView(FormView):
         user = self.request.user
         prev_votes = Vote.objects.filter(voter=user, post=post)
         has_voted = (len(prev_votes) > 0)
+
 
         ret = {"success": 1}
         if not has_voted:

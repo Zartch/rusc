@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from usuari.forms import ExRegistrationForm
 from registration.backends.simple.views import RegistrationView
 import autocomplete_light
 

@@ -77,6 +77,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django_messages.context_processors.inbox',
+                'cela.context_processors.cela_context'
             ],
         },
     },
@@ -122,6 +123,5 @@ STATICFILES_DIRS = STATICFILES_DIRS
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'zartch@gmail.com'
-EMAIL_HOST_PASSWORD = '1722004'
+
 

@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% csrf_token %}
+{% block headers %}
+    <script src="{% static 'js/vote.js' %}"></script>
+{% endblock %}
 {% block content %}
 
     <a class="button" href="{% url 'post_nou'  %}">Nou post</a>
@@ -18,7 +21,7 @@
                          <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />
                          <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
                          {% if not user.is_authenticated %}
-                            <button disabled title="Please login to vote">+</button>
+                            <button disabled title="Identificat per votar">+</button>
                          {% elif post.pk not in voted %}
                             <button>+</button>
                          {% else %}

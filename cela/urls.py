@@ -10,5 +10,7 @@ urlpatterns = patterns('',
         url(r'^modcela/(?P<pk>\d+)/$', views.celaUpdateView.as_view() ,name='edicio_cela'),
         url(r'^modepost/$', views.moderacioPostView ,name='mode_post'),
         url(r'^modeusers/$', views.acceptar_usuari ,name='mode_usuaris'),
+        url(r'^convidar/$', views.cela_convidar ,name='convidar_usu_cela'),
         url(r'^users/$', views.usuaris_cela ,name='usuaris_cela'),
+        url(r'^changecell/(?P<cela>\d+)/url/(?P<url>\w+)/$', views.celachange, name='canviar_cela')
 )

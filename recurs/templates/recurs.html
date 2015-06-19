@@ -1,5 +1,73 @@
 {% extends "base.html" %}
 {% csrf_token %}
 {% block content %}
-    {{ recurs.url }}
+
+    <div id="recurs_wraper">
+        <div id="div_recurs" style="display: block; align:left">
+            {{ recurs.url }}
+            {{ recurs.descripcio }}
+            {{ recurs.datahora }}
+            {{ recurs.autor }}
+            {{ recurs.descripcio }}
+            {% for etiqueta in recurs.etiquetes.all %}
+                {{ etiqueta.nom}}/{{etiqueta.descripcio}}
+            {% endfor %}
+        </div>
+        <div id="div_debat_recurs"  style="display: block; align:right" >
+            <a href=""> Comentar Recurs </a>
+            <!--post view-->
+
+
+        </div>
+    </div>
+
+
+
+     <br />
+     <br />
+     <h3>Post Relacionats:</h3>
+     <br />
+
+        <table class="table table-striped">
+        {% for post in posts %}
+        <tr>
+            <td>
+                    <form method="post" action="{% url 'vote' %}" class="vote_form">
+
+                         [{{ post.votes }}]
+
+                        {% csrf_token %}
+                         <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />
+                         <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+                         {% if not user.is_authenticated %}
+                            <button disabled title="Identificat per votar">+</button>
+                         {% elif post.pk not in voted %}
+                            <button>+</button>
+                         {% else %}
+                            <button>-</button>
+                         {% endif %}
+                    </form>
+
+            </td>
+            <td>
+                <a href="{% url 'post' post.pk  %}"> ({{ post.pk }}) </a>
+                <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
+
+                <a class="button" href="{% url 'post_respon' post.pk  %}">Comentar</a>
+            </td>
+            <td>
+                {{ post.text|slice:":60" }}
+            </td>
+            <td>
+
+                {% for etiqueta in post.etiquetes.all %}
+                    {{ etiqueta.nom}}/{{etiqueta.descripcio}}
+                {% endfor %}
+
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+
+
 {% endblock %}

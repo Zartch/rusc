@@ -28,6 +28,10 @@ class Etiqueta(models.Model):
     datahora =models.DateTimeField(auto_now_add=True)
     cela = models.ForeignKey(Cela,blank=True)
     relacio = models.ManyToManyField('Etiqueta', through='Tesauro', blank=True)
+    #Cam per a reflexar un valor que podrá ser considerat com un camp de el model,
+    #Les estiquees que es creein amb paraula:valor es separaran en nom i valor
+    #valor = models.CharField(max_length=25, blank=True)
+
 
     def __str__(self):
         return self.nom

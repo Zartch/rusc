@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block headers %}
+    <script src="{% static 'js/jquery.formset.js' %}"></script>
 
-{% endblock %}
 
+{% endblock  %}
 {% block content %}
 
     {% for post in reply_root %}
@@ -27,9 +29,51 @@
             {% endfor %}
         {% endfor %}
 
-    <form method="post" action="">
+    <form id="MyForm" method="post" action="">
         {% csrf_token %}
         {{ formPost.as_p }}
+
+
+        <table>
+        <tbody>
+        {% for recurs_form in recurs_formset %}
+            <div  class="recurs-formset">
+                <tr>
+                <td>
+                {{ recurs_form.descripcio }}
+                {% if recurs_form.anchor.errors %}
+                    {% for error in recurs_form.anchor.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+                </td>
+                <td>
+                {{ recurs_form.url }}
+                {% if recurs_form.url.errors %}
+                    {% for error in recurs_form.url.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+                </td>
+                </tr>
+            </div>
+        {% endfor %}
+        </tbody>
+        </table>
+        {{ recurs_formset.management_form }}
+        {% if recurs_formset.non_form_errors %}
+            {% for error in link_formset.non_form_errors %}
+                {{ error|escape }}
+            {% endfor %}
+        {% endif %}
+
+
+
+
+
         <p class="submit"><input type="submit" value="OK"></p>
     </form>
+
+
+
 {% endblock %}

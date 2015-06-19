@@ -7,7 +7,6 @@ autocomplete_light.register(Etiqueta, search_fields=('nom', ))
 
 class postForm(forms.ModelForm):
 
-    chk = forms.BooleanField()
 
     class Meta:
         model = Post

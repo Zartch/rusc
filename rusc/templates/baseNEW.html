@@ -19,12 +19,9 @@
     <link href="{% static 'js/bootstrap-3.3.4/css/bootstrap.min.css' %}" rel="stylesheet">
 	<link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
 
-
-    <script  src="{% static 'js/generic.js' %}" ></script>
-    <script  src="{% static 'js/notifIt.js' %}" ></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/notifIt.css' %}">
-
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+     <script src="{% static 'js/toggle-menu.js'%}"></script>
 
 
     {% block headers %}{% endblock %}
@@ -33,9 +30,14 @@
 </head>
 
 <body>
-
     <div id="div_header">
         <div id="div_menu1">
+
+                <a href="#">Mes Vists</a>/
+                <a href="#">Proximitat</a>/
+                <a href="#">Valoració</a>/
+                <a href="#">Mes Comentats</a>/
+                <a href="#">Prox.Social</a>
 
                <h3><a href="{% url 'forum' %}">{{ cela.pregunta }}</a></h3>
 
@@ -46,36 +48,38 @@
         </div>
     </div>
 
-    </div>
+    <div id="wrapper" class="active">
+	
+		<!-- Sidebar -->
+        <div id="sidebar-wrapper">
+			{% include "leftmenu.html" %}
+		</div>
 
-
+		
+        <!-- Page content -->
         <div id="page-content-wrapper">
-            <div class="container-fluid">
-               <div class="row">
-                    <div class="col-lg-12">
+        <!-- Keep all page content within the page-content inset div! -->
+           <div class="page-content inset">
+                <div class="row">
+                    <div class="col-md-12">
 						{% block content %}{% endblock %}
                     </div>
                 </div>
             </div>
         </div>
+        <!-- /#page-content-wrapper -->
 
-<script>
-    {% if messages %}
-
-        {% for message in messages %}
-            CallNotification('{{ message }}', '{{ message.extra_tags }}');
-        {% endfor %}
-
-    {% endif %}
-</script>
-
-
+		
 		<div id="div_footer">
             footer
             <div id="div_pulpo">
                  <img src="{% static "images/pulpo.gif" %}" align="right" height="70" width="70">
             </div>
         </div>
+    </div>
+    <!-- /#wrapper -->
+
+
 
 </body>
 

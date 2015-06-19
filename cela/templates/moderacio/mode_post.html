@@ -1,8 +1,12 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% csrf_token %}
+{% block headers %}
+    <script src="{% static 'js/check_all.js' %}"></script>
+{% endblock %}
 {% block content %}
 
-    <input type="checkbox" name="chk_all" />
+    <input type="checkbox" name="chk_all" class="chk_all" id="chk_all" />
     <form name="frm_modepost" action="" method="post">{% csrf_token %}
 
          <select name="slc_modaction">

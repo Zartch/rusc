@@ -1,8 +1,11 @@
 {% extends "base.html" %}
+{%  load staticfiles %}
 {% csrf_token %}
+{% block headers %}
+    <script src="{% static 'js/vote.js' %}"></script>
+{% endblock %}
 {% block content %}
     <ul>
-
         {% for post in posts %}
             {% for branch, obj in post.as_tree %}
                 {% if obj %}
@@ -29,6 +32,11 @@
                         {% endfor %}
                         <a href="{% url 'post_respon' obj.pk  %}">Re</a>
                          {{ obj.text  }}
+
+                        {% for recurs in obj.recursos.all %}
+                            <br /><a href="http://{{ recurs.url}}"> {{ recurs.url}} </a> /
+                            <a href="{% url 'recurs' recurs.pk %}"> {{recurs.descripcio}} </a>
+                        {% endfor %}
                         </form>
                     </div>
                     {% if branch %}
@@ -46,4 +54,7 @@
             {% endfor %}
         {% endfor %}
     </ul>
+
+
+
 {% endblock %}
