@@ -16,10 +16,10 @@ class voteAdmin(admin.ModelAdmin):
 
 admin.site.register(Vote, voteAdmin)
 
-class PostRecursAdmin(admin.ModelAdmin):
-    list_display = ('post','recurs')
-    search_fields = ['post','recurs']
-    list_filter = ['post','recurs']
-
-admin.site.register(PostRecurs, PostRecursAdmin)
-
+# class PostRecursAdmin(admin.ModelAdmin):
+#     list_display = ('post','recurs')
+#     search_fields = ['post','recurs']
+#     list_filter = ['post','recurs']
+#
+# admin.site.register(PostRecurs, PostRecursAdmin)
+#

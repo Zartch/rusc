@@ -16,19 +16,20 @@ class PostVoteCountManager(models.Manager):
         )
 
 
-
-class PostRecurs(models.Model):
-
-    TIPUS_RELACIO = (
-        ('R','Referent A'),
-    )
-
-    post = models.ForeignKey('Post')
-    recurs = models.ForeignKey(Recurs)
-    tipus = models.CharField(max_length=1,choices=TIPUS_RELACIO, blank=True,default="")
-
-    def __str__(self):
-        return self.etq1 + self.etq2 + self.tipo
+#La Barra per comentar es "/"
+#He solucionat això a Recurs
+# class PostRecurs(models.Model):
+#
+#     TIPUS_RELACIO = (
+#         ('R','Referent A'),
+#     )
+#
+#     post = models.ForeignKey('Post')
+#     recurs = models.ForeignKey(Recurs)
+#     tipus = models.CharField(max_length=1,choices=TIPUS_RELACIO, blank=True,default="")
+#
+#     def __str__(self):
+#         return self.etq1 + self.etq2 + self.tipo
 
 
 class Post(models.Model):
@@ -45,7 +46,7 @@ class Post(models.Model):
     pare = models.ForeignKey('self', related_name='children', blank=True, null=True)
     datahora =models.DateTimeField(auto_now_add=True)
     autor = models.ForeignKey(User)
-    recursos = models.ManyToManyField(Recurs, blank=True, through=PostRecurs)
+    recursos = models.ManyToManyField(Recurs, blank=True)
     etiquetes = models.ManyToManyField(Etiqueta, blank=True)
     cela = models.ForeignKey(Cela,blank=True)
 
