@@ -2,39 +2,24 @@
 
 $( document ).ready(function() {
 
-        <!-- Script per oucultar el menu -->
-        $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            /*USO CON STATIC/CSS/simple-sidebar.css*/
-            $("#wrapper").toggleClass("toggled");
-            var $this = $(this).toggleClass('toggled');
-            if($(this).hasClass('toggled')){
-                $(this).text('>');
-            } else {
-                $(this).text('<');
-            }
-        });
+    <!-- Script per oucultar el menu -->
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        /*USO CON STATIC/CSS/simple-sidebar.css*/
+        $("#wrapper").toggleClass("toggled");
+        var $this = $(this).toggleClass('toggled');
+        if($(this).hasClass('toggled')){
+            $(this).text('>');
+        } else {
+            $(this).text('<');
+        }
+    });
 
 
-        $("#busk-toggle").click(function(e) {
-            e.preventDefault();
-            $("#div_bsk_extend").toggle();
-        });
-
-
-        $('#MyForm tbody tr').formset({
-            prefix: 'form',
-            addText: 'afegir recurs',
-            deleteText: 'remove'
-        });
-
-
-
-        //$('#MyForm').formset({
-        //    prefix: '{{ recurs_formset.prefix }}',
-        //    addText: 'afegir recurs',
-        //    deleteText: 'remove'
-        //});
+    $("#busk-toggle").click(function(e) {
+        e.preventDefault();
+        $("#div_bsk_extend").toggle();
+    });
 
  });
 

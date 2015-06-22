@@ -19,58 +19,55 @@
             </div>
         </div>
 
-        <div id="div_debat_recurs"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px " >
-          <ul style="margin: 20px">
-            <h3>Debat recurs:</h3> <br />
-            {% for branch, obj in posts_debat.as_tree %}
-                {% if obj %}
-                    <div class="div_coment">
-                        <form method="post" action="{% url 'vote' %}" class="vote_form">
+        <div id="div_debat_recurs"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px;" >
+           <div style="margin: 30px">
+              <h3>Debat recurs:</h3> <br />
+              <ul style=" margin-left: -51px; ">
 
-                             [{{ obj.votes }}]
-
-                            {% csrf_token %}
-                             <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ obj.pk }}" />
-                             <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
-                             {% if not user.is_authenticated %}
-                                <button disabled title="Please login to vote">+</button>
-                             {% elif obj.pk not in voted %}
-                                <button>+</button>
-                             {% else %}
-                                <button>-</button>
-                             {% endif %}
-
-                        ({{ obj.pk }}) <b>{{ obj.titol }}</b> {{ obj.pare_id }}
-                        <a href="{% url 'perfil' obj.autor.pk %}"> {{ obj.autor }}</a>)<br />
-                        {% for etiqueta in obj.etiquetes.all %}
-                            {{ etiqueta.nom}}/{{etiqueta.descripcio}}
-                        {% endfor %}
-                        <a href="{% url 'post_respon' obj.pk  %}">Re</a>
-                         {{ obj.text  }}
-
-                        {% for recurs in obj.recursos.all %}
-                            <br /><a href="http://{{ recurs.url}}"> {{ recurs.url}} </a> /
-                            <a href="{% url 'recurs' recurs.pk %}"> {{recurs.descripcio}} </a>
-                        {% endfor %}
-                        </form>
-                    </div>
-                    {% if branch %}
+                {% for branch, obj in posts_debat.as_tree %}
+                    {% if obj %}
                         <div class="div_coment">
+                            <form method="post" action="{% url 'vote' %}" class="vote_form">
+
+                                 [{{ obj.votes }}]
+
+                                {% csrf_token %}
+                                 <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ obj.pk }}" />
+                                 <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+                                 {% if not user.is_authenticated %}
+                                    <button disabled title="Please login to vote">+</button>
+                                 {% elif obj.pk not in voted %}
+                                    <button>+</button>
+                                 {% else %}
+                                    <button>-</button>
+                                 {% endif %}
+
+                            ({{ obj.pk }}) <b>{{ obj.titol }}</b> {{ obj.pare_id }}
+                            <a href="{% url 'perfil' obj.autor.pk %}"> {{ obj.autor }}</a>)<br />
+                            {% for etiqueta in obj.etiquetes.all %}
+                                {{ etiqueta.nom}}/{{etiqueta.descripcio}}
+                            {% endfor %}
+                            <a href="{% url 'post_respon' obj.pk  %}">Re</a>
+                             {{ obj.text  }}
+
+                            {% for recurs in obj.recursos.all %}
+                                <br /><a href="http://{{ recurs.url}}"> {{ recurs.url}} </a> /
+                                <a href="{% url 'recurs' recurs.pk %}"> {{recurs.descripcio}} </a>
+                            {% endfor %}
+                            </form>
+                        </div>
+                        {% if branch %}
+                            <div class="div_coment">
+                        {% else %}
+                        {% endif %}
                     {% else %}
-
-
+                        {% if branch %}
+                             </div >
+                        {% endif %}
                     {% endif %}
-
-                {% else %}
-                    {% if branch %}
-                         </div >
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-    </ul>
-
-
-
+                {% endfor %}
+              </ul>
+           </div>
         </div>
     </div>
 
