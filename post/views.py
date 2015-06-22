@@ -133,7 +133,7 @@ def postCreateView(request, pk=None):
             if recurs_form.is_valid():
                 url = recurs_form.cleaned_data.get('url',False)
                 descripcio = recurs_form.cleaned_data.get('descripcio',False)
-                etqlistFormSet = recurs_form.cleaned_data['etiquetes']
+                etqlistFormSet = recurs_form.cleaned_data.get('etiquetes',False)
 
                 #Noves etiquetes o etiquetes sense haver fet correctament l'autocomplete
                 etqAddFormSet =request.POST.get(nomFormset, 0)

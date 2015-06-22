@@ -11,7 +11,7 @@ def etiquetaview(request,etq):
 
 def todoview(request):
     cela = get_cela(request)
-    etiqueta = get_object_or_404(Etiqueta,nom='ToDo', cela = cela)
+    etiqueta = Etiqueta.objects.filter(nom='ToDo', cela = cela)
     posts = Post.objects.filter(etiquetes=etiqueta, cela = cela)
 
     return render(request,"toDo.html", {'posts':posts, 'cela': cela})
