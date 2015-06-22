@@ -4,7 +4,6 @@ from recurs.models import Recurs
 from etiqueta.models import Etiqueta
 from django.core.urlresolvers import reverse
 from cela.models import Cela,get_cela
-
 #classe que gestiona(manager) els vots dels diferents posts. camp 'with_votes' del post
 from django.db.models import Count
 from django.utils.timezone import now
@@ -115,9 +114,7 @@ class Post(models.Model):
 
 # from django.db.models.signals import post_save
 #
-#
 # def post_handler(sender, instance, created, **kwargs):
-#
 #
 # post_save.connect(post_handler, sender=Post)
 

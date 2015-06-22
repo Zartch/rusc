@@ -9,8 +9,10 @@ def recursview(request,pk):
 
     cela = get_cela(request)
     recurs = Recurs.objects.filter(pk=pk,cela= cela).exclude(moderacio='R').first()
-    posts = Post.objects.filter(recursos = recurs)
-    return render(request, "recurs.html",{'recurs': recurs,'cela':cela,'posts':posts})
+    posts_relacionats = Post.objects.filter(recursos = recurs)
+
+    return render(request, "recurs.html",{'recurs': recurs,'cela':cela,
+                                          'posts_relacionats':posts_relacionats , 'posts_debat': recurs.post_debat})
 
 
 def zonarecurs(request):

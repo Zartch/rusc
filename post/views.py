@@ -18,7 +18,7 @@ def forum(request):
     #ToDo https://docs.djangoproject.com/en/1.8/topics/http/middleware/
     cela= get_cela(request)
     #Filtrem els posts a aparèixer i utilitzem el manager pq afegeixi la columna on es dona el nºtotal de vots
-    posts = Post.with_votes.get_queryset().filter(pare=None, cela = cela.pk).exclude(moderacio='R')
+    posts = Post.with_votes.get_queryset().filter(pare=None, cela = cela.pk).exclude(moderacio='R').filter(recurs=None)
     #Generem la queryset on es recullen tots els vots del passat i la tornem llistat de nombres
     #això ens serveix per saber si l'usuari ha votat abans o no al post en concret
     if not request.user.is_anonymous():
@@ -128,11 +128,19 @@ def postCreateView(request, pk=None):
 
         for recurs_form in recurs_formset:
             if recurs_form.is_valid():
-                url = recurs_form.cleaned_data['url']
-                descripcio = recurs_form.cleaned_data['descripcio']
+                url = recurs_form.cleaned_data.get('url',False)
+                descripcio = recurs_form.cleaned_data.get('descripcio',False)
 
                 if url:
+                    #Creem o obtenim el recurs que s'ha introduit en el post
                     rec,bool = Recurs.objects.get_or_create(cela = get_cela(request), descripcio=descripcio, url=url)
+                    #Si el recurs s'ha creat i encara no existia creem el post del recurs
+                    # i l'associem al recurs per a saber quin post ha creat el recurs
+                    if bool:
+                        post_x = Post.objects.create(titol=rec.url, autor=request.user, text="Discussio del recurs: "+rec.descripcio, cela=get_cela(request))
+                        rec.post_debat = post_x
+                        rec.save()
+                    #Associem el recurs al post
                     f.recursos.add(rec)
 
 

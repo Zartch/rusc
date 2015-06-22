@@ -21,8 +21,10 @@ class Recurs(models.Model):
     datahora = models.DateTimeField(auto_now_add=True)
     autor =  models.CharField(max_length=100,blank=True)
     cela = models.ForeignKey(Cela,blank=True)
-    post_debat = models.ForeignKey("post.Post", null=True)
+    post_debat = models.ForeignKey("post.Post",verbose_name="recurs",  null=True)
 
     def __str__(self):
         return self.url
+
+
 
