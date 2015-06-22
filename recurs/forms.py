@@ -1,5 +1,8 @@
 from django import forms
+import autocomplete_light
+from etiqueta.models import Etiqueta
 
+autocomplete_light.register(Etiqueta, search_fields=('nom', ))
 
 class RecursForm(forms.Form):
     """
@@ -17,3 +20,5 @@ class RecursForm(forms.Form):
                         'placeholder': 'URL',
                     }),
                     required=False)
+    etiquetes =  autocomplete_light.MultipleChoiceField('EtiquetaAutocomplete')
+

@@ -126,22 +126,44 @@ def postCreateView(request, pk=None):
         #Affegim els recursos
         recurs_formset = RecursFormSet(request.POST)
 
+        numFormset = 0
+
         for recurs_form in recurs_formset:
+            nomFormset = 'form-'+numFormset.__str__()+'-etiquetes-autocomplete'
             if recurs_form.is_valid():
                 url = recurs_form.cleaned_data.get('url',False)
                 descripcio = recurs_form.cleaned_data.get('descripcio',False)
+                etqlistFormSet = recurs_form.cleaned_data['etiquetes']
+
+                #Noves etiquetes o etiquetes sense haver fet correctament l'autocomplete
+                etqAddFormSet =request.POST.get(nomFormset, 0)
 
                 if url:
                     #Creem o obtenim el recurs que s'ha introduit en el post
                     rec,bool = Recurs.objects.get_or_create(cela = get_cela(request), descripcio=descripcio, url=url)
+
+                    #Associem el recurs al post
+                    f.recursos.add(rec)
+
                     #Si el recurs s'ha creat i encara no existia creem el post del recurs
                     # i l'associem al recurs per a saber quin post ha creat el recurs
                     if bool:
                         post_x = Post.objects.create(titol=rec.url, autor=request.user, text="Discussio del recurs: "+rec.descripcio, cela=get_cela(request))
                         rec.post_debat = post_x
+                        #Associem les etiquetes del formset al recurs
+                        for etq in etqlistFormSet:
+                            rec.etiquetes.add(etq)
+
+                        if len(etqAddFormSet) > 0:
+                            etqPerCrear = etqAddFormSet.split(',')
+                            #Los tags que se tienen que añadir
+                            for etiqueta in etqPerCrear:
+                                objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta, usuari=request.user, cela=cela)
+                                rec.etiquetes.add(objEtq)
+
+                        #Guardem els canvis a recurs
                         rec.save()
-                    #Associem el recurs al post
-                    f.recursos.add(rec)
+            numFormset = numFormset +1
 
 
 

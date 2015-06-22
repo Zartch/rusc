@@ -2,19 +2,26 @@
 {% csrf_token %}
 {% block content %}
 
-    <div id="recurs_wraper">
-        <div id="div_recurs" style="display: block; align:left">
-            {{ recurs.url }}
-            {{ recurs.descripcio }}
-            {{ recurs.datahora }}
-            {{ recurs.autor }}
-            {{ recurs.descripcio }}
+    <div id="recurs_wraper" style="display: inline-block; margin:20px; ">
+
+        <div id="div_recurs"  style="float: left; border: 2px solid #0E0E0E;">
+            <div style="margin: 30px">
+            <h2>Recurs :</h2>
+            {{ recurs.url }} <br />
+            {{ recurs.descripcio }}<br />
+            {{ recurs.datahora }}<br />
+            {{ recurs.autor }}<br />
+            {{ recurs.descripcio }}<br />
+            <h4>Etiquetes:</h4>
             {% for etiqueta in recurs.etiquetes.all %}
                 {{ etiqueta.nom}}/{{etiqueta.descripcio}}
             {% endfor %}
+            </div>
         </div>
-        <div id="div_debat_recurs"  style="display: block; align:right" >
-                <ul>
+
+        <div id="div_debat_recurs"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px " >
+          <ul style="margin: 20px">
+            <h3>Debat recurs:</h3> <br />
             {% for branch, obj in posts_debat.as_tree %}
                 {% if obj %}
                     <div class="div_coment">

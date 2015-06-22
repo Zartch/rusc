@@ -55,6 +55,14 @@
                     {% endfor %}
                 {% endif %}
                 </td>
+                <td>
+                {{ recurs_form.etiquetes }}
+                {% if recurs_form.anchor.errors %}
+                    {% for error in recurs_form.anchor.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+                </td>
                 </tr>
             </div>
         {% endfor %}
