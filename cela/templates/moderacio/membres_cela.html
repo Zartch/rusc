@@ -6,26 +6,57 @@
 {% endblock %}
 {% block content %}
 
-    <input type="checkbox" class="chk_all" name="chk_all" />
     <form name="frm_acceptusers" action="" method="post">{% csrf_token %}
+        <div class="input-group" >
+             <div class="btn-group" >
+                 <select name="slc_modaction" class="form-control nonfluid">
+                     <option value="A">Acceptar</option>
+                     <option value="R">Rebutjar</option>
+                 </select>
+             </div>
+            <input type="submit" value="GO" class="btn-primary btn" />
+        </div>
 
-         <select name="slc_modaction">
-          <option value="A">Acceptar</option>
-          <option value="R">Rebutjar</option>
-        </select>
-        <input type="submit" value="GO" />
+        <div class="table-responsive">
+        <table class="table table-striped nonfluid">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" class="chk_all" name="chk_all" /></th>
+                    <th>User</th>
+                    <th>LastName</th>
+                    <th>Web</th>
+                    <th>Estat</th>
+                    <th>TipusS</th>
+                    <th>MailC</th>
+                </tr>
+            </thead>
         {% for usuari in usuaris %}
-            <div class="row">
-                <div class="col-md-1">
+            <tr>
+                <td>
                     <input type="checkbox" name="chk_usuaris" value="{{ usuari.pk }}" />
-                </div>
-                <div class="col-md-2">
+                </td>
+                <td>
                     <b><a href="{% url 'perfil' usuari.pk  %}"> {{ usuari.user.username }}</a></b>
-                </div>
-
-            </div>
+                </td>
+                <td>
+                     {{ usuari.user.last_name }}
+                </td>
+                <td>
+                    {{ usuari.website }}
+                </td>
+                <td>
+                    {{ usuari.estat }}
+                </td>
+                <td>
+                    {{ usuari.tipusSubscripcio }}
+                </td>
+                <td>
+                    {{ usuari.mailConf }}
+                </td>
+            </tr>
         {% endfor %}
-
+        </table>
+        </div>
 
     </form>
     

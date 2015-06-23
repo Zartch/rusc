@@ -6,34 +6,50 @@
 {% endblock %}
 {% block content %}
 
-    <input type="checkbox" name="chk_all" class="chk_all" id="chk_all" />
+
     <form name="frm_modepost" action="" method="post">{% csrf_token %}
 
-         <select name="slc_modaction">
-          <option value="A">Acceptar</option>
-          <option value="R">Rebutjar</option>
-        </select>
-        <input type="submit" value="GO" />
+         <div class="input-group" >
+             <div class="btn-group" >
+                 <select name="slc_modaction" class="form-control nonfluid">
+                     <option value="A">Acceptar</option>
+                     <option value="R">Rebutjar</option>
+                 </select>
+             </div>
+            <input type="submit" value="GO" class="btn-primary btn" />
+        </div>
+        <div class="table-responsive">
+        <table class="table table-striped">
+        <thead>
+                <tr>
+                    <th><input type="checkbox" class="chk_all" name="chk_all" /></th>
+                    <th>Titol</th>
+                    <th>Text</th>
+                    <th>Etiquetes</th>
+
+                </tr>
+            </thead>
         {% for post in posts %}
-            <div class="row">
-                <div class="col-md-1">
+            <tr>
+                <td>
                     <input type="checkbox" name="chk_post" value="{{ post.pk }}" />
-                </div>
-                <div class="col-md-2">
+                </td>
+                <td>
                     <a href="{% url 'post' post.pk  %}"> ({{ post.pk }}) </a>
                     <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
-                </div>
-                <div class="col-md-2">
+                </td>
+                <td>
                     {{ post.text}}
-                </div>
-                <div class="col-md-2">
+                </td>
+                <td>
                     {% for etiqueta in post.etiquetes.all %}
                         {{ etiqueta.nom}}/{{etiqueta.descripcio}}
                     {% endfor %}
-                </div>
-            </div>
+                </td>
+            </tr>
         {% endfor %}
-
+        </table>
+        </div>
 
     </form>
     

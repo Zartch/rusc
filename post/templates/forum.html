@@ -8,8 +8,16 @@
 
     <a class="button" href="{% url 'post_nou'  %}">Nou post</a>
     <br />
-
+        <div class="table-responsive">
         <table class="table table-striped">
+        <thead>
+                <tr>
+                    <th>Vots</th>
+                    <th>Post</th>
+                    <th>Text</th>
+                    <th>Etiquetes</th>
+                </tr>
+            </thead>
         {% for post in posts %}
         <tr>
             <td>
@@ -49,7 +57,7 @@
         </tr>
         {% endfor %}
         </table>
-
+        </div>
 
 
 

@@ -20,6 +20,10 @@ body {
     background-color: #FFC;
 }
 
+.nonfluid {
+   width: auto !important;
+}
+
 #div_header, #div_footer {
     width: 100%;
     left: 0px;
