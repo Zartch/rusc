@@ -6,6 +6,8 @@ class postAdmin(admin.ModelAdmin):
     list_display = ('id','titol','autor','text')
     search_fields = ['titol','autor']
     list_filter = ['autor']
+    filter_horizontal = ('etiquetes','recursos')
+
 
 admin.site.register(Post, postAdmin)
 

@@ -58,3 +58,16 @@ class UserProfileUpdateView(UpdateView):
     def form_invalid(self, form):
         notif_messages.add_message(self.request, notif_messages.INFO, "corregeix els errors indicats", 'warning')
         return super(UserProfileUpdateView, self).form_invalid(form)
+
+
+#Probes per el m2mSelector, funciona
+from django.forms import ModelForm
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'user_permissions')
+
+def index(request):
+    u = User.objects.get(pk=1)
+    return render(request, 'm2mselector.html', {'form': UserForm(instance=u)})

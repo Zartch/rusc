@@ -1,11 +1,19 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block headers %}
+    <link href="{% static 'css/django-admin-widgets.css' %}" rel="stylesheet">
+    <script  src="{% static 'js/django-admin.multiselect.js' %}" ></script>
 
 {% endblock %}
 {%  block content %}
     <h3><b>Configuració específica de cel·la</b></h3><br>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
+
+    <form action="" method="post" >{% csrf_token %}
         <input type="submit" class="btn btn-primary btn-lg" value="Grabar" />
+        {{ form.as_p }}
     </form>
+
+
+    <script type="text/javascript">addEvent(window, "load", function(e) { SelectFilter.init("id_subscripcions", "subscripcions", 0, "/media/"); });</script>
+
 {% endblock %}

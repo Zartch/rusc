@@ -6,5 +6,6 @@ class recursAdmin(admin.ModelAdmin):
     list_display = ('url','moderacio','cela')
     search_fields = ['url']
     list_filter = ['url']
+    filter_horizontal = ('etiquetes',)
 
 admin.site.register(Recurs, recursAdmin)

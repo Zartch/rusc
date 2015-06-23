@@ -29,8 +29,8 @@ class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.ForeignKey(User, null=True )
     # The additional attributes we wish to include.
-    website = models.URLField(blank=True)
-    avatar = models.ImageField(upload_to='/Usuario/profile_images', blank=True)
+    website = models.URLField(null=True)
+    avatar = models.ImageField(upload_to='/usuari/static/profiles', null=True)
     subscripcions = models.ManyToManyField(Post,blank=True, related_name="subscripcions")
     tipusSubscripcio = models.CharField(max_length=1,choices= TIPUS_SUBSCRIPCIO,default='S')
     cela= models.ForeignKey(Cela)
