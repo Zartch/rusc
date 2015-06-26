@@ -11,7 +11,7 @@ def buskador(request):
     searchString = request.POST.get('searchString', 0)
 
     posts = Post.objects.filter(Q(titol__icontains = searchString) | Q(text__icontains = searchString) )
-    etiquetes = Etiqueta.objects.filter(Q(nom__icontains = searchString) | Q(descripcio__icontains = searchString))
+    etiquetes = Etiqueta.objects.filter(nom__icontains = searchString)
     recursos = Recurs.objects.filter(Q(url__icontains = searchString))
 
     # r={'type','var','count'}

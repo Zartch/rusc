@@ -2,6 +2,53 @@
 {% csrf_token %}
 {% block content %}
 
-    {{ etiqueta.nom }}<br />
-    {{ etiqueta.descripcio }}
+    <h3>Etiqueta: "{{ etiqueta.nom }}"</h3><br />
+    {{ etiqueta.wiki }}
+
+
+
+      <h3>Post Relacionats:</h3>
+     <br />
+
+        <table class="table table-striped">
+        {% for post in posts_relacionats %}
+        <tr>
+            <td>
+                    <form method="post" action="{% url 'vote' %}" class="vote_form">
+
+                         [{{ post.votes }}]
+
+                        {% csrf_token %}
+                         <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />
+                         <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+                         {% if not user.is_authenticated %}
+                            <button disabled title="Identificat per votar">+</button>
+                         {% elif post.pk not in voted %}
+                            <button>+</button>
+                         {% else %}
+                            <button>-</button>
+                         {% endif %}
+                    </form>
+
+            </td>
+            <td>
+                <a href="{% url 'post' post.pk  %}"> ({{ post.pk }}) </a>
+                <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
+
+                <a class="button" href="{% url 'post_respon' post.pk  %}">Comentar</a>
+            </td>
+            <td>
+                {{ post.text|slice:":60" }}
+            </td>
+            <td>
+
+                {% for etiqueta in post.etiquetes.all %}
+                    {{ etiqueta.nom}}/{{etiqueta.descripcio}}
+                {% endfor %}
+
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+
 {% endblock %}

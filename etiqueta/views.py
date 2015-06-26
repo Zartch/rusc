@@ -1,13 +1,20 @@
 from .models import Etiqueta
-from post.models import Post
+from post.models import Post,Vote
 from cela.models import Cela, get_cela
 from django.shortcuts import render,get_object_or_404,redirect
 
 def etiquetaview(request,etq):
     cela = get_cela(request)
     etiqueta = Etiqueta.objects.filter(pk=etq, cela = cela).first()
+    posts_relacionats = Post.with_votes.get_queryset().filter(etiquetes = etiqueta, cela = cela.pk).exclude(moderacio='R')
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'cela': cela})
+    if not request.user.is_anonymous():
+        voted = Vote.objects.filter(voter=request.user)
+        voted = voted.values_list('post_id', flat=True)
+    else:
+        voted= []
+
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'cela': cela, 'voted':voted, 'posts_relacionats': posts_relacionats})
 
 def todoview(request):
     cela = get_cela(request)

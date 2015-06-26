@@ -50,7 +50,7 @@
             <td>
 
                 {% for etiqueta in post.etiquetes.all %}
-                    {{ etiqueta.nom}}/{{etiqueta.descripcio}}
+                    <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn btn-warning"> {{ etiqueta.nom}}</a>
                 {% endfor %}
 
             </td>
