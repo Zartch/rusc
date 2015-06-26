@@ -37,7 +37,7 @@
 
                     {% for recurs in obj.recursos.all %}
                         <br /><a href="http://{{ recurs.url}}"> {{ recurs.url}} </a> /
-                        <a href="{% url 'recurs' recurs.pk %}"> {{recurs.descripcio}} </a>
+                        <a href="{% url 'recurs' recurs.pk %}"> Accès al recurs</a>
                     {% endfor %}
                     </form>
                 </div>

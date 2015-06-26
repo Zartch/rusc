@@ -1,7 +1,8 @@
-from .models import Etiqueta
+from .models import Etiqueta, Tesauro
 from post.models import Post,Vote
 from cela.models import Cela, get_cela
 from django.shortcuts import render,get_object_or_404,redirect
+from django.db.models import Q
 
 def etiquetaview(request,etq):
     cela = get_cela(request)
@@ -14,7 +15,9 @@ def etiquetaview(request,etq):
     else:
         voted= []
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'cela': cela, 'voted':voted, 'posts_relacionats': posts_relacionats})
+    tesauros = Tesauro.objects.filter(Q(etq1=etiqueta)|Q(etq2=etiqueta))
+
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'tesauros':tesauros, 'cela': cela, 'voted':voted, 'posts_relacionats': posts_relacionats})
 
 def todoview(request):
     cela = get_cela(request)

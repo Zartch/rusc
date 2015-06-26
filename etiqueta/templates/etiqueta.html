@@ -1,10 +1,46 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% csrf_token %}
+{% block headers %}
+    <script src="{% static 'js/vote.js' %}"></script>
+{% endblock %}
 {% block content %}
 
-    <h3>Etiqueta: "{{ etiqueta.nom }}"</h3><br />
-    {{ etiqueta.wiki }}
 
+
+<div id="recurs_wraper" style="display: inline-block; margin:20px; ">
+
+        <div id="div_etiqueta"  style="float: left; border: 2px solid #0E0E0E;">
+            <div style="margin: 30px">
+            <h3>Etiqueta: "{{ etiqueta.nom }}"</h3><br />
+               <a href="{{ etiqueta.wiki }}">{{ etiqueta.wiki }}</a>
+            </div>
+        </div>
+
+        <div id="div_relacions_etiquetes"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px;" >
+           <div style="margin: 30px">
+              <h3>Etiquetes relacionades:</h3> <br />
+                <div class="table-responsive">
+                <table class="table-striped">
+                <thead>
+                <tr>
+                    <th>Node Fort &nbsp;</th>
+                    <th>Node dèbil  &nbsp;</th>
+                    <th>Tipus vincle &nbsp; </th>
+                </tr>
+                </thead>
+               {% for tesauro in tesauros %}
+                   <tr>
+                   <td>{{ tesauro.etq1 }}</td>
+                    <td>{{ tesauro.etq2 }}</td>
+                    <td>{{ tesauro.tipo }}</td>
+                   </tr>
+               {% endfor %}
+                </table>
+                </div>
+           </div>
+        </div>
+    </div>
 
 
       <h3>Post Relacionats:</h3>

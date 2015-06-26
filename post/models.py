@@ -102,7 +102,7 @@ class Post(models.Model):
         return user_subscrits
 
     def set_rank(self):
-        # Based on HN ranking algo at http://amix.dk/blog/post/19574
+        #Based on HN ranking algo at http://amix.dk/blog/post/19574
         SECS_IN_HOUR = float(60*60)
         GRAVITY = 1.2
 
@@ -111,6 +111,23 @@ class Post(models.Model):
         votes = self.votes - 1
         self.rank_score = votes / pow((item_hour_age+2), GRAVITY)
         self.save()
+    #Folksonomia etiquetes_relacionades
+    def folksonomia(self):
+        return self.etiquetes
+
+# def folksonomia(posts):
+#     relacions = {'num','etiqueta'}
+#     folk = set()
+#
+#     for post in posts:
+#         for etq in post.etiquetes:
+
+    #Rebre una llista de post
+
+    #Tornar el resultat de un llistat de etiquetes, relacionades en el diferents post,
+    #Amb un contador de  les vegades que han estat relacionades.
+
+
 
 # from django.db.models.signals import post_save
 #

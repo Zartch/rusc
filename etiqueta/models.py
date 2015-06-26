@@ -33,6 +33,12 @@ class Etiqueta(models.Model):
     #Les estiquees que es creein amb paraula:valor es separaran en nom i valor
     #valor = models.CharField(max_length=25, blank=True)
 
+    def get_list(self):
+
+        li = [self.etq1,self.etq2]
+        return li
+
+
 
     def __str__(self):
         return self.nom
@@ -48,13 +54,17 @@ class Tesauro(models.Model):
         ('B','associatiu'),
     )
 
+
+    # etq = list(models.ForeignKey(Etiqueta, related_name="element"))
+
     etq1 = models.ForeignKey(Etiqueta, related_name="element_fort")
     etq2 = models.ForeignKey(Etiqueta, related_name="element_debil")
 
     tipo = models.CharField(max_length=1,choices=TIPUS_TESAURO)
 
+
     def __str__(self):
-        return self.etq1 + self.etq2 + self.tipo
+        return self.etq1.nom + self.etq2.nom + self.tipo
 
 
 

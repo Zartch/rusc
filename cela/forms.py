@@ -8,25 +8,22 @@ autocomplete_light.register(User, search_fields=('username', ))
 
 class celaForm(forms.ModelForm):
 
-    widgets = {
-        	'moderadors': autocomplete_light.MultipleChoiceWidget('UserAutocomplete'),
-            }
-
     class Meta:
         model = Cela
         exclude = {}
+        widgets = {
+            'moderadors': autocomplete_light.MultipleChoiceWidget('UserAutocomplete'),}
 
     def __init__(self, *args, **kwargs):
         super(celaForm, self).__init__(*args, **kwargs)
         self.fields['descripcio'].widget.attrs.update({'class' : 'form-control'})
         self.fields['tipus'].widget.attrs.update({'class' : 'form-control'})
         self.fields['pregunta'].widget.attrs.update({'class' : 'form-control'})
-        self.fields['moderadors'].widget.attrs.update({'class' : 'form-control'})
+        # self.fields['moderadors'].widget.attrs.update({'class' : 'form-control'})
 
 
 
 class modeform(forms.Form):
-
 
     class Meta:
         model = Post
