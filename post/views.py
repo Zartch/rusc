@@ -114,12 +114,7 @@ def postCreateView(request, pk=None):
             etqAdd = str.split(etqAdd, ",")
             #Los tags que se tienen que añadir
             for etiqueta in etqAdd:
-                #La etiqueta To'Do se trata diferente
-                if (etiqueta=='ToDo'):
-                    us= User.objects.filter(id=1).first()
-                    objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta, usuari=us, cela=cela)
-                else:
-                    objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta, usuari=request.user, cela=cela)
+                objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta, cela=cela)
                 f.etiquetes.add(objEtq)
 
 
