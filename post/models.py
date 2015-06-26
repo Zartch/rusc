@@ -82,7 +82,7 @@ class Post(models.Model):
 
     def get_root_object(self):
         if self.pare == None:
-            return self.pk
+            return self
         else:
             comment_root = self.pare
             while comment_root.pare != None:

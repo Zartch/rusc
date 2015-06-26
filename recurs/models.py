@@ -15,11 +15,11 @@ class Recurs(models.Model):
 
     moderacio= models.CharField(max_length=1,choices=ESTAT_MODERACIO, default='E')
     url = models.TextField()
-    descripcio = models.TextField(blank=True)
+    descripcio = models.TextField(blank=True, default="")
     #usuari = models.ForeignKey(User)
     etiquetes = models.ManyToManyField(Etiqueta,blank=True)
     datahora = models.DateTimeField(auto_now_add=True)
-    autor =  models.CharField(max_length=100,blank=True)
+    autor =  models.CharField(max_length=100,blank=True, default='')
     cela = models.ForeignKey(Cela,blank=True)
     post_debat = models.ForeignKey("post.Post",verbose_name="recurs",  null=True)
 

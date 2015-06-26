@@ -32,14 +32,14 @@ def forum(request):
 def postView(request, pkpost):
     # comentaris = Post.objects.filter(post = pkpost, pare = None)
     cela= get_cela(request)
-    posts = Post.with_votes.get_queryset().filter(pk=pkpost).exclude( moderacio='R')
-
+    post = Post.with_votes.get_queryset().filter(pk=pkpost).exclude( moderacio='R').first()
+    root = post.get_root_object()
     if not request.user.is_anonymous():
         voted = Vote.objects.filter(voter=request.user)
         voted = voted.values_list('post_id', flat=True)
     else:
         voted= []
-    return render(request, "post.html", {'posts': posts, 'cela':cela,'voted':voted})
+    return render(request, "post.html", {'post': post, 'cela':cela,'voted':voted, 'root':root})
 
 
 def postCreateView(request, pk=None):
@@ -134,8 +134,12 @@ def postCreateView(request, pk=None):
                 etqAddFormSet =request.POST.get(nomFormset, 0)
 
                 if url:
+                    str.strip(url)
+                    if descripcio:
+                        str.strip(descripcio)
+
                     #Creem o obtenim el recurs que s'ha introduit en el post
-                    rec,bool = Recurs.objects.get_or_create(cela = get_cela(request), descripcio=descripcio, url=url)
+                    rec, bool = Recurs.objects.get_or_create(cela = get_cela(request), descripcio=descripcio, url=url)
 
                     #Associem el recurs al post
                     f.recursos.add(rec)
@@ -143,21 +147,28 @@ def postCreateView(request, pk=None):
                     #Si el recurs s'ha creat i encara no existia creem el post del recurs
                     # i l'associem al recurs per a saber quin post ha creat el recurs
                     if bool:
-                        post_x = Post.objects.create(titol=rec.url, autor=request.user, text="Discussio del recurs: "+rec.descripcio, cela=get_cela(request))
+                        post_x = Post.objects.create(titol=rec.url, autor = request.user,  text="Discussio del recurs: "+ rec.descripcio, cela=get_cela(request))
                         rec.post_debat = post_x
-                        #Associem les etiquetes del formset al recurs
-                        for etq in etqlistFormSet:
-                            rec.etiquetes.add(etq)
 
-                        if len(etqAddFormSet) > 0:
-                            etqPerCrear = etqAddFormSet.split(',')
-                            #Los tags que se tienen que añadir
-                            for etiqueta in etqPerCrear:
-                                objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta, usuari=request.user, cela=cela)
-                                rec.etiquetes.add(objEtq)
 
-                        #Guardem els canvis a recurs
-                        rec.save()
+
+                    #Creem o no el recurs, sempre volem afegir-li etiquetes al Recurs
+                    #Associem les etiquetes del formset al recurs
+                    for etq in etqlistFormSet:
+                        rec.etiquetes.add(etq)
+
+                    if len(etqAddFormSet) > 0:
+                        etqPerCrear = etqAddFormSet.split(',')
+                        #Los tags que se tienen que añadir
+                        for etiqueta in etqPerCrear:
+                            objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
+                            rec.etiquetes.add(objEtq)
+
+                    #Guardem els canvis a recurs
+                    rec.save()
+
+
+
             numFormset = numFormset +1
 
 
@@ -185,7 +196,17 @@ def postCreateView(request, pk=None):
         if not pk:
             returnpage = "/forum/post/" + str(f.pk)
         else:
-            returnpage = '/forum/post/' + str(reply_rootid)
+            R = Recurs.objects.filter(post_debat = f.get_root())
+            if R.count() > 0 :
+                #Es un Debat de recurs, retornem a la pagina de recurs
+                returnpage = '/recurs/'+ str(R.first().pk)
+            else:
+                #no es un debnat de recurs, retornem el debat
+                returnpage = '/forum/post/' + str(reply_rootid)
+
+            #Recurs.objects.filter(post_debat)
+
+
 
         return redirect(returnpage)
 

@@ -22,3 +22,7 @@ class RecursForm(forms.Form):
                     required=False)
     etiquetes =  autocomplete_light.MultipleChoiceField('EtiquetaAutocomplete')
 
+    def __init__(self, *args, **kwargs):
+        super(RecursForm, self).__init__(*args, **kwargs)
+        self.fields['etiquetes'].required = False
+        self.fields['descripcio'].required = False
