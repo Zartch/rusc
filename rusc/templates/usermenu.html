@@ -6,11 +6,12 @@
     $(document).ready(function()
     {
         $("#notificationLink").click(function() {
-            $("#notificationContainer").fadeToggle(300);
+            $("#notificationContainer").toggle();
             $("#notification_count").fadeOut("slow");
             return false;
         });
 
+        /*
         //Document Click
         $(document).click(function() {
             $("#notificationContainer").hide();
@@ -19,7 +20,7 @@
         $("#notificationContainer").click(function() {
             return false
         });
-
+        */
     });
 </script>
 <style>
@@ -98,6 +99,7 @@ a {
     <a href="{% url 'all' %}" > {{ unread_count }} <span class="glyphicon glyphicon-inbox"></span></a>
     <br />
 
+
     <span id="notification_count">{{ unread_count }}</span>
     <a href="#" id="notificationLink"> <span class="glyphicon glyphicon-inbox"></span></a>
     <div id="notificationContainer">
@@ -105,24 +107,22 @@ a {
             Notifications
         </div>
         <div id="notificationsBody" class="notifications">
-
+            {% notifications_last_five as notificationsdiv %}
+            {% for notif in notificationsdiv %}
+                {{ notif.verb }} / {{ notif.description|slice:":2" }} / {{ notif.action_object_content_type }}
+                <br />
+            {% endfor %}
         </div>
         <div id="notificationFooter">
-            <a href="/forum"> See All</a></a>
+            <a href="{% url 'unread' %}"> See All</a>
         </div>
     </div>
 
 
 
-
-
-
-
 {% else %}
     <a href="{% url 'auth_login' %}"><span class="glyphicon glyphicon-log-in"></span></a> /
-
     <a href="{% url 'registration_register' %}">Register</a>
-
 {% endif %}
 
 
