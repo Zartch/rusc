@@ -114,16 +114,17 @@ def postCreateView(request, pk=None):
             etqAdd = str.split(etqAdd, ",")
             #Los tags que se tienen que añadir
             for etiqueta in etqAdd:
-                objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta, cela=cela)
+                objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
                 f.etiquetes.add(objEtq)
 
 
         #Affegim els recursos
         recurs_formset = RecursFormSet(request.POST)
-
+        #numerador per poder recuperar el formset de les etiquetes a afegir
         numFormset = 0
 
         for recurs_form in recurs_formset:
+            #nom del formset per a recuperar les etiqwuetes
             nomFormset = 'form-'+numFormset.__str__()+'-etiquetes-autocomplete'
             if recurs_form.is_valid():
                 url = recurs_form.cleaned_data.get('url',False)
@@ -134,6 +135,7 @@ def postCreateView(request, pk=None):
                 etqAddFormSet =request.POST.get(nomFormset, 0)
 
                 if url:
+                    #treiem el espais per evitar duplicats
                     str.strip(url)
                     if descripcio:
                         str.strip(descripcio)
@@ -151,7 +153,6 @@ def postCreateView(request, pk=None):
                         rec.post_debat = post_x
 
 
-
                     #Creem o no el recurs, sempre volem afegir-li etiquetes al Recurs
                     #Associem les etiquetes del formset al recurs
                     for etq in etqlistFormSet:
@@ -166,13 +167,8 @@ def postCreateView(request, pk=None):
 
                     #Guardem els canvis a recurs
                     rec.save()
-
-
-
+            #numerador per poder recuperar el formset de les etiquetes a afegir
             numFormset = numFormset +1
-
-
-
 
 
 #Enviem les notificacions als usuaris subscrits
