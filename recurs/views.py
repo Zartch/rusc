@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .models import Recurs
 from django.shortcuts import render, redirect,get_object_or_404
 from etiqueta.models import Etiqueta

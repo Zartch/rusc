@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .models import Cela, get_cela
 from post.models import Post
 from django.shortcuts import render, redirect, render_to_response

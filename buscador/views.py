@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from post.models import Post
 from etiqueta.models import Etiqueta
 from recurs.models import Recurs

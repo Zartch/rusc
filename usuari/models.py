@@ -1,4 +1,4 @@
-__author__ = 'Zartch'
+# -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.db import models
 from post.models import Post

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from cela.models import Cela
 from django.shortcuts import render
 from django.shortcuts import render,get_object_or_404,redirect

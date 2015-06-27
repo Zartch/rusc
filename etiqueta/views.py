@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .models import Etiqueta, Tesauro
 from post.models import Post,Vote, folksonomia
 from cela.models import Cela, get_cela
