@@ -30,6 +30,22 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
+
+# Don't use the django-registration available from PyPI. It does not support Django 1.7 and it appears it never will. The repo maintainer has abdicated and the project appears unmaintained.
+# There is a maintenance fork available on Github which has worked well for me with Django 1.7:
+# https://github.com/macropin/django-registration
+# It's available from PyPI as django-registration-redux.
+# https://pypi.python.org/pypi/django-registration-redux/
+# You can install using pip:
+# pip install django-registration-redux
+#FIQUEM EL NOM REGISTRATION PÈRO EN REALITAT FEM REFERENCIA AL DJANGO-REGISTRATION-REDUX COM ES POT VEURE A LES EXTERNAL LIBRARIES/DIST_PACKAGES, SI NO...PETA!
+
+#TAMBE S'HA D'INSTALAR: 'autocomplete_light'  & 'notifications'
+
+
+#django-messages esta obsolet respecte el django >1.7 pq en el urls.py utilitza una comanda "deprecated". per aixo copiem la api dins la nostra carpeta i la modifiquem
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
