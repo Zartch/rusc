@@ -37,6 +37,15 @@
                    </tr>
                {% endfor %}
                 </table>
+                <h2>Relacions tesauro:</h2>
+                {% for key,value in etiqueta.get_list_tesauros.items %}
+                    {{ key }} -- {{ value }} <br/>
+                {% endfor %}
+                <h2>Relacions post:</h2>
+                {% for key,value in posts_rel.items %}
+                    {{ key }} -- {{ value }} <br/>
+                {% endfor %}
+
                 </div>
            </div>
         </div>

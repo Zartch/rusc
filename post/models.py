@@ -111,9 +111,38 @@ class Post(models.Model):
         votes = self.votes - 1
         self.rank_score = votes / pow((item_hour_age+2), GRAVITY)
         self.save()
-    #Folksonomia etiquetes_relacionades
-    def folksonomia(self):
-        return self.etiquetes
+
+        # posts = Post.objects.filter(etiquetes=etq)
+        # list = dict()
+        # for post in posts:
+        #     for etk in post.etiquetes.all():
+        #         if etk in list:
+        #             val = list[etk.nom]
+        #             val = val +1
+        #             list[etk.nom] = val
+        #         else:
+        #             list[etk.nom] = 1
+        # return  list
+
+
+#Folksonomia etiquetes_relacionades
+#Rep un llistat de posts
+def folksonomia(posts):
+    d = dict()
+    for post_rel in posts:
+        for etq in post_rel.etiquetes.all():
+            if etq.nom in d:
+                #suma els values
+                val = d[etq.nom]
+                val = val + 1
+                d[etq.nom] = val
+            else:
+                d[etq.nom]= 1
+
+
+
+    return d
+#retorna un dicionari amb la quanytitat de coincidencies
 
 # def folksonomia(posts):
 #     relacions = {'num','etiqueta'}

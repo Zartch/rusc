@@ -282,3 +282,5 @@ class VoteFormBaseView(FormView):
 class VoteFormView(JSONFormMixin, VoteFormBaseView):
     pass
 
+def get_reel_etq(etq):
+    return Post.objects.filter(etiquetes= etq)

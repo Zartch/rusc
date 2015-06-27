@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cela.models import Cela
+from django.db.models import Q
+# from post.views import get_reel_etq
+
 
 class Etiqueta(models.Model):
 
@@ -33,10 +36,30 @@ class Etiqueta(models.Model):
     #Les estiquees que es creein amb paraula:valor es separaran en nom i valor
     #valor = models.CharField(max_length=25, blank=True)
 
-    def get_list(self):
+    def get_list_tesauros(self):
+        tesauros = Tesauro.objects.filter(Q(etq1=self)|Q(etq2=self))
+        etq_lst = dict()
+        for relacio in tesauros:
+            if (relacio.etq1.nom != self.nom):
+                if relacio.etq1.nom in etq_lst.keys():
+                    valor = etq_lst[relacio.etq1]
+                    valor = valor +1
+                    etq_lst[relacio.etq1]  = valor
+                else:
+                    etq_lst[relacio.etq1] = 1
+            else:
+                if relacio.etq2.nom in etq_lst.keys():
+                    valor = etq_lst[relacio.etq2]
+                    valor = valor +1
+                    etq_lst[relacio.etq2]  = valor
+                else:
+                    etq_lst[relacio.etq2] = 1
 
-        li = [self.etq1,self.etq2]
-        return li
+        return etq_lst
+
+
+
+
 
 
 

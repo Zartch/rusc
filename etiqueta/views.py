@@ -1,5 +1,5 @@
 from .models import Etiqueta, Tesauro
-from post.models import Post,Vote
+from post.models import Post,Vote, folksonomia
 from cela.models import Cela, get_cela
 from django.shortcuts import render,get_object_or_404,redirect
 from django.db.models import Q
@@ -16,8 +16,23 @@ def etiquetaview(request,etq):
         voted= []
 
     tesauros = Tesauro.objects.filter(Q(etq1=etiqueta)|Q(etq2=etiqueta))
+    # d = dict()
+    # for post_rel in posts_relacionats:
+    #     a=post_rel.folksonomia(etiqueta)
+    #     for key,value in a.items():
+    #         if key in d:
+    #             #suma els values
+    #             val = d[key]
+    #             val = val + value
+    #             d[key] = val
+    #         else:
+    #             d[key]= value
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'tesauros':tesauros, 'cela': cela, 'voted':voted, 'posts_relacionats': posts_relacionats})
+    d = folksonomia(posts_relacionats)
+    sorted_x = sorted(d, key=d.get)
+
+
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': d, 'tesauros':tesauros, 'cela': cela, 'voted':voted, 'posts_relacionats': posts_relacionats})
 
 def todoview(request):
     cela = get_cela(request)
