@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    <h3>Perfil Usuari<b>{{ usuari.username }}</b></h3>
+    <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="42" width="42"><br />
+
+    {{ usuari }}<br />
+    {{ perfilusuari.website }} <br />
+    {{ perfilusuari.user }}<br />
+    {{ perfilusuari.cela }}<br />
+
+{% endblock %}
