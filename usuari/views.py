@@ -28,8 +28,6 @@ def perfilview(request):
     return render(request, 'perfil_usuari.html', {'form_user':form_user,
                                                   'perfilusuari':perfilusuari, 'up':up})
 
-
-
 def viewuser(request,pk):
     if not request.user.is_authenticated():
         return redirect('auth_login')
@@ -37,6 +35,14 @@ def viewuser(request,pk):
     usuari = User.objects.filter(pk=perfilusuari.user.pk).first()
     return render(request, 'perfil_usuari.html', {'usuari': usuari, 'perfilusuari':perfilusuari})
 
+def viewuserprofile(request,pk):
+    if not request.user.is_authenticated():
+        return redirect('auth_login')
+
+    usuari = User.objects.filter(pk=pk).first()
+    perfilusuari = UserProfile.objects.filter(user__pk=pk).first()
+
+    return render(request, 'perfil_view.html', {'usuari': usuari, 'perfilusuari':perfilusuari})
 
 class UserProfileUpdateView(UpdateView):
     model = UserProfile

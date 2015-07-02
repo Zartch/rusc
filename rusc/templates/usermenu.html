@@ -1,5 +1,5 @@
 {% load notifications_tags %}
-
+{% load static %}
 
 {% if user.is_authenticated %}
 <script type="text/javascript" >
@@ -21,6 +21,10 @@
             return false
         });
         */
+
+
+
+
     });
 </script>
 <style>
@@ -58,7 +62,7 @@
     border: 1px solid rgba(100, 100, 100, .4);
 }
 #notificationsBody {
-    padding: 33px 0px 0px 0px !important;
+    padding:0px 0px 0px 0px !important;
     min-height:300px;
 }
 #notificationFooter {
@@ -82,6 +86,31 @@
 a {
     color: #0600ae;
 }
+.div_notifications {
+    border: 1px solid rgba(100, 100, 100, 0.4);
+    width: 100%;
+
+}
+
+.inline {
+    display: inline;
+}
+
+#notificationsBody {
+    direction: ltr;
+    max-height:150px;
+    overflow-y: auto;
+    font-size: 11px;
+    overflow-x: hidden;
+    white-space:initial;
+
+ }
+
+.div_notification_text {
+    font-size: 11px;
+    overflow-x: hidden;
+ }
+
 
 </style>
 
@@ -105,14 +134,39 @@ a {
     <div id="notificationContainer">
         <div id="notificationTitle">
             Notifications
+            <a href="#" style="float: right" >Mark All As Read</a>
         </div>
         <div id="notificationsBody" class="notifications">
-{#            {% notifications_last_five as notificationsdiv %}#}
-{#            {% for notif in notificationsdiv %}#}
-{#                {{ notif.verb }} / {{ notif.description|slice:":2" }} / {{ notif.action_object_content_type }}#}
-{#                <br />#}
-{#            {% endfor %}#}
+            {% for notif in notifications_user %}
+                <div class="div_notifications " >
+                 <table>
+                    <tr>
+                      <td>
+                        <div class="div_notification_image inline">
+                            <a href="{% url 'perfil_user' notif.actor_object_id %}">
+                                <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="42" width="42">
+                            </a>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="#">
+                            <div class="div_notification_text inline">
+                            {% if notif.unread %}
+                                *
+                            {% endif %}
+                             {{ notif.actor }} {{ notif.actor_object_id  }} ha {{ notif.verb }} el {{ notif.action_object_content_type }} {{ notif.action_object_object_id }} : {{ notif.description|slice:":40" }}
+                            </div>
+                        </a>
+                      </td>
+                    </tr>
+                 </table>
+                </div>
+            {% endfor %}
+
         </div>
+
+
+
         <div id="notificationFooter">
             <a href="{% url 'unread' %}"> See All</a>
         </div>
