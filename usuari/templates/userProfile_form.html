@@ -8,7 +8,7 @@
 {%  block content %}
     <h3><b>Configuració específica de cel·la</b></h3><br>
 
-    <form action="" method="post" >{% csrf_token %}
+    <form action="" enctype="multipart/form-data" method="post" >{% csrf_token %}
         <input type="submit" class="btn btn-primary btn-lg" value="Grabar" />
         {{ form.as_p }}
     </form>

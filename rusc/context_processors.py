@@ -8,6 +8,6 @@ def notifications_user(request):
     if request.user.is_anonymous():
         return ''
 
-    ret = request.user.notifications.unread()
+    ret = request.user.notifications.all()
     return { 'notifications_user' : ret}
 

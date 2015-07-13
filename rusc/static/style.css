@@ -72,6 +72,26 @@ body {
     background-color: #bce8f1;
 }
 
+#div_post_wraper{
+
+
+}
+
+#div_post_vote{
+    display: inline-block;
+    vertical-align: top;
+}
+#div_post_content_wraper {
+    display: inline-block;
+}
+#div_post_info{
+    display: inline-block;
+    font-size: 10px;
+    margin-left: 30px;
+}
+#div_post_titol{
+    display: inline-block;
+}
 
 /*LEFT MENU */
 /*

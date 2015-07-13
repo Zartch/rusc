@@ -54,7 +54,7 @@
     margin-left: 188px;
     }
 #notificationTitle {
-    z-index: 1000;
+
     font-weight: bold;
     padding: 8px;
     font-size: 13px;
@@ -82,6 +82,8 @@
     position: absolute;
     float: left;
     font-size: 9px;
+    margin-left: 10px;
+    z-index: 100;
 }
 a {
     color: #0600ae;
@@ -134,7 +136,7 @@ a {
     <div id="notificationContainer">
         <div id="notificationTitle">
             Notifications
-            <a href="#" style="float: right" >Mark All As Read</a>
+            <a href="{% url 'mark_all_as_read' %}" style="float: right" >Mark All As Read</a>
         </div>
         <div id="notificationsBody" class="notifications">
             {% for notif in notifications_user %}
@@ -149,7 +151,7 @@ a {
                         </div>
                       </td>
                       <td>
-                        <a href="#">
+                        <a href="{% url 'post' notif.action_object_object_id  %}">
                             <div class="div_notification_text inline">
                             {% if notif.unread %}
                                 *
@@ -168,7 +170,7 @@ a {
 
 
         <div id="notificationFooter">
-            <a href="{% url 'unread' %}"> See All</a>
+            <a href="{% url 'all' %}"> See All</a>
         </div>
     </div>
 
