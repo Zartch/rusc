@@ -1,0 +1,69 @@
+
+<form method="post" action="{% url 'vote' %}" class="vote_form">{% csrf_token %}
+<div id="div_post_wraper">
+        <div id="div_post_vote">
+            {% if not user.is_authenticated %}
+                <button disabled title="Please login to vote">+</button>
+             {% elif obj.pk not in voted %}
+                <button>+</button>
+             {% else %}
+                <button>-</button>
+             {% endif %}
+             [{{ obj.votes }}]
+        </div>
+        <div id="div_post_content_wraper">
+            <div id="div_post_header">
+                <div id="div_post_titol">
+                    <a href="{% url 'post'  obj.pk   %}">({{ obj.pk }})</a>
+                    <b>{{ obj.titol }}</b>
+                    {% if obj.pare_id %}
+                        pare:
+                       <a href="{% url 'post'  obj.pare_id  %}">{{ obj.pare_id }}</a>
+                    {% endif %}
+
+                </div>
+                <div id="div_post_info" class="pull-right">
+                     Escrit el:{{ obj.datahora }}
+                    per:
+                    <a href="{% url 'perfil' obj.autor.pk %}"> {{ obj.autor }}</a>)
+                </div>
+            </div>
+            <div id="div_post_content">
+                <div id="div_post_text">
+                    {{ obj.text  }}
+                </div>
+                <div id="div_post_respondre">
+                    <a href="{% url 'post_respon' obj.pk  %}">Respondre</a>
+                </div>
+                <div id="div_post_recursos">
+                    {% for recurs in obj.recursos.all %}
+                        <br /><a href="http://{{ recurs.url}}"> {{ recurs.url}} </a> /
+                        <a href="{% url 'recurs' recurs.pk %}"> Accès al recurs</a>
+                    {% endfor %}
+                </div>
+                <div id="div_post_etiquetes">
+                    {% for etiqueta in obj.etiquetes.all %}
+                        <a href="{% url 'etiqueta' etiqueta.pk %}">{{ etiqueta.nom}}</a>/{{etiqueta.descripcio}}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ obj.pk }}" />
+        <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+</div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
