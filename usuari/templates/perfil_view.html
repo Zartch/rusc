@@ -3,8 +3,8 @@
 {% block content %}
 
     <h3>Perfil Usuari<b>{{ usuari.username }}</b></h3>
-    <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="42" width="42"><br />
-
+    <img src="{{ perfilusuari.avatar|slugify  }}" alt="avatar" height="42" width="42"><br />
+    <a href="{{ perfilusuari.avatar }}">{{ perfilusuari.avatar }}</a> <br />
     {{ usuari }}<br />
     {{ perfilusuari.website }} <br />
     {{ perfilusuari.user }}<br />
