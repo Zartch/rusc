@@ -245,7 +245,8 @@ def visual(request):
            # " FL,1140516,1938695,925060,1607297,4782119,4746856,3187797"
            # " IL,894368,1558919,725973,1311479,3596343,3239173,1575308"
            # " PA,737462,1345341,679201,1203944,3157759,3414001,1910571"
+
     data = [12, 12, 15, 12, 12, 42]
     #return HttpResponse(data, content_type='text/csv')
 
-    return render(request,"visual/visual.html", {'data': data})
+    return render(request,"visual/visual.html", {'data':data})
