@@ -12,5 +12,6 @@ urlpatterns = patterns('',
         url(r'^modeusers/$', views.acceptar_usuari ,name='mode_usuaris'),
         url(r'^convidar/$', views.cela_convidar ,name='convidar_usu_cela'),
         url(r'^users/$', views.usuaris_cela ,name='usuaris_cela'),
-        url(r'^changecell/(?P<cela>\d+)/url/(?P<url>\w+)/$', views.celachange, name='canviar_cela')
+        url(r'^changecell/(?P<cela>\d+)/url/(?P<url>\w+)/$', views.celachange, name='canviar_cela'),
+        url(r'^visual/$', views.visual ,name='visual'),
 )
