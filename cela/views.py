@@ -247,15 +247,21 @@ def tesauro_jerarquic_json(request):
 def tesauro_jerarquic(request):
     return render(request,"visual/tesauro_jerarquic.html", {})
 
+def network(request):
+
+    etq = Etiqueta.objects.values_list('nom', flat=True).filter(cela=get_cela(request))
+    reel = Tesauro.objects.values_list('etq1__nom','etq2__nom').filter(etq1__cela=get_cela(request))
+    reel = list(reel)
+    return render(request,"visual/network.html", {'etq':etq, 'reel': reel})
 
 
-
-
+import string
 def visual(request):
 
     etq = Etiqueta.objects.values_list('nom', flat=True).filter(cela=get_cela(request))
     reel = Tesauro.objects.values_list('etq1__nom','etq2__nom').filter(etq1__cela=get_cela(request))
 
+    reel = list(reel)
     return render(request,"visual/visual.html", {'etq':etq, 'reel': reel})
 
 
