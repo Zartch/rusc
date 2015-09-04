@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from .models import Cela, get_cela
 from post.models import Post
+from etiqueta.models import Etiqueta, Tesauro
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import CreateView, UpdateView
 from .forms import celaForm
@@ -10,6 +11,7 @@ from django.contrib.auth.models import User
 from notifications import notify
 from django.contrib import messages as notif_messages
 from django.core.urlresolvers import reverse
+import json
 
 def celaview(request,cela):
     request.session["cell"] = cela
@@ -236,17 +238,24 @@ def validateEmail( email ):
         return False
 
 
+from django.http import JsonResponse
+def tesauro_jerarquic_json(request):
+    data = {"name": "AUTOMÓVIL", "size": 3534, "children": [{"name": "Sedan", "size": 6714},{"name": "Todoterreno", "size": 743}]}
+
+    return JsonResponse(dict(data), safe=False)
+
+def tesauro_jerarquic(request):
+    return render(request,"visual/tesauro_jerarquic.html", {})
+
+
+
+
+
 def visual(request):
 
-    #data = "State,Under 5 Years,5 to 13 Years,14 to 17 Years,18 to 24 Years,25 to 44 Years,45 to 64 Years,65 Years and Over "
-           # " CA,2704659,4499890,2159981,3853788,10604510,8819342,4114496"
-           # " TX,2027307,3277946,1420518,2454721,7017731,5656528,2472223"
-           # " NY,1208495,2141490,1058031,1999120,5355235,5120254,2607672"
-           # " FL,1140516,1938695,925060,1607297,4782119,4746856,3187797"
-           # " IL,894368,1558919,725973,1311479,3596343,3239173,1575308"
-           # " PA,737462,1345341,679201,1203944,3157759,3414001,1910571"
+    etq = Etiqueta.objects.values_list('nom', flat=True).filter(cela=get_cela(request))
+    reel = Tesauro.objects.values_list('etq1__nom','etq2__nom').filter(etq1__cela=get_cela(request))
 
-    data = [12, 12, 15, 12, 12, 42]
-    #return HttpResponse(data, content_type='text/csv')
+    return render(request,"visual/visual.html", {'etq':etq, 'reel': reel})
 
-    return render(request,"visual/visual.html", {'data':data})
+
