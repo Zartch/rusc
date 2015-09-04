@@ -25,7 +25,7 @@ def celaview(request,cela):
        if  UserProfile.objects.filter(user = request.user, cela=celax.pk).exists():
           return redirect('forum')
 
-    return render(request,"cela.html", {'cela':celax,'extensVar':extensVar})
+    return render(request,"cela.html", {'extensVar':extensVar})
 
 #la seguent funció serveix per a canviarli la cela on es troba l'usuari i redireccionarlo
 #a la URL que se li hagi passat a la funció
@@ -38,7 +38,7 @@ def peticioAcces(request):
     if not request.user.is_authenticated():
         return redirect('auth_login')
 
-    perfilusuari, created =  UserProfile.objects.get_or_create(user=request.user, cela= cela,estat='E')
+    perfilusuari, created =  UserProfile.objects.get_or_create(user=request.user,estat='E')
 
     return HttpResponse(" has solicitat acces.")
 
@@ -99,7 +99,7 @@ def moderacioPostView(request):
             Post.objects.filter(pk=post_pk).update(moderacio = estatmod)
         notif_messages.add_message(request, notif_messages.INFO, "Moderació realitzada" , 'success')
 
-    return render(request, "moderacio/mode_post.html", {'posts':posts, 'cela': cela})
+    return render(request, "moderacio/mode_post.html", {'posts':posts})
 
 #vista per a que el moderador modifiqui usuaris ja creats i aprovats previament
 def usuaris_cela(request):
@@ -127,7 +127,7 @@ def usuaris_cela(request):
 
         notif_messages.add_message(request, notif_messages.INFO, missatge , 'success')
 
-    return render(request, "moderacio/membres_cela.html",{'usuaris':usuaris, 'cela':cela})
+    return render(request, "moderacio/membres_cela.html",{'usuaris':usuaris})
 
 
 #vista per a que el moderador accepti o rebutji nous ingressos d'usuari
@@ -152,7 +152,7 @@ def acceptar_usuari(request):
 
         notif_messages.add_message(request, notif_messages.INFO, missatge , 'success')
 
-    return render(request, "moderacio/solicitud_ingres.html",{'usuaris':usuaris, 'cela':cela})
+    return render(request, "moderacio/solicitud_ingres.html",{'usuaris':usuaris})
 
 #funció que comprova que el usuari loguejat sigui admin de la cela on es troba
 def ChekUsuariCellAdmin(request):

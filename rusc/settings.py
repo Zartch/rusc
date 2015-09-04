@@ -94,6 +94,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django_messages.context_processors.inbox',
                 'rusc.context_processors.notifications_user',
+                'cela.context_processors.cela_context'
             ],
         },
     },
