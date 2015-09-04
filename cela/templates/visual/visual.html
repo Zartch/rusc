@@ -106,9 +106,10 @@ bar.append("text")
     function myGraph() {
 
         // Add and remove elements on the graph object
-        this.addNode = function (id) {
+        this.addNode = function (id,type) {
+            type = type || 0;
             nodes.push({"id": id});
-            update();
+            update(type);
         };
 
         this.removeNode = function (id) {
@@ -186,7 +187,7 @@ bar.append("text")
         var nodes = force.nodes(),
                 links = force.links();
 
-        var update = function () {
+        var update = function (type) {
             var link = vis.selectAll("line")
                     .data(links, function (d) {
                         return d.source.id + "-" + d.target.id;
@@ -215,13 +216,29 @@ bar.append("text")
                     .attr("class", "node")
                     .call(force.drag);
 
-            nodeEnter.append("svg:circle")
-                    .attr("r", 12)
-                    .attr("id", function (d) {
-                        return "Node;" + d.id;
-                    })
-                    .attr("class", "nodeStrokeClass")
-                    .attr("fill", function(d) { return color(d.id); });
+            if (type==0) {
+                nodeEnter.append("svg:circle")
+                        .attr("r", 12)
+                        .attr("id", function (d) {
+                            return "Node;" + d.id;
+                        })
+                        .attr("class", "nodeStrokeClass")
+                        .attr("fill", function (d) {
+                            return color(d.id);
+                        });
+            }
+            if (type==1) {
+                nodeEnter.append("svg:rect")
+                        .attr("width", 35)
+                        .attr("height", 20)
+                        .attr("id", function (d) {
+                            return "Node;" + d.id;
+                        })
+                        .attr("class", "nodeStrokeClass")
+                        .attr("fill", function (d) {
+                            return color(d.id);
+                        });
+            }
 
             nodeEnter.append("svg:text")
                     .attr("class", "textClass")
@@ -274,13 +291,18 @@ bar.append("text")
 
         var etq = {{ etq|safe }};
         //reel = [['diables', ' castellers'], ['diables', ' geganters'], [' castellers', ' geganters']];
-        reel = {{ reel|safe }};
+        var posts = {{ posts|safe }};
 
         graph.addNode('Entra');
 
         for (ii = 0; ii < etq.length; ii++) {
-            graph.addNode(etq[ii]);
+            graph.addNode(etq[ii],0);
         }
+
+        for (ii = 0; ii < posts.length; ii++) {
+            graph.addNode(posts[ii],1);
+        }
+
 
         graph.addNode('Surt');
         graph.addLink('Entra', 'Surt', '20');
@@ -295,13 +317,21 @@ bar.append("text")
             return 2000 + (1500*step); // initial time, wait time
         }
 
-        {% for key, value in reel %}
-            //graph.addLink('{{ key }}' , '{{ value }}','20');
+        {% for etq1, etq2 in reel %}
+            //graph.addLink('{{ etq1 }}' , '{{ etq2 }}','20');
             setTimeout(function() {
-                graph.addLink('{{ key }}',  '{{ value }}', '10');
+                graph.addLink('{{ etq1 }}',  '{{ etq2 }}', '20');
                 keepNodesOnTop();
             }, nextval());
         {% endfor %}
+
+        {% for post, etqs in d %}
+            {% for etq in etqs %}
+                graph.addLink('{{ post }}',  '{{ etq }}', '10');
+            {% endfor %}
+        {% endfor %}
+
+
 
 
     }

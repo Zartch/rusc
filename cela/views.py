@@ -260,8 +260,17 @@ def visual(request):
 
     etq = Etiqueta.objects.values_list('nom', flat=True).filter(cela=get_cela(request))
     reel = Tesauro.objects.values_list('etq1__nom','etq2__nom').filter(etq1__cela=get_cela(request))
+    posts = Post.objects.values_list('titol', flat=True).filter(cela=get_cela(request))
+    post_list = Post.objects.filter(cela=get_cela(request))
+
+    d = []
+    for pt in post_list:
+        x = pt.titol
+        r = list(pt.etiquetes.values_list('nom', flat=True))
+        d.append((x,r))
+
 
     reel = list(reel)
-    return render(request,"visual/visual.html", {'etq':etq, 'reel': reel})
+    return render(request,"visual/visual.html", {'etq':etq, 'reel': reel, 'posts':posts, 'd':d} )
 
 
