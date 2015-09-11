@@ -37,7 +37,7 @@ body {
 #div_menu1{
     float: left;
     display: inline;
-    margin-left: 20px; ;
+    margin-left: 80px;
 }
 
 #wrapper{
@@ -87,10 +87,14 @@ body {
 #div_post_info{
     display: inline-block;
     font-size: 10px;
-    margin-left: 30px;
+    margin-left: 20px;
 }
 #div_post_titol{
     display: inline-block;
+}
+
+.sidebar{
+    z-index: 10;
 }
 
 /*LEFT MENU */
@@ -190,6 +194,7 @@ body {
   line-height: 60px;
   font-size: 18px;
 }
+
 
 .sidebar-nav > .sidebar-brand a {
   color: #999999;

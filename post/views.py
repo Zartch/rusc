@@ -28,7 +28,7 @@ def forum(request):
     else:
         voted= []
 
-    return render(request, "forum.html", {'posts': posts, 'cela': cela, 'voted':voted })
+    return render(request, "forum.html", {'posts': posts, 'voted':voted })
 
 def postView(request, pkpost):
     # comentaris = Post.objects.filter(post = pkpost, pare = None)
@@ -40,7 +40,7 @@ def postView(request, pkpost):
         voted = voted.values_list('post_id', flat=True)
     else:
         voted= []
-    return render(request, "post.html", {'post': post, 'cela':cela,'voted':voted, 'root':root})
+    return render(request, "post.html", {'post': post,'voted':voted, 'root':root})
 
 
 def postCreateView(request, pk=None):
@@ -214,7 +214,7 @@ def postCreateView(request, pk=None):
 
     return render(request, 'post/post_form.html',
                   {'id_pare': int(pk), 'reply_root': reply_root, 'formPost': formPost,
-                   'formEtiqueta': formEtiqueta, 'cela':cela,'recurs_formset': RecursFormSet})
+                   'formEtiqueta': formEtiqueta,'recurs_formset': RecursFormSet})
 
 
 

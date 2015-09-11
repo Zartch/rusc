@@ -6,6 +6,28 @@
     <script src="{% static 'js/d3.js'%}"></script>
 <style>
 
+/*
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+*/
+
+/*
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}*/
+
 
         .link {
             stroke: #2E2E2E;
@@ -33,16 +55,61 @@
     This is the visualitzation <br />
 
 <script>
+/*
+var data  = {{ data|safe }};
+
+var x = d3.scale.linear()
+    .domain([0, d3.max(data)])
+    .range([0, 200]);
+
+d3.select(".chart")
+  .selectAll("div")
+    .data(data)
+  .enter().append("div")
+    .style("width", function(d) { return x(d) + "px"; })
+    .text(function(d) { return d; });
+*/
 
 
+/*
+var data = {{ data|safe }};
+
+var width = 420,
+    barHeight = 20;
+
+var x = d3.scale.linear()
+    .domain([0, d3.max(data)])
+    .range([0, width]);
+
+var chart = d3.select(".chart")
+    .attr("width", width)
+    .attr("height", barHeight * data.length);
+
+var bar = chart.selectAll("g")
+    .data(data)
+  .enter().append("g")
+    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+bar.append("rect")
+    .attr("width", x)
+    .attr("height", barHeight - 1);
+
+bar.append("text")
+    .attr("x", function(d) { return x(d) - 3; })
+    .attr("y", barHeight / 2)
+    .attr("dy", ".35em")
+    .text(function(d) { return d; });
+
+*/
 
     var graph;
     function myGraph() {
 
         // Add and remove elements on the graph object
-        this.addNode = function (id) {
+        this.addNode = function (id,type) {
+            type = type || 0;
             nodes.push({"id": id});
-            update();
+            update(type);
         };
 
         this.removeNode = function (id) {
@@ -120,7 +187,7 @@
         var nodes = force.nodes(),
                 links = force.links();
 
-        var update = function () {
+        var update = function (type) {
             var link = vis.selectAll("line")
                     .data(links, function (d) {
                         return d.source.id + "-" + d.target.id;
@@ -149,13 +216,29 @@
                     .attr("class", "node")
                     .call(force.drag);
 
-            nodeEnter.append("svg:circle")
-                    .attr("r", 12)
-                    .attr("id", function (d) {
-                        return "Node;" + d.id;
-                    })
-                    .attr("class", "nodeStrokeClass")
-                    .attr("fill", function(d) { return color(d.id); });
+            if (type==0) {
+                nodeEnter.append("svg:circle")
+                        .attr("r", 12)
+                        .attr("id", function (d) {
+                            return "Node;" + d.id;
+                        })
+                        .attr("class", "nodeStrokeClass")
+                        .attr("fill", function (d) {
+                            return color(d.id);
+                        });
+            }
+            if (type==1) {
+                nodeEnter.append("svg:rect")
+                        .attr("width", 35)
+                        .attr("height", 20)
+                        .attr("id", function (d) {
+                            return "Node;" + d.id;
+                        })
+                        .attr("class", "nodeStrokeClass")
+                        .attr("fill", function (d) {
+                            return color(d.id);
+                        });
+            }
 
             nodeEnter.append("svg:text")
                     .attr("class", "textClass")
@@ -207,12 +290,21 @@
         graph = new myGraph("#svgdiv");
 
         var etq = {{ etq|safe }};
-        reel = {{ reel|safe }};
+        var posts = {{ posts|safe }};
+
+        graph.addNode('Entra');
 
         for (ii = 0; ii < etq.length; ii++) {
-            graph.addNode(etq[ii]);
+            graph.addNode(etq[ii],0);
         }
 
+        for (ii = 0; ii < posts.length; ii++) {
+            graph.addNode(posts[ii],1);
+        }
+
+
+        graph.addNode('Surt');
+        graph.addLink('Entra', 'Surt', '20');
 
         keepNodesOnTop();
 
@@ -224,13 +316,23 @@
             return 2000 + (1500*step); // initial time, wait time
         }
 
-        {% for key, value in reel %}
-            //graph.addLink('{{ key }}' , '{{ value }}','20');
+        {% for etq1, etq2 in reel %}
+            //graph.addLink('{{ etq1 }}' , '{{ etq2 }}','20');
             setTimeout(function() {
-                graph.addLink('{{ key }}',  '{{ value }}', '20');
+                graph.addLink('{{ etq1 }}',  '{{ etq2 }}', '20');
                 keepNodesOnTop();
             }, nextval());
         {% endfor %}
+
+
+
+{#        {% for post, etqs in d %}#}
+{#            {% for etq in etqs %}#}
+{#                graph.addLink('{{ post }}',  '{{ etq }}', '10');#}
+{#            {% endfor %}#}
+{#        {% endfor %}#}
+
+
 
 
     }

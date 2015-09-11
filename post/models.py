@@ -128,6 +128,7 @@ class Post(models.Model):
 
 #Folksonomia etiquetes_relacionades
 #Rep un llistat de posts
+#retorna un dicionari amb el nom de la etiqueta i el numero de coincidencies
 def folksonomia(posts):
     d = dict()
     for post_rel in posts:
@@ -139,23 +140,8 @@ def folksonomia(posts):
                 d[etq.nom] = val
             else:
                 d[etq.nom]= 1
-
-
-
     return d
-#retorna un dicionari amb la quanytitat de coincidencies
 
-# def folksonomia(posts):
-#     relacions = {'num','etiqueta'}
-#     folk = set()
-#
-#     for post in posts:
-#         for etq in post.etiquetes:
-
-    #Rebre una llista de post
-
-    #Tornar el resultat de un llistat de etiquetes, relacionades en el diferents post,
-    #Amb un contador de  les vegades que han estat relacionades.
 
 
 

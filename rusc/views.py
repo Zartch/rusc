@@ -13,12 +13,15 @@ def ruscView(request):
 
 
     #si ja esta dins de una cela permetem que pugui tornar
-    cela_pk = request.session.get('cell', 'NoCell')
-    if (cela_pk != 'NoCell'):
-        cela = Cela.objects.filter(pk=cela_pk).first()
-        return render(request,"rusc.html", {'celas':celas,'cela':cela,'notifications': notif})
-    else:
-        return render(request,"rusc.html", {'celas':celas,'notifications': notif})
+    #Amb el contex proxessor això no cal
+    # cela_pk = request.session.get('cell', 'NoCell')
+    # if (cela_pk != 'NoCell'):
+    #     cela = Cela.objects.filter(pk=cela_pk).first()
+    #     return render(request,"rusc.html", {'celas':celas,'cela':cela,'notifications': notif})
+    # else:
+
+
+    return render(request,"rusc.html", {'celas':celas,'notifications': notif})
 
 
 

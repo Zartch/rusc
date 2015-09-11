@@ -12,8 +12,7 @@ def recursview(request,pk):
     recurs = Recurs.objects.filter(pk=pk,cela= cela).exclude(moderacio='R').first()
     posts_relacionats = Post.objects.filter(recursos = recurs)
 
-    return render(request, "recurs.html",{'recurs': recurs,'cela':cela,
-                                          'posts_relacionats':posts_relacionats , 'posts_debat': recurs.post_debat})
+    return render(request, "recurs.html",{'recurs': recurs, 'posts_relacionats':posts_relacionats , 'posts_debat': recurs.post_debat})
 
 
 def zonarecurs(request):
@@ -21,11 +20,10 @@ def zonarecurs(request):
     cela = get_cela(request)
     zona_recursos = Etiqueta.objects.filter(tipologia='M',cela= cela)
     # noti = {'text':"RecursView", 'type':"succes"}
-    return render(request, "zonarecurs.html",{'zona_recursos': zona_recursos,'cela':cela})
+    return render(request, "zonarecurs.html",{'zona_recursos': zona_recursos})
 
 
 def zonaview(request,pkzona):
 
-    cela = get_cela(request)
-    recursos = Recurs.objects.filter(etiquetes=pkzona,cela= cela).exclude(moderacio='R')
-    return render(request, "zona.html",{'recursos': recursos,'cela':cela})
+    recursos = Recurs.objects.filter(etiquetes=pkzona,cela= get_cela(request)).exclude(moderacio='R')
+    return render(request, "zona.html",{'recursos': recursos})

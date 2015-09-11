@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from .models import Cela, get_cela
-from post.models import Post
+from post.models import Post,folksonomia
 from etiqueta.models import Etiqueta, Tesauro
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import CreateView, UpdateView
@@ -214,7 +214,7 @@ def cela_convidar(request):
         for usu in usuaris:
             usuaris_list.append(usu.username)
 
-        return render(request, "convidar.html",{'usuaris':usuaris_list, 'cela':cela})
+        return render(request, "convidar.html",{'usuaris':usuaris_list})
 
 
 from django.core.mail import send_mail
@@ -251,15 +251,6 @@ def network(request):
 
     etq = Etiqueta.objects.values_list('nom', flat=True).filter(cela=get_cela(request))
     reel = Tesauro.objects.values_list('etq1__nom','etq2__nom').filter(etq1__cela=get_cela(request))
-    reel = list(reel)
-    return render(request,"visual/network.html", {'etq':etq, 'reel': reel})
-
-
-import string
-def visual(request):
-
-    etq = Etiqueta.objects.values_list('nom', flat=True).filter(cela=get_cela(request))
-    reel = Tesauro.objects.values_list('etq1__nom','etq2__nom').filter(etq1__cela=get_cela(request))
     posts = Post.objects.values_list('titol', flat=True).filter(cela=get_cela(request))
     post_list = Post.objects.filter(cela=get_cela(request))
 
@@ -271,6 +262,72 @@ def visual(request):
 
 
     reel = list(reel)
-    return render(request,"visual/visual.html", {'etq':etq, 'reel': reel, 'posts':posts, 'd':d} )
+    return render(request,"visual/network.html", {'etq':etq, 'reel': reel, 'posts':posts, 'd':d} )
 
 
+def visualPost(request):
+
+    posts = Post.objects.filter(cela=get_cela(request))
+    s = {'artist':"",'title':"",'itunes':"",'cover':"",'color':"",'text':"",'musicians':[]}
+    d=[]
+    data = []
+
+    for post in posts:
+        s.clear()
+        s['artist']= str(post.autor)
+        s['title']= post.titol
+        s['color']= "#47738C"
+        s['text']= "#0A0606"
+        d.clear()
+        for etq in post.etiquetes.values_list('nom',flat=True):
+            d.append(etq)
+        if len(d) > 0:
+            s['musicians'] = d.copy()
+        else:
+            s['musicians'] = []
+        data.append(s.copy())
+
+
+    return render(request,"visual/PostRelacions.html", {'data':data} )
+
+
+def visual(request):
+    etqs = Etiqueta.objects.filter(cela=get_cela(request))
+    data = []
+    s = {'artist':"",'title':"",'itunes':"",'cover':"",'color':"",'text':"",'musicians':[]}
+    d=[]
+    for etq in etqs:
+        s.clear()
+        s['artist']= etq.nom
+        s['title']= etq.nom
+        s['itunes']= "www.itunes.com"
+        s['cover']= "Cover"
+        s['color']= "#47738C"
+        s['text']= "#0A0606"
+        d.clear()
+
+        #taxonomia
+        for t in etq.relacio.values_list('nom', flat=True):
+            d.append(t)
+        for reel in Tesauro.objects.filter(etq2=etq):
+            d.append(reel.etq1.nom)
+        d = list(set(d))
+
+        #folksonomia
+        posts = Post.objects.filter(etiquetes= etq)
+        llist = folksonomia(posts)
+        for etq,num in llist.items():
+            d.append(etq)
+        d = list(set(d))
+
+        if len(d) > 0:
+            s['musicians'] = d.copy()
+        else:
+            s['musicians'] = []
+        data.append(s.copy())
+
+
+
+
+
+    return render(request,"visual/visual.html", {'data':data} )

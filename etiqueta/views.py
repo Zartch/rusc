@@ -33,14 +33,14 @@ def etiquetaview(request,etq):
     sorted_x = sorted(d, key=d.get)
 
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': d, 'tesauros':tesauros, 'cela': cela, 'voted':voted, 'posts_relacionats': posts_relacionats})
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': d, 'tesauros':tesauros, 'voted':voted, 'posts_relacionats': posts_relacionats})
 
 def todoview(request):
     cela = get_cela(request)
     etiqueta = Etiqueta.objects.filter(nom='ToDo', cela = cela)
     posts = Post.objects.filter(etiquetes=etiqueta, cela = cela)
 
-    return render(request,"toDo.html", {'posts':posts, 'cela': cela})
+    return render(request,"toDo.html", {'posts':posts})
 
 def feinafeta(request,pkpost):
     cela = get_cela(request)
@@ -50,6 +50,6 @@ def feinafeta(request,pkpost):
 
     posts = Post.objects.filter(etiquetes=todo, cela = cela)
 
-    return render(request,"toDo.html", {'posts':posts, 'cela': cela})
+    return render(request,"toDo.html", {'posts':posts})
 
 

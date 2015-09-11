@@ -278,7 +278,9 @@ data.forEach(function(srcNode, srcIdx, srcList) {
         // For each musican in the "src" album, iterate
         // through the remaining albums in the list.
 
-        for (var tgtIdx = srcIdx + 1; tgtIdx < srcList.length; tgtIdx++) {
+        for (var tgtIdx = srcIdx + 1;
+                 tgtIdx < srcList.length;
+                 tgtIdx++) {
 
             // Use a variable to refer to the "tgt"
             // album for convenience.
@@ -290,7 +292,9 @@ data.forEach(function(srcNode, srcIdx, srcList) {
             // currently considering from the "src"
             // album?
 
-            if (tgtNode.title === srcLink) {
+            if (tgtNode.musicians.some(function(tgtLink){
+                return tgtLink === srcLink;
+            })) {
 
                 // When we do find a match, add a new
                 // link to the links array.

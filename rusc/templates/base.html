@@ -37,6 +37,11 @@
 </head>
 
 <body>
+
+     <div id="sidebar">
+			{% include "leftmenuNEW.html" %}
+	</div>
+
     <div id="div_header">
         <div id="div_menu1">
 
@@ -56,24 +61,18 @@
         </div>
     </div>
 
-    <div id="wrapper">
+   <!-- <div id="wrapper">
 	
-		<!-- Sidebar -->
-        <div id="sidebar-wrapper">
-			{% include "leftmenu.html" %}
-		</div>
+		<!-- Sidebar
 
         <div id="div_toggle">
             <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"  ><</a>
         </div>
-		<!-- /#sidebar-wrapper -->
+		  /#sidebar-wrapper -->
 		
         <!-- Page Content -->
         <div id="page-content-wrapper" class="page-content-wrapper">
-
-						{% block content %}{% endblock %}
-
-
+			{% block content %}{% endblock %}
         </div>
         <!-- /#page-content-wrapper -->
 
@@ -84,8 +83,8 @@
                  <img src="{% static "images/pulpo.gif" %}" align="right" height="70" width="70">
             </div>
         </div>
-    </div>
-    <!-- /#wrapper -->
+    <!--</div>
+     /#wrapper -->
 
     <script>
 

@@ -11,3 +11,8 @@ $(document).ready(function(){
         $("sidebar").show();
     });
 });
+
+$(".menu-toggle").click(function(e) {
+        e.preventDefault();
+        $(".collapse1").toggleClass("active");
+});
