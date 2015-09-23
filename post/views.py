@@ -75,7 +75,7 @@ def postCreateView(request, pk=None):
 
         f = formPost.save(commit=False)
 
-        #Recollim les variables per a crear les etiquetes o asociales al debat
+        #Recollim les variables per a crear les etiquetes  asociales al debat
         etqAdd = request.POST.get('etiquetes-autocomplete', 0)
         etqlist = request.POST.getlist('etiquetes', 0)
 

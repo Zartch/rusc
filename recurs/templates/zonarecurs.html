@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% csrf_token %}
 {% block content %}
+    <a href="{%  url 'crearecurs' %}">Nou Recurs</a>
     {% for zona in zona_recursos %}
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail" >
@@ -11,4 +12,12 @@
             </div>
           </div>
     {% endfor %}
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail" >
+          <div class="caption">
+            <h3><a href="{% url 'recursos' %}" > Tots els Recursos </a></h3>
+            <p>{{ zona.descripcio }}</p>
+          </div>
+        </div>
+      </div>
 {% endblock %}

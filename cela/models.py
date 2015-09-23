@@ -44,7 +44,7 @@ class Cela(models.Model):
 def get_cela(request):
     cela_pk = request.session.get('cell', 'NoCell')
     if cela_pk == 'NoCell' or not request.user.is_authenticated():
-         return redirect('/rusc')
+         return '0'
     cela = get_object_or_404(Cela, pk=cela_pk)
 
     return cela

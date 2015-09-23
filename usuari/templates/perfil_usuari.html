@@ -3,7 +3,11 @@
 {% block content %}
 
     <h3>Configuració general usuari   <b>{{ user.username }}</b></h3>
-    <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="42" width="42"><br />
+    {% if perfilusuari.avatar %}
+        <img src="{{ perfilusuari.avatar.url }}" alt="avatar" height="120" width="120">
+    {% else %}
+        <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="120" width="120">
+    {% endif %}
 
     {{ user }}<br />
     {{ perfilusuari.website }}<br />

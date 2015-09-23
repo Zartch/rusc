@@ -99,6 +99,10 @@ ul.connection.hidden {
 {% block content %}
 
     This is the visualitzation <br />
+    <form method="post" >{% csrf_token %}
+        <input type="checkbox" name="chk_folk" />
+        <input type="submit" value="GO" class="btn-primary btn" />
+    </form>
     <div id='container'>
         <div id='graph'></div>
         <div id='notes'></div>

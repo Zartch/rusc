@@ -292,6 +292,9 @@ def visualPost(request):
 
 
 def visual(request):
+
+    chk_folk =  request.POST.get('chk_folk')
+
     etqs = Etiqueta.objects.filter(cela=get_cela(request))
     data = []
     s = {'artist':"",'title':"",'itunes':"",'cover':"",'color':"",'text':"",'musicians':[]}
@@ -313,21 +316,19 @@ def visual(request):
             d.append(reel.etq1.nom)
         d = list(set(d))
 
-        #folksonomia
-        posts = Post.objects.filter(etiquetes= etq)
-        llist = folksonomia(posts)
-        for etq,num in llist.items():
-            d.append(etq)
-        d = list(set(d))
+        if chk_folk:
+            #folksonomia
+            posts = Post.objects.filter(etiquetes= etq)
+            llist = folksonomia(posts)
+            for etq,num in llist.items():
+                d.append(etq)
+            d = list(set(d))
 
         if len(d) > 0:
             s['musicians'] = d.copy()
         else:
             s['musicians'] = []
+
         data.append(s.copy())
-
-
-
-
 
     return render(request,"visual/visual.html", {'data':data} )

@@ -23,6 +23,7 @@ class Recurs(models.Model):
     autor =  models.CharField(max_length=100,blank=True, default='')
     cela = models.ForeignKey(Cela,blank=True)
     post_debat = models.ForeignKey("post.Post",verbose_name="recurs",  null=True)
+    adjunt = models.FileField(upload_to='documents/%Y/%m/%d', null=True)
 
     def __str__(self):
         return self.url

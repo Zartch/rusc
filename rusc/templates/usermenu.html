@@ -146,7 +146,11 @@ a {
                       <td>
                         <div class="div_notification_image inline">
                             <a href="{% url 'perfil_user' notif.actor_object_id %}">
-                                <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="42" width="42">
+                                {% if perfilusuari.avatar %}
+                                    <img src="{{ perfilusuari.avatar.url }}" alt="avatar" height="42" width="42">
+                                {% else %}
+                                    <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="42" width="42">
+                                {% endif %}
                             </a>
                         </div>
                       </td>

@@ -94,7 +94,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django_messages.context_processors.inbox',
                 'rusc.context_processors.notifications_user',
-                'cela.context_processors.cela_context'
+                'cela.context_processors.cela_context',
+                'rusc.context_processors.perfil_usuari'
+
             ],
         },
     },
@@ -134,7 +136,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'rusc/static'),)
 STATICFILES_DIRS = STATICFILES_DIRS
 
@@ -144,3 +145,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

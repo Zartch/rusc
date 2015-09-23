@@ -25,24 +25,25 @@ def perfilview(request):
         return redirect('rusc', )
 
 
-    return render(request, 'perfil_usuari.html', {'form_user':form_user,
-                                                  'perfilusuari':perfilusuari, 'up':up})
+    return render(request, 'perfil_usuari.html', {'form_user':form_user, 'up':up})
 
 def viewuser(request,pk):
     if not request.user.is_authenticated():
         return redirect('auth_login')
+
     perfilusuari = UserProfile.objects.filter(pk=pk).first()
     usuari = User.objects.filter(pk=perfilusuari.user.pk).first()
-    return render(request, 'perfil_usuari.html', {'usuari': usuari, 'perfilusuari':perfilusuari})
+
+    return render(request, 'perfil_usuari.html', {'usuari': usuari})
 
 def viewuserprofile(request,pk):
     if not request.user.is_authenticated():
         return redirect('auth_login')
 
     usuari = User.objects.filter(pk=pk).first()
-    perfilusuari = UserProfile.objects.filter(user__pk=pk).first()
+    perfilusuari = UserProfile.objects.filter(user__pk=pk, cela=get_cela(request)).first()
 
-    return render(request, 'perfil_view.html', {'usuari': usuari, 'perfilusuari':perfilusuari})
+    return render(request, 'perfil_view.html', {'usuari': usuari})
 
 class UserProfileUpdateView(UpdateView):
     model = UserProfile

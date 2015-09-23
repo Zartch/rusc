@@ -30,7 +30,7 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, null=True )
     # The additional attributes we wish to include.
     website = models.URLField(null=True)
-    avatar = models.ImageField(upload_to='media/profiles/%Y/%m/%d', null=True)
+    avatar = models.FileField(upload_to='profiles/%Y/%m/%d', null=True)
     subscripcions = models.ManyToManyField(Post,blank=True, related_name="subscripcions")
     tipusSubscripcio = models.CharField(max_length=1,choices= TIPUS_SUBSCRIPCIO,default='S')
     cela= models.ForeignKey(Cela)

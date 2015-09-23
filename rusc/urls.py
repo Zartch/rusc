@@ -17,11 +17,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from registration.backends.simple.views import RegistrationView
 import autocomplete_light
+from django.views.generic import RedirectView
 
 autocomplete_light.autodiscover()
 admin.autodiscover()
 
 from rusc import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls), name="admin"),
@@ -38,6 +41,7 @@ urlpatterns = [
     url(r'^messages/', include('django_messages.urls')),
     url('^inbox/notifications/', include('notifications.urls')),
     #url(r'^boot/', include('etiqueta.urls')),
-    url(r'^', views.ruscView),
+    # url(r'^', views.ruscView),
+    #url(r'^$', RedirectView.as_view(url='/rusc/', permanent=True)),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
