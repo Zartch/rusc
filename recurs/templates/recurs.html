@@ -12,12 +12,17 @@
             {{ recurs.datahora }}<br />
             {{ recurs.autor }}<br />
             {{ recurs.descripcio }}<br />
+            {% if recurs.adjunt %}
+                <br />
+                <a href="{{ MEDIA_URL }}{{ recurs.adjunt.url }}" > Adjunt </a><br />
+            {% endif %}
             <h4>Etiquetes:</h4>
             {% for etiqueta in recurs.etiquetes.all %}
                 {{ etiqueta.nom}}/{{etiqueta.descripcio}}
             {% endfor %}
+
             </div>
-            <a href="{{ recurs.adjunt }}" >Adjunt</a><br />
+
         </div>
 
         <div id="div_debat_recurs"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px;" >
@@ -72,8 +77,6 @@
         </div>
     </div>
 
-
-
      <br />
      <br />
      <h3>Post Relacionats:</h3>
@@ -110,11 +113,9 @@
                 {{ post.text|slice:":60" }}
             </td>
             <td>
-
                 {% for etiqueta in post.etiquetes.all %}
                     {{ etiqueta.nom}}/{{etiqueta.descripcio}}
                 {% endfor %}
-
             </td>
         </tr>
         {% endfor %}
