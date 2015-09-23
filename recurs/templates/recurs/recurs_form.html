@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{%  block content %}
+    <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+        {{ formRecurs.as_p }}
+        <input type="submit" value="Create new Resource" class="btn-primary btn-lg" />
+    </form>
+{% endblock %}

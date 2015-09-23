@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% for recurs in recursos %}
+        <li>
+            <b>{{ recurs.descripcio }}</b><br />
+            <a href="{% url 'recurs' recurs.pk  %}">  {{ recurs.url }}</a>
+            {{ recurs.datahora }}<br />
+            {{ recurs.autor }}<br />
+            {{ recurs.adjunt }}<br />
+            {% if recurs.etiquetes.all.count > 0 %}
+                <b>Etiquetes:</b>
+            {% endif %}
+            {% for etiqueta in recurs.etiquetes.all %}
+                {{ etiqueta.nom}}/{{etiqueta.descripcio}}
+            {% endfor %}
+        </li>
+    {% endfor %}
+
+{% endblock %}
