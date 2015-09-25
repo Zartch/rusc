@@ -220,11 +220,19 @@ nav.sidebar ul.level1 ul.level2 li a {
            </a>
      </ul>
 
+
         <ul class='level1'>
             <li class=''>
               <a class='expandable' href="{% url 'rusc' %}" title='HOME'>
                 <span class='glyphicon glyphicon-home collapsed-element'></span>
                 <span class='expanded-element'>RUSC (U->V)</span>
+              </a>
+            </li>
+
+            <li class=''>
+              <a class='expandable' href="{% url 'faq' %}" title='FAQ'>
+                <span class='glyphicon glyphicon-pushpin collapsed-element'></span>
+                <span class='expanded-element'>FAQ</span>
               </a>
             </li>
 
@@ -295,6 +303,8 @@ nav.sidebar ul.level1 ul.level2 li a {
                             <li>
                                 <a  href="/admin/" title='Admin'>Admin</a>
                             </li>
+
+
                         </ul>
                 </li>
             {% endif %}

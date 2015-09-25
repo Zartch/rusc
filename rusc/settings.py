@@ -63,7 +63,7 @@ INSTALLED_APPS = (
     'cela',
     'django_messages',
     'notifications',
-
+    'rusc.faq',
 
 )
 

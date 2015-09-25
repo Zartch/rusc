@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^etiqueta/', include('etiqueta.urls')),
     url(r'^messages/', include('django_messages.urls')),
     url('^inbox/notifications/', include('notifications.urls')),
+    url(r'^faq/', include('rusc.faq.urls')),
+
     #url(r'^boot/', include('etiqueta.urls')),
     # url(r'^', views.ruscView),
     #url(r'^$', RedirectView.as_view(url='/rusc/', permanent=True)),

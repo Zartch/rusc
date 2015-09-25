@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if user in cela.moderadors.all %}
+        <a href="{% url 'faq_nova' %}">Nova Pregunta</a>
+        <br />
+    {% endif %}
+
+    <br />
+
+    {% for faq in faqs %}
+        <b>{{ faq.text }}</b>
+        {% if user in cela.moderadors.all %}
+            <a href="{% url 'faq_modif' faq.id %}"> <span class='glyphicon glyphicon-pencil'></span></a>
+        {% endif %}
+        <br />
+        {{ faq.answer }}
+        <br />
+        <br />
+    {% endfor %}
+
+{% endblock %}
