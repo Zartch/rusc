@@ -17,7 +17,7 @@ body {
     min-height: 100%;
     position: relative;
     color: #000;
-    background-color: #FFC;
+    background-color: #FFC; !important;
 }
 
 .nonfluid {
@@ -33,15 +33,13 @@ body {
     background-color: #12A9C7;
     height: 80px;
     top: 0px;
+    position: fixed;
+    z-index: 2;
 }
 #div_menu1{
     float: left;
     display: inline;
     margin-left: 80px;
-}
-
-#wrapper{
-    margin-bottom: 100px;
 }
 
 #div_user{

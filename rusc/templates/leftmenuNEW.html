@@ -6,10 +6,12 @@
 
 nav.sidebar-menu-collapsed {
     width: 44px;
+
 }
 nav.sidebar-menu-expanded {
     width: auto;
     overflow: scroll;
+
 }
 nav.sidebar {
     position: fixed;
@@ -19,6 +21,7 @@ nav.sidebar {
     background: none repeat scroll 0 0 #0099ff;
     color: white;
     padding: 20px 10px;
+    z-index: 10;
 }
 nav.sidebar a#justify-icon {
     outline: 0;
@@ -301,8 +304,12 @@ nav.sidebar ul.level1 ul.level2 li a {
                                 <a  href='{% url 'usuaris_cela' %}' title='UsuarisCela'>Usuaris Cela</a>
                             </li>
                             <li>
+                                <a  href="{% url 'missatge_cela' %}" title='Enviar missatge a tota la cela'>Enviar missatge a tota la cela</a>
+                            </li>
+                            <li>
                                 <a  href="/admin/" title='Admin'>Admin</a>
                             </li>
+
 
 
                         </ul>

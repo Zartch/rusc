@@ -332,3 +332,16 @@ def visual(request):
         data.append(s.copy())
 
     return render(request,"visual/visual.html", {'data':data} )
+
+
+from django_messages.models import Message
+def missatge_cela(request):
+
+    if request.POST:
+        usuaris = UserProfile.objects.filter(cela= get_cela(request))
+        for user in usuaris:
+            Message.objects.create(subject=request.POST['asumpte'], body=request.POST['text'],
+                                   sender= request.user, recipient= user.user)
+        notif_messages.add_message(request, notif_messages.INFO, "Enviats Missatges a tota la xarxa", 'success')
+
+    return render(request,"moderacio/missatgeriaCela.html", {} )

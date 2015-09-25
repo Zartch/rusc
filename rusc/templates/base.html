@@ -42,7 +42,7 @@
 			{% include "leftmenuNEW.html" %}
 	</div>
 
-    <div id="div_header">
+    <div id="div_header" >
         <div id="div_menu1">
 
                 <a href="#">Mes Vists</a>/
@@ -72,7 +72,9 @@
 		
         <!-- Page Content -->
         <div id="page-content-wrapper" class="page-content-wrapper">
-			{% block content %}{% endblock %}
+            {% block sidebar %} {% endblock %}
+			{% block content %}
+			{% endblock %}
         </div>
         <!-- /#page-content-wrapper -->
 
