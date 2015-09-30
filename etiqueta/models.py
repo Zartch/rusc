@@ -27,7 +27,7 @@ class Etiqueta(models.Model):
     moderacio= models.CharField(max_length=1,choices=ESTAT_MODERACIO, default='E')
     nom = models.CharField(max_length=100)
     tipologia = models.CharField(max_length=1, choices=TIPO_TIPOLOGIA, default='E')
-    #descripcio = models.TextField(verbose_name=('descripció'), blank=True) #Será un enllaç a la wikipedia
+    descripcio = models.TextField(verbose_name=('descripció'), blank=True) #Será un enllaç a la wikipedia
     wiki = models.URLField(blank=True, default="")
     #usuari = models.ForeignKey(User)
     datahora =models.DateTimeField(auto_now_add=True)
