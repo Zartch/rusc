@@ -5,7 +5,7 @@
  */
 
 /* Toggle Styles */
-
+/*
 #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
@@ -39,26 +39,20 @@
     width: 250px;
 }
 */
-#page-content-wrapper {
-    background-color: #FFC;
-    padding: 80px 20px 20px 60px ;
-    position: relative;
-    z-index: 1;
-}
+
 
 /*
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
     margin-right: -250px;
-}*/
-
-/* Sidebar Styles */
+}
 #div_busk {
     margin: 20px;
 }
 #div_bsk_extend {
     display: none;
 }
+
 
 
 
@@ -127,9 +121,9 @@
     }
 
 
-/*
+
     #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0;
-    }*/
-}
+    }
+}*/

@@ -20,6 +20,13 @@ body {
     background-color: #FFC; !important;
 }
 
+#page-content-wrapper {
+    background-color: #FFC;
+    padding: 100px 20px 20px 60px ;
+    position: relative;
+    z-index: 1;
+}
+
 .nonfluid {
    width: auto !important;
 }
