@@ -6,8 +6,10 @@ from django.views.generic.edit import UpdateView
 from usuari.forms import userProfileGeneralForm, userProfileForm
 from cela.models import get_cela
 from django.contrib import messages as notif_messages
+from post.models import Post
+from etiqueta.models import Etiqueta
 
-
+from datetime import date, datetime, timedelta
 
 def perfilview(request):
 
@@ -36,14 +38,22 @@ def viewuser(request,pk):
 
     return render(request, 'perfil_usuari.html', {'usuari': usuari})
 
+from itertools import chain
 def viewuserprofile(request,pk):
     if not request.user.is_authenticated():
         return redirect('auth_login')
 
     usuari = User.objects.filter(pk=pk).first()
     perfilusuari = UserProfile.objects.filter(user__pk=pk, cela=get_cela(request)).first()
+    posts_publicats = Post.objects.filter(autor=usuari, pare = None)
+    respostes_publicades = Post.objects.filter(autor=usuari).exclude(pare = None)
+    etiquetes1 = Etiqueta.objects.filter(post= posts_publicats)
+    etiquetes2 = Etiqueta.objects.filter(post= respostes_publicades)
 
-    return render(request, 'perfil_view.html', {'usuari': usuari})
+    etiquetes = list(chain(etiquetes2, etiquetes1))
+
+    return render(request, 'perfil_view.html', {'usuari': usuari, 'nMiss': posts_publicats.count(), 'nRes':respostes_publicades.count(), 'antig':usuari.date_joined,
+                                                'posts_publicats':posts_publicats,'etiquetes':etiquetes})
 
 class UserProfileUpdateView(UpdateView):
     model = UserProfile

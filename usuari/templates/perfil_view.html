@@ -9,9 +9,45 @@
         <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="120" width="120">
     {% endif %}
 
-    {{ usuari }}<br />
     {{ perfilusuari.website }} <br />
     {{ perfilusuari.user }}<br />
     {{ perfilusuari.cela }}<br />
+
+    <b>Estadisticas:</b><br />
+    nºMissatges Publicats: {{ nMiss }}<br />
+    nºRespostes: {{ nRes }}<br />
+    Antiguetat:{{ antig|timesince }}<br />
+    <br />
+    Tags:
+    {% for etiqueta in  etiquetes  %}
+        <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn btn-warning"> {{ etiqueta.nom}}</a>
+    {% endfor %}
+    <br />
+    <br />
+    Posts:
+    <br />
+    <table class="table table-striped">
+    {% for post in posts_publicats %}
+    <tr>
+        <td>
+            <a href="{% url 'post' post.pk  %}"> ({{ post.pk }}) </a>
+            <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
+
+            <a class="button" href="{% url 'post_respon' post.pk  %}">Comentar</a>
+        </td>
+        <td>
+            {{ post.text|slice:":60" }}
+        </td>
+        <td>
+
+            {% for etiqueta in post.etiquetes.all %}
+                <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn btn-warning"> {{ etiqueta.nom}}</a>
+            {% endfor %}
+
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+
 
 {% endblock %}

@@ -66,6 +66,8 @@ class UserProfile(models.Model):
 
 
 
+
+
 from registration.signals import user_registered
 
 def user_registered_callback(sender, user, request, **kwargs):
