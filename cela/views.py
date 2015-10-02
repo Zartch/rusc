@@ -364,7 +364,6 @@ def VisualCelas(request):
         d.clear()
 
 
-
         for etq in cela.get_etiquetes():
             d.append(etq.nom)
         if len(d) > 0:

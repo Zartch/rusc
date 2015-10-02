@@ -20,11 +20,3 @@ class celaForm(forms.ModelForm):
         self.fields['tipus'].widget.attrs.update({'class' : 'form-control'})
         self.fields['pregunta'].widget.attrs.update({'class' : 'form-control'})
         # self.fields['moderadors'].widget.attrs.update({'class' : 'form-control'})
-
-
-
-class modeform(forms.Form):
-
-    class Meta:
-        model = Post
-        fields = ['titol','text']
