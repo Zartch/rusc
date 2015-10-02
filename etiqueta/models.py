@@ -81,7 +81,15 @@ class Tesauro(models.Model):
 
 
     def __str__(self):
+
         return self.etq1.nom + self.etq2.nom + self.tipo
+
+
+import django_filters
+class TesauroFilter(django_filters.FilterSet):
+    class Meta:
+        model = Tesauro
+        fields = ['etq1', 'etq2', 'tipo']
 
 
 

@@ -25,6 +25,8 @@ class tesauroForm(forms.ModelForm):
         super (tesauroForm,self ).__init__(*args,**kwargs)
         self.fields['etq1'].queryset = Etiqueta.objects.filter(cela= get_cela(self.request))
         self.fields['etq2'].queryset = Etiqueta.objects.filter(cela= get_cela(self.request))
+        self.fields['etq1'].widget.attrs['style'] = 'width: 100%'
+        self.fields['etq2'].widget.attrs['style'] = 'width: 100%'
         self.fields['etq1'].widget.attrs['class'] = 'id_etq1'
         self.fields['etq2'].widget.attrs['class'] = 'id_etq2'
         self.fields['tipo'].widget.attrs['class'] = 'form-control'
