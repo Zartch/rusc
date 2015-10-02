@@ -4,6 +4,7 @@ from post.models import Post,Vote, folksonomia
 from cela.models import Cela, get_cela
 from django.shortcuts import render,get_object_or_404,redirect
 from django.db.models import Q
+from etiqueta.forms import tesauroForm
 
 def etiquetaview(request,etq):
     cela = get_cela(request)
@@ -53,3 +54,83 @@ def feinafeta(request,pkpost):
     return render(request,"toDo.html", {'posts':posts})
 
 
+from django.contrib import messages as notif_messages
+from django.core.urlresolvers import reverse
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+class tesauroCreateView(CreateView):
+    model = Tesauro
+    form_class = tesauroForm
+
+    def get_context_data(self, **kwargs):
+        context = super(tesauroCreateView, self).get_context_data(**kwargs)
+        cela = get_cela(self.request)
+        context['llista_tesauros'] = Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela)
+        return context
+
+    def get_success_url(self):
+        notif_messages.add_message(self.request, notif_messages.INFO, "Has creat una nova relacio", 'success')
+        return reverse('tesauro_nou')
+
+
+    def form_invalid(self, form):
+        notif_messages.add_message(self.request, notif_messages.INFO, "corregeix els errors indicats", 'warning')
+        return super(tesauroCreateView, self).form_invalid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(tesauroCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+class tesauroUpdateView(UpdateView):
+    model = Tesauro
+    form_class = tesauroForm
+
+
+    def get_context_data(self, **kwargs):
+        context = super(tesauroUpdateView, self).get_context_data(**kwargs)
+        cela = get_cela(self.request)
+        context['llista_tesauros'] = Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela)
+        return context
+
+    def form_valid(self, form):
+        notif_messages.add_message(self.request, notif_messages.INFO, "Has modificat el tesauro", 'success')
+        return super(tesauroUpdateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        notif_messages.add_message(self.request, notif_messages.INFO, "corregeix els errors indicats", 'warning')
+        return super(tesauroUpdateView, self).form_invalid(form)
+
+    #Si afegim moderadors, hem de crear el user profile, per a que el moderador no s'hagi d'acceptar a si mateix
+    def get_success_url(self):
+        notif_messages.add_message(self.request, notif_messages.INFO, "tesauro modificada correctament", 'success')
+        return reverse('tesauro_nou')
+
+    def get_form_kwargs(self):
+        kwargs = super(tesauroUpdateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse_lazy
+
+
+
+class tesauroDeleteView(DeleteView):
+    model = Tesauro
+    success_url = reverse_lazy('tesauro_nou')
+
+    def get_form_kwargs(self):
+        kwargs = super(tesauroDeleteView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+
+# def tesauroDelete(request,pk):
+#     TesDell= Tesauro.objects.filter(pk= pk).delete()
+#     cela = get_cela(request)
+#     llista_tesauros = Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela)
+#     form = tesauroForm
+#
+#     return HttpResponseRedirect(reverse('tesauro_nou', kwargs={'request': request}))
+#     #return render(request, "etiqueta/tesauro_form.html", {'llista_tesauros':llista_tesauros, 'form':form,'request':request})

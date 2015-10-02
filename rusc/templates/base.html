@@ -18,20 +18,22 @@
     <link rel="stylesheet" href="{% static 'js/jquery-ui-1.11.4/jquery-ui.css' %}">
     <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
     <script src="{% static 'js/jquery-ui-1.11.4/jquery-ui.js'%}"></script>
-    <!--Bootstrap-->
-    <link href="{% static 'js/bootstrap-3.3.4/css/bootstrap.min.css' %}" rel="stylesheet">
 
+    {% block headers %}{% endblock %}
     <!--JS Generales-->
     <script  src="{% static 'js/generic.js' %}" ></script>
     <!--CSS Generales-->
     <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+    <!--Bootstrap-->
+    <link href="{% static 'js/bootstrap-3.3.4/css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- CSS Notificacións -->
     <script  src="{% static 'js/notifIt.js' %}" ></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/notifIt.css' %}">
 
 
-    {% block headers %}{% endblock %}
+
     {% include 'autocomplete_light/static.html' %}
 
 </head>
