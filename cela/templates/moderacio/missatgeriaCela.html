@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<form action="" method="post" xmlns="http://www.w3.org/1999/html">
+{% csrf_token %}
+<table>
+    Asumpte:
+    <input type="text" name="asumpte"  />
+    <br />
+    Text:
+    <textarea name="text" > </textarea>
+
+</table>
+<input type="submit" value="Send"/>
+</form>
+
+{% endblock %}
