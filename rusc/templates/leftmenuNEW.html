@@ -316,7 +316,8 @@ nav.sidebar ul.level1 ul.level2 li a {
                 </li>
             {% endif %}
         </ul>
-        <a href='#' id='logout-icon' title='Logout'>
-        <span class='glyphicon glyphicon-off'></span>
-      </a>
+        {% if user.is_authenticated %}
+                <a href="{% url 'auth_logout' %}?next=/rusc/" id='logout-icon' title='Logout'><span class='glyphicon glyphicon-off'></span>
+             </a>
+        {% endif %}
  </nav>

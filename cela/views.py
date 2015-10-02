@@ -345,3 +345,33 @@ def missatge_cela(request):
         notif_messages.add_message(request, notif_messages.INFO, "Enviats Missatges a tota la xarxa", 'success')
 
     return render(request,"moderacio/missatgeriaCela.html", {} )
+
+
+
+def VisualCelas(request):
+
+    celas = Cela.objects.filter(tipus='P')
+    s = {'artist':"",'title':"",'itunes':"",'cover':"",'color':"",'text':"",'musicians':[]}
+    d=[]
+    data = []
+
+    for cela in celas:
+        s.clear()
+        s['artist']= str(cela.descripcio)
+        s['title']= cela.pregunta
+        s['color']= "#47738C"
+        s['text']= "#0A0606"
+        d.clear()
+
+
+
+        for etq in cela.get_etiquetes():
+            d.append(etq.nom)
+        if len(d) > 0:
+            s['musicians'] = d.copy()
+        else:
+            s['musicians'] = []
+        data.append(s.copy())
+
+
+    return render(request,"visual/CelaRelacions.html", {'data':data} )

@@ -18,5 +18,6 @@ urlpatterns = patterns('',
         url(r'^tesauro_jerarquic_json/', views.tesauro_jerarquic_json, name='tesauro_jerarquic_json'),
         url(r'^tesauro_jerarquic/', views.tesauro_jerarquic, name='tesauro_jerarquic'),
         url(r'^network/', views.network, name='network'),
+        url(r'^visualcelas/', views.VisualCelas, name='VisualCelas'),
         url(r'^missatge_cela/', views.missatge_cela, name='missatge_cela'),
 )

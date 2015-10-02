@@ -48,7 +48,7 @@ class Post(models.Model):
     autor = models.ForeignKey(User)
     recursos = models.ManyToManyField(Recurs, blank=True)
     etiquetes = models.ManyToManyField(Etiqueta, blank=True)
-    cela = models.ForeignKey(Cela,blank=True)
+    cela = models.ForeignKey(Cela, related_name='posts', blank=True)
 
     with_votes =PostVoteCountManager()
     objects = models.Manager()

@@ -74,12 +74,9 @@ class Tesauro(models.Model):
         ('B','associatiu'),
     )
 
-
     # etq = list(models.ForeignKey(Etiqueta, related_name="element"))
-
     etq1 = models.ForeignKey(Etiqueta, related_name="element_fort")
     etq2 = models.ForeignKey(Etiqueta, related_name="element_debil")
-
     tipo = models.CharField(max_length=1,choices=TIPUS_TESAURO)
 
 
