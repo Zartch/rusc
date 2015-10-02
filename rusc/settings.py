@@ -52,17 +52,20 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
+    'django_tables2',
+    'django_messages',
+    'notifications',
+    'registration',
+    'autocomplete_light',
     'post',
     'etiqueta',
     'recurs',
-    'registration',
     'usuari',
-    'autocomplete_light',
     'buscador',
     'cela',
-    'django_messages',
-    'notifications',
     'rusc.faq',
+
 
 )
 
