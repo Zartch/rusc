@@ -232,13 +232,6 @@ nav.sidebar ul.level1 ul.level2 li a {
               </a>
             </li>
 
-            <li class=''>
-              <a class='expandable' href="{% url 'faq' %}" title='FAQ'>
-                <span class='glyphicon glyphicon-pushpin collapsed-element'></span>
-                <span class='expanded-element'>FAQ</span>
-              </a>
-            </li>
-
             <li class='active'>
                <a class='expandable active' href="{% url 'visual'  %}"  title='Dashboard'>
                    <span class='glyphicon glyphicon-eye-open collapsed-element'></span>
@@ -258,8 +251,15 @@ nav.sidebar ul.level1 ul.level2 li a {
             </li>
 
             <li>
-              <a class='expandable' href='{% url 'forum' %}' title='Debat'>
+              <a class='expandable' href='{% url 'post_nou' %}' title='Nou post'>
                 <span class='glyphicon glyphicon-pencil collapsed-element'></span>
+                <span class='expanded-element'>Nova entrada </span>
+              </a>
+            </li>
+
+            <li>
+              <a class='expandable' href='{% url 'forum' %}' title='Forum'>
+                <span class='glyphicon glyphicon-list collapsed-element'></span>
                 <span class='expanded-element'>Zona Debat </span>
               </a>
             </li>
@@ -281,6 +281,12 @@ nav.sidebar ul.level1 ul.level2 li a {
               <a class='expandable' href='{% url 'opcions_user' user %}' title='opcions'>
                  <span class='glyphicon glyphicon-user collapsed-element'></span>
                  <span class='expanded-element'>Opcions usuari</span>
+              </a>
+            </li>
+            <li class=''>
+              <a class='expandable' href="{% url 'faq' %}" title='FAQ'>
+                <span class='glyphicon glyphicon-pushpin collapsed-element'></span>
+                <span class='expanded-element'>FAQ</span>
               </a>
             </li>
 
