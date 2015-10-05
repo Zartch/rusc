@@ -3,7 +3,7 @@
  */
 $( document ).ready(function() {
 
-    $('.id_etq1').select2();
-    $('.id_etq2').select2();
+    $(".id_etq1").select2();
+    $(".id_etq2").select2();
 
  });

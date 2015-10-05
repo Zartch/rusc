@@ -1,266 +1,323 @@
 
-<!--
-<link rel="stylesheet" href="/resources/demos/style.css">
--->
 <style>
 
-  #swatch {
-    width: 120px;
-    height: 100px;
-    margin-top: 18px;
-    margin-left: 50px;
-    background-image: none;
-  }
-  #red .ui-slider-range { background: #ef2929; }
-  #red .ui-slider-handle { border-color: #ef2929; }
-  #green .ui-slider-range { background: #8ae234; }
-  #green .ui-slider-handle { border-color: #8ae234; }
-  #blue .ui-slider-range { background: #729fcf; }
-  #blue .ui-slider-handle { border-color: #729fcf; }
+@import url('http://getbootstrap.com/dist/css/bootstrap.css');
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css");
 
+nav.sidebar-menu-collapsed {
+    width: 44px;
 
-      nav.sidebar, .main{
-    -webkit-transition: margin 200ms ease-out;
-      -moz-transition: margin 200ms ease-out;
-      -o-transition: margin 200ms ease-out;
-      transition: margin 200ms ease-out;
-  }
+}
+nav.sidebar-menu-expanded {
+    width: auto;
+    overflow: scroll;
 
-  .main{
-    padding: 10px 10px 0 10px;
-  }
-
- @media (min-width: 765px) {
-
-    .main{
-      position: absolute;
-      width: calc(100% - 40px);
-      margin-left: 40px;
-      float: right;
-    }
-
-    nav.sidebar:hover + .main{
-      margin-left: 200px;
-    }
-
-    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
-      margin-left: 0px;
-    }
-
-    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
-      text-align: center;
-      width: 100%;
-      margin-left: 0px;
-    }
-
-    nav.sidebar a{
-      padding-right: 13px;
-    }
-
-    nav.sidebar .navbar-nav > li:first-child{
-      border-top: 1px #e5e5e5 solid;
-    }
-
-    nav.sidebar .navbar-nav > li{
-      border-bottom: 1px #e5e5e5 solid;
-    }
-
-    nav.sidebar .navbar-nav .open .dropdown-menu {
-      position: static;
-      float: none;
-      width: auto;
-      margin-top: 0;
-      background-color: transparent;
-      border: 0;
-      -webkit-box-shadow: none;
-      box-shadow: none;
-    }
-
-    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
-      padding: 0 0px 0 0px;
-    }
-
-    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
-      color: #777;
-    }
-
-    nav.sidebar{
-      width: 200px;
-      height: 100%;
-      margin-left: -160px;
-      float: left;
-      margin-bottom: 0px;
-    }
-
-    nav.sidebar li {
-      width: 100%;
-    }
-
-    nav.sidebar:hover{
-      margin-left: 0px;
-    }
-
-    .forAnimate{
-      opacity: 0;
-    }
-  }
-
-  @media (min-width: 1330px) {
-
-    .main{
-      width: calc(100% - 200px);
-      margin-left: 200px;
-    }
-
-    nav.sidebar{
-      margin-left: 0px;
-      float: left;
-    }
-
-    nav.sidebar .forAnimate{
-      opacity: 1;
-    }
-  }
-
-  nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
-    color: #CCC;
-    background-color: transparent;
-  }
-
-  nav:hover .forAnimate{
-    opacity: 1;
-  }
-  section{
-    padding-left: 15px;
-  }
-
-  .sub_icon
-    {
-       float:right;
-       padding-right: 65px;
-       padding-top:10px;
-    }
-
-
-
-
+}
+nav.sidebar {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    background: none repeat scroll 0 0 #0099ff;
+    color: white;
+    padding: 20px 10px;
+    z-index: 10;
+}
+nav.sidebar a#justify-icon {
+    outline: 0;
+    color: white;
+    font-size: 24px;
+    font-style: normal;
+}
+nav.sidebar a#logout-icon {
+    outline: 0;
+    color: white;
+    font-size: 24px;
+    font-style: normal;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+nav.sidebar ul.level1 {
+    margin: 0;
+    padding: 0;
+    margin-top: 60px;
+}
+nav.sidebar ul.level1 li {
+    margin: 0;
+    padding: 0;
+    margin-top: 20px;
+    list-style-type: none;
+}
+nav.sidebar ul.level1 li a.expandable {
+    outline: 0;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 30px;
+    color: white;
+    text-decoration: none;
+    text-align: left;
+    padding: 10px 4px 4px 0px;
+    font-size: 20px;
+}
+nav.sidebar ul.level1 li a.expandable:hover {
+    color: #bbbbbb;
+}
+nav.sidebar ul.level1 li a.expandable span.expanded-element {
+    display: none;
+    font-size: 11px;
+    position: relative;
+    bottom: 5px;
+}
+nav.sidebar ul.level1 li.active {
+    margin-left: -4px;
+}
+nav.sidebar ul.level1 li.active a.expandable {
+    background: none repeat scroll 0 0 #337ab7;
+    border-radius: 4px;
+    color: white !important;
+    width: 30px;
+    padding: 4px;
+}
+nav.sidebar ul.level1 li.active a.expandable:hover {
+    color: white !important;
+}
+nav.sidebar ul.level1 ul.level2 {
+    margin: 10px 10px 10px 40px;
+    padding: 0;
+    display: none;
+}
+nav.sidebar ul.level1 ul.level2 li {
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    list-style-type: none;
+    border-bottom: solid white 1px;
+}
+nav.sidebar ul.level1 ul.level2 li:last-child {
+    border-bottom: none;
+}
+nav.sidebar ul.level1 ul.level2 li a {
+    text-decoration: none;
+    outline: 0;
+    color: white;
+    text-decoration: none;
+    font-size: 11px;
+}
 
 </style>
-  <script>
-  function hexFromRGB(r, g, b) {
-    var hex = [
-      r.toString( 16 ),
-      g.toString( 16 ),
-      b.toString( 16 )
-    ];
-    $.each( hex, function( nr, val ) {
-      if ( val.length === 1 ) {
-        hex[ nr ] = "0" + val;
-      }
+
+<script>
+(function () {
+    $(function () {
+        var SideBAR;
+        SideBAR = (function () {
+            function SideBAR() {}
+
+            SideBAR.prototype.expandMyMenu = function () {
+                return $("nav.sidebar").removeClass("sidebar-menu-collapsed").addClass("sidebar-menu-expanded");
+            };
+
+            SideBAR.prototype.collapseMyMenu = function () {
+                return $("nav.sidebar").removeClass("sidebar-menu-expanded").addClass("sidebar-menu-collapsed");
+            };
+
+            SideBAR.prototype.showMenuTexts = function () {
+                return $("nav.sidebar ul a span.expanded-element").show();
+            };
+
+            SideBAR.prototype.hideMenuTexts = function () {
+                return $("nav.sidebar ul a span.expanded-element").hide();
+            };
+
+            SideBAR.prototype.showActiveSubMenu = function () {
+                $("li.active ul.level2").show();
+                return $("li.active a.expandable").css({
+                    width: "100%"
+                });
+            };
+
+            SideBAR.prototype.hideActiveSubMenu = function () {
+                return $("li.active ul.level2").hide();
+            };
+
+            SideBAR.prototype.adjustPaddingOnExpand = function () {
+                $("ul.level1 li a.expandable").css({
+                    padding: "1px 4px 4px 0px"
+                });
+                return $("ul.level1 li.active a.expandable").css({
+                    padding: "1px 4px 4px 4px"
+                });
+            };
+
+            SideBAR.prototype.resetOriginalPaddingOnCollapse = function () {
+                $("ul.nbs-level1 li a.expandable").css({
+                    padding: "4px 4px 4px 0px"
+                });
+                return $("ul.level1 li.active a.expandable").css({
+                    padding: "4px"
+                });
+            };
+
+            SideBAR.prototype.ignite = function () {
+                return (function (instance) {
+                    return $("#justify-icon").click(function (e) {
+                        if ($(this).parent("nav.sidebar").hasClass("sidebar-menu-collapsed")) {
+                            instance.adjustPaddingOnExpand();
+                            instance.expandMyMenu();
+                            instance.showMenuTexts();
+                            instance.showActiveSubMenu();
+                            $(this).css({
+                                color: "#000"
+                            });
+                        } else if ($(this).parent("nav.sidebar").hasClass("sidebar-menu-expanded")) {
+                            instance.resetOriginalPaddingOnCollapse();
+                            instance.collapseMyMenu();
+                            instance.hideMenuTexts();
+                            instance.hideActiveSubMenu();
+                            $(this).css({
+                                color: "#FFF"
+                            });
+                        }
+                        return false;
+                    });
+                })(this);
+            };
+
+            return SideBAR;
+
+        })();
+        return (new SideBAR).ignite();
     });
-    return hex.join( "" ).toUpperCase();
-  }
-  function refreshSwatch() {
-    var red = $( "#red" ).slider( "value" ),
-      green = $( "#green" ).slider( "value" ),
-      blue = $( "#blue" ).slider( "value" ),
-      hex = hexFromRGB( red, green, blue );
-    $( "#swatch" ).css( "background-color", "#" + hex );
-  }
-    $(function() {
-        $( "#red, #green, #blue,#a,#b" ).slider({
-          orientation: "horizontal",
-          range: "min",
-          max: 255,
-          value: 127,
-          slide: refreshSwatch,
-          change: refreshSwatch
-        });
-        $( "#red" ).slider( "value", 255 );
-        $( "#green" ).slider( "value", 140 );
-        $( "#blue" ).slider( "value", 60 );
-        $( "#a" ).slider( "value", 30 );
-        $( "#b" ).slider( "value", 40 );
-    });
 
-
-
-
+}).call(this);
 </script>
 
-            <ul class="sidebar-nav" >
-            
-                <li class="sidebar-brand">
-                    <a href="{% url 'rusc'  %}">
-                        RUSC (U->V)
-                    </a>
-                </li>
 
 
-                <li><a href="{% url 'visual'  %}" class="left_menu" >Visualitzacio</a></li>
-                <li><a href="{% url 'tesauro_jerarquic'  %}" class="left_menu" >Tesauro</a></li>
-                <li><a href="{% url 'network'  %}" class="left_menu" >Xarxa</a></li>
+ <nav class='sidebar sidebar-menu-collapsed' >
+     <a href='#' id='justify-icon'>
+        <span class='glyphicon glyphicon-align-justify'></span>
+     </a>
 
-                <li class="sidebar-brand"><a id="menu-toggle2" >Menu<span class="sub_icon glyphicon glyphicon-align-justify" ></span></a></li>
+     <ul class='level1'>
 
-                <li ><a href="{% url 'forum' %}" class="left_menu" >Zona Debat <span class="sub_icon glyphicon glyphicon-align-justify" ></span></a></li>
-
-                
-                <li><a href="{% url 'zonarecurs' %}" class="left_menu" >Zona Recursos <span class="sub_icon glyphicon glyphicon-align-justify" ></span></a></li>
-
-                
-                <li><a href="{% url 'todo' %}" class="left_menu" >ToDo</a></li>
-                {% if user in cela.moderadors.all %}
-                    
-                    <li><a href="{% url 'edicio_cela' cela.pk %}" class="left_menu" >Editar Cela</a></li>
-
-                    
-                    <li><a href="{% url 'mode_post' %}" class="left_menu" >Moderar Post</a></li>
-
-                    
-                    <li><a href="{% url 'mode_usuaris' %}" class="left_menu" >Solicituts Ingrés</a></li>
-
-                    
-                    <li><a href="{% url 'usuaris_cela' %}" class="left_menu" >Usuaris Cela</a></li>
-                {% endif %}
-                
-                <li><a href="{% url 'convidar_usu_cela' %}" class="left_menu" >Convidar Cela</a></li>
-
-                
-                <li><a href="{% url 'opcions_user' user %}" class="left_menu" >Opcions</a></li>
-
-                
-                <li><a href="/admin" class="left_menu" >Admin</a></li>
-
-
-                <div id="div_busk" >
+        <li class='active'>
+           <a class='expandable active' >
+               <span class='glyphicon glyphicon-search collapsed-element'></span>
+               <span class='expanded-element'>
                     <form action="/busk/" method="post">
-                    {% csrf_token %}
+                        {% csrf_token %}
                         <div class="input-group">
                             <input type="text" class="form-control"  name="searchString" width="40px" />
                           <span class="input-group-btn">
                               <button type="submit" class="btn btn-default">Busk</button>
                           </span>
                         </div>
-                    <br />
-
-                    <a href="#busk-toggle" class="btn btn-default" id="busk-toggle"  ><</a>
-                    <div id="div_bsk_extend" >
-                        Proximitat social<div id="red"></div><br />
-                        Activitat Propia<div id="green"></div><br />
-                        Visites<div id="blue"></div><br />
-                        Valoració<div id="a"></div><br />
-                        Mes Comentats<div id="b"></div>
-                    </div>
                     </form>
-
-                </div>
-
-
-
-
-            </ul>
+               </span>
+               <br />
+               <br />
+           </a>
+     </ul>
 
 
+        <ul class='level1'>
+            <li class=''>
+              <a class='expandable' href="{% url 'rusc' %}" title='HOME'>
+                <span class='glyphicon glyphicon-home collapsed-element'></span>
+                <span class='expanded-element'>RUSC (U->V)</span>
+              </a>
+            </li>
 
-        <!-- /#sidebar-wrapper -->
+            <li class=''>
+              <a class='expandable' href="{% url 'faq' %}" title='FAQ'>
+                <span class='glyphicon glyphicon-pushpin collapsed-element'></span>
+                <span class='expanded-element'>FAQ</span>
+              </a>
+            </li>
+
+            <li class='active'>
+               <a class='expandable active' href="{% url 'visual'  %}"  title='Dashboard'>
+                   <span class='glyphicon glyphicon-eye-open collapsed-element'></span>
+                   <span class='expanded-element'>Visualitzacions</span>
+               </a>
+                   <ul class='level2'>
+                       <li>
+                           <a  href='{% url 'tesauro_jerarquic'  %}' title='Traffic'>Tesauro</a>
+                       </li>
+                       <li>
+                           <a  href='{% url 'network'  %}' title='Conversion rate'>Xarxa</a>
+                       </li>
+                       <li>
+                           <a  href='{% url 'visualPost'  %}' title='Conversion rate'>Visual Post</a>
+                       </li>
+                    </ul>
+            </li>
+
+            <li>
+              <a class='expandable' href='{% url 'forum' %}' title='Debat'>
+                <span class='glyphicon glyphicon-pencil collapsed-element'></span>
+                <span class='expanded-element'>Zona Debat </span>
+              </a>
+            </li>
+
+            <li>
+              <a class='expandable' href='{% url 'zonarecurs' %}' title='Recursos'>
+                <span class='glyphicon glyphicon-folder-open collapsed-element'></span>
+                <span class='expanded-element'>Zona Recursos</span>
+              </a>
+            </li>
+
+            <li>
+              <a class='expandable' href='{% url 'convidar_usu_cela' %}' title='Convidar'>
+                 <span class='glyphicon glyphicon-plus collapsed-element'></span>
+                 <span class='expanded-element'>Convidar Cela</span>
+              </a>
+            </li>
+            <li>
+              <a class='expandable' href='{% url 'opcions_user' user %}' title='opcions'>
+                 <span class='glyphicon glyphicon-user collapsed-element'></span>
+                 <span class='expanded-element'>Opcions usuari</span>
+              </a>
+            </li>
+
+            {% if user in cela.moderadors.all %}
+                 <li class='active'>
+                   <a class='expandable active' href="{% url 'mode_post' %}"  title='Administracio'>
+                       <span class='glyphicon glyphicon-cog collapsed-element'></span>
+                       <span class='expanded-element'>Administració Cela</span>
+                   </a>
+                       <ul class='level2'>
+                            <li>
+                                <a  href='{% url 'edicio_cela' cela.pk %}' title='EditarCela'>EditarCela</a>
+                            </li>
+                           <li>
+                                <a  href='{% url 'mode_post' %}' title='moderarPost'>Moderar Post</a>
+                            </li>
+                           <li>
+                                <a  href='{% url 'mode_usuaris' %}' title='SolicitutsIngres'>Solicituts Ingrés</a>
+                            </li>
+                           <li>
+                                <a  href='{% url 'usuaris_cela' %}' title='UsuarisCela'>Usuaris Cela</a>
+                            </li>
+                            <li>
+                                <a  href="{% url 'missatge_cela' %}" title='Enviar missatge a tota la cela'>Enviar missatge a tota la cela</a>
+                            </li>
+                            <li>
+                                <a  href="/admin/" title='Admin'>Admin</a>
+                            </li>
+
+
+
+                        </ul>
+                </li>
+            {% endif %}
+        </ul>
+        {% if user.is_authenticated %}
+                <a href="{% url 'auth_logout' %}?next=/rusc/" id='logout-icon' title='Logout'><span class='glyphicon glyphicon-off'></span>
+             </a>
+        {% endif %}
+ </nav>

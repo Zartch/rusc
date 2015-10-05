@@ -21,7 +21,6 @@ $( document ).ready(function() {
         $("#div_bsk_extend").toggle();
     });
 
-
  });
 
 /*Script per Notificacións */

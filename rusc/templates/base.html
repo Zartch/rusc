@@ -5,43 +5,18 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
-
-    <!--Jquey / UI-->
-    <link rel="stylesheet" href="{% static 'js/jquery-ui-1.11.4/jquery-ui.css' %}">
-    <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
-    <script src="{% static 'js/jquery-ui-1.11.4/jquery-ui.js'%}"></script>
-
+    {% block PREheaders %}{% endblock %}
+    {% include 'headers.html' %}
     {% block headers %}{% endblock %}
-    <!--JS Generales-->
-    <script  src="{% static 'js/generic.js' %}" ></script>
-    <!--CSS Generales-->
-    <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-
-    <!--Bootstrap-->
-    <link href="{% static 'js/bootstrap-3.3.4/css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- CSS Notificacións -->
-    <script  src="{% static 'js/notifIt.js' %}" ></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/notifIt.css' %}">
-
-
 
     {% include 'autocomplete_light/static.html' %}
-
+    <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
 
      <div id="sidebar">
-			{% include "leftmenuNEW.html" %}
+			{% include "leftmenu.html" %}
 	</div>
 
     <div id="div_header" >
