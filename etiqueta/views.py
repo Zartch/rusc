@@ -36,6 +36,25 @@ def etiquetaview(request,etq):
 
     return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': d, 'tesauros':tesauros, 'voted':voted, 'posts_relacionats': posts_relacionats})
 
+def nometiquetaview(request,nometq,nomcela):
+    #cela = get_cela(request)
+    cela = Cela.objects.filter(pregunta= nomcela).first()
+    etiqueta = Etiqueta.objects.filter(nom=nometq, cela = cela.pk).first()
+    posts_relacionats = Post.with_votes.get_queryset().filter(etiquetes = etiqueta, cela = cela.pk).exclude(moderacio='R')
+
+    if not request.user.is_anonymous():
+        voted = Vote.objects.filter(voter=request.user)
+        voted = voted.values_list('post_id', flat=True)
+    else:
+        voted= []
+
+    tesauros = Tesauro.objects.filter(Q(etq1=etiqueta)|Q(etq2=etiqueta))
+    d = folksonomia(posts_relacionats)
+    sorted_x = sorted(d, key=d.get)
+
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': d, 'tesauros':tesauros, 'voted':voted, 'posts_relacionats': posts_relacionats})
+
+
 def todoview(request):
     cela = get_cela(request)
     etiqueta = Etiqueta.objects.filter(nom='ToDo', cela = cela)

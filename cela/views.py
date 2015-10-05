@@ -361,6 +361,7 @@ def VisualCelas(request):
         s['title']= cela.pregunta
         s['color']= "#47738C"
         s['text']= "#0A0606"
+        s['pk'] = cela.pk
         d.clear()
 
 

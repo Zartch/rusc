@@ -109,7 +109,7 @@ def postCreateView(request, pk=None):
             if len(etqlist) > 0:
                 #Los tags que ya estaban en DB
                 for etiqueta in etqlist:
-                    objEtq = Etiqueta.objects.filter(pk=etiqueta).first()
+                    objEtq = Etiqueta.objects.filter(pk=etiqueta, cela=cela).first()
                     f.etiquetes.add(objEtq)
 
         if len(etqAdd) > 0:

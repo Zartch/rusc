@@ -3,7 +3,7 @@ from post.models import Post,Vote
 import autocomplete_light
 from etiqueta.models import Etiqueta
 
-autocomplete_light.register(Etiqueta, search_fields=('nom', ))
+autocomplete_light.register(Etiqueta, search_fields=('nom',))
 
 class postForm(forms.ModelForm):
 
