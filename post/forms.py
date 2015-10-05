@@ -13,6 +13,12 @@ class postForm(forms.ModelForm):
         widgets = {
         	'etiquetes': autocomplete_light.MultipleChoiceWidget('EtiquetaAutocomplete'),}
 
+    def __init__(self, *args,**kwargs):
+        super (postForm,self ).__init__(*args,**kwargs)
+        self.fields['titol'].widget.attrs['class'] = 'form-control'
+        self.fields['text'].widget.attrs['class'] = 'form-control'
+        self.fields['etiquetes'].widget.attrs['class'] = 'form-control'
+
 
 class VoteForm(forms.ModelForm):
 

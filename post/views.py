@@ -55,17 +55,18 @@ def postCreateView(request, pk=None):
     #Inicialitzem les variables
     titol = ""
     reply_root = []
-
+    etiquetes = []
 
     if pk:
         # Bloc per que prengui el titol de el comentari al que respón
         re = "Re:"
         reply = get_object_or_404(Post, pk=pk)
         titol = re + reply.titol        #Bloc per incloure les variables de Post al html per pintar el debat al que responem.
+        etiquetes = reply.etiquetes.values_list('pk', flat=True).all()
         reply_rootid = reply.get_root()
         reply_root = Post.objects.filter(pk=reply_rootid)
 
-    formPost = postForm(request.POST or None, initial={'titol': titol})
+    formPost = postForm(request.POST or None, initial={'titol': titol, 'etiquetes': etiquetes})
     formEtiqueta = etiquetaForm(request.POST or None)
     RecursFormSet = formset_factory(RecursForm, formset=BaseFormSet)
 
