@@ -6,13 +6,14 @@
 {% csrf_token %}
 <table>
     Asumpte:
-    <input type="text" name="asumpte"  />
+    <input type="text" name="asumpte" class="form-control"  />
     <br />
     Text:
-    <textarea name="text" > </textarea>
+    <textarea name="text" class="form-control"> </textarea>
 
 </table>
-<input type="submit" value="Send"/>
+    <br />
+<input type="submit" value="Send" class="btn btn-primary"/>
 </form>
 
 {% endblock %}
