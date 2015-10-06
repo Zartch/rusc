@@ -1,4 +1,7 @@
 {% load notifications_tags %}
+
+{% load inbox %}
+
 {% load static %}
 
 {% if user.is_authenticated %}
@@ -85,6 +88,18 @@
     margin-left: 10px;
     z-index: 100;
 }
+#unread_mes_count {
+    padding: 2px 4px 2px 4px;
+    background: #cc0000;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 9px;
+    position: absolute;
+    float: left;
+    font-size: 9px;
+    margin-left: 10px;
+    z-index: 100;
+}
 a {
     color: #0600ae;
 }
@@ -119,16 +134,17 @@ a {
 
      <a href="/usuari/perfil">{{ user.username }}</a>
      <a href="{% url 'auth_logout' %}?next=/rusc/"><span class="glyphicon glyphicon-log-out"></span></a><br />
-
-
+    {% inbox_count as unread_mes_count %}
+    {% if unread_mes_count > 0 %}
+        <span id="unread_mes_count">{{ unread_mes_count }}</span>
+    {% endif %}
      <a href="{% url 'messages_inbox' %}" >
 {#        {% load inbox %} {% inbox_count %}#}
          <span class="glyphicon glyphicon-envelope"></span>
-     </a>
+    </a>
+    &nbsp;&nbsp;
 
     {% notifications_unread as unread_count %}
-    <a href="{% url 'all' %}" > {{ unread_count }} <span class="glyphicon glyphicon-inbox"></span></a>
-    <br />
 
 
     <span id="notification_count">{{ unread_count }}</span>
