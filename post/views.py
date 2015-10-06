@@ -282,3 +282,9 @@ class VoteFormView(JSONFormMixin, VoteFormBaseView):
 
 def get_reel_etq(etq):
     return Post.objects.filter(etiquetes= etq)
+
+def view_resums(request):
+    etqResum = Etiqueta.objects.get_or_create(nom='Resum', tipologia= 'S', cela= get_cela(request) )
+    resums = Post.objects.filter(etiquetes__nom = 'Resum')
+
+    return render(request, "forum.html", {'posts':resums})

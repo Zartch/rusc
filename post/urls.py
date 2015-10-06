@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     url(r'^perfil/(?P<pk>\d+)$', views.postView, name='perfil'),
     url(r'^post/(?P<pkpost>\d+)$', views.postView, name='post'),
     url(r'^$', views.forum, name='forum'),
+    url(r'^resums/$', views.view_resums, name='resums'),
     url(r'^vote/$', auth(VoteFormView.as_view()), name="vote"),
+
 
 )
