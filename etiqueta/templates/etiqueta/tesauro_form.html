@@ -10,14 +10,11 @@
 {% endblock %}
 {%  block content %}
 
-{#    <script type="text/javascript">#}
-{#      $('.id_etq1').select2();#}
-{#    </script>#}
 
-    {% for element in llista_tesauros %}
-       {{ element.pk }}-  {{ element.etq1 }} - {{ element.etq2 }} -{{ element.get_tipo_display }} -
-        <a href="{% url 'mod_tesauro' element.pk  %}"> Edit </a> <a href="{% url 'delete_tesauro' element.pk %}"> Delete </a>  <br />
-    {% endfor %}
+{#    {% for element in llista_tesauros %}#}
+{#       {{ element.pk }}-  {{ element.etq1 }} - {{ element.etq2 }} -{{ element.get_tipo_display }} -#}
+{#        <a href="{% url 'mod_tesauro' element.pk  %}"> Edit </a> <a href="{% url 'delete_tesauro' element.pk %}"> Delete </a>  <br />#}
+{#    {% endfor %}#}
 
     <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
         {{ form.as_p }}
