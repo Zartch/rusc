@@ -112,7 +112,8 @@ def postCreateView(request, pk=None):
                     objEtq = Etiqueta.objects.filter(pk=etiqueta, cela=cela).first()
 
                     if not objEtq:
-                        objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
+                        objEtqaux = Etiqueta.objects.filter(pk=etiqueta).first()
+                        objEtq, created = Etiqueta.objects.get_or_create(nom=objEtqaux.nom, cela=cela)
 
                     f.etiquetes.add(objEtq)
 
