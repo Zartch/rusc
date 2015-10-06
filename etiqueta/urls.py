@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = patterns('',
         url(r'^(?P<etq>\d+)/$', views.etiquetaview,name='etiqueta'),
-        url(r'^(?P<nometq>\w+)/(?P<nomcela>\w+)/$', views.nometiquetaview,name='nom_etiqueta'),
+        url(r'^(?P<nometq>[\w\s]+)/(?P<nomcela>[\w\s]+)/$', views.nometiquetaview,name='nom_etiqueta'),
         url(r'^todo/(?P<pkpost>\d+)$', views.feinafeta, name='feina_feta'),
         url(r'^todo', views.todoview, name='todo'),
         url(r'^tesauronou/$', login_required(views.tesauroCreateView.as_view()) ,name='tesauro_nou'),
