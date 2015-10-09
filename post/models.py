@@ -12,8 +12,9 @@ from django.utils.timezone import now
 class PostVoteCountManager(models.Manager):
 
     def get_queryset(self):
-        return super(PostVoteCountManager, self).get_queryset().annotate(votes=Count('votePost')
-        )
+        return super(PostVoteCountManager, self).get_queryset().annotate(votes=Count('vote'))
+
+
 
 
 #La Barra per comentar es "/"
@@ -49,6 +50,7 @@ class Post(models.Model):
     recursos = models.ManyToManyField(Recurs, blank=True)
     etiquetes = models.ManyToManyField(Etiqueta, blank=True)
     cela = models.ForeignKey(Cela, related_name='posts', blank=True)
+    rank_score = models.FloatField(default=0.0)
 
     with_votes =PostVoteCountManager()
     objects = models.Manager()
@@ -153,7 +155,7 @@ def folksonomia(posts):
 
 class Vote(models.Model):
     voter = models.ForeignKey(User)
-    post = models.ForeignKey(Post, related_name='votePost')
+    post = models.ForeignKey(Post)
 
     def __str__(self):
         return "%s voted %s" % (self.voter.username, self.post.titol)
