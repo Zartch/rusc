@@ -2,7 +2,7 @@ import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rusc.settings")
 
-from .models import  Post
+from post.models import  Post
 
 def rank_all():
     for link in Post.with_votes.all():
@@ -24,8 +24,9 @@ if __name__=="__main__":
 
 # aquest codi python s'ha de executar de fondo per a que es vagin recalculant el ranking_score de cada entrada,
 # pq no nomes va per vots també hi influeixen altres variables en el ranking
-
-
+#
+#
+#
 # Turn it into a background job
 #
 # (nohup python -u rerank.py&)
