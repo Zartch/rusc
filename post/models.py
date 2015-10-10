@@ -92,6 +92,7 @@ class Post(models.Model):
                 comment_root = comment_root.pare
             return comment_root
 
+
     #Llistat de usuaris subscrits al root de un post
     def get_subscriptors(self):
         post = self.get_root_object()

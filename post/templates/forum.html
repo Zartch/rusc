@@ -14,6 +14,7 @@
                 <tr>
                     <th>Vots</th>
                     <th>Post</th>
+                    <th>Quan?Qui?</th>
                     <th>Text</th>
                     <th>Etiquetes</th>
                 </tr>
@@ -40,9 +41,21 @@
             </td>
             <td>
                 <a href="{% url 'post' post.pk  %}"> ({{ post.pk }}) </a>
-                <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
+                <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b>
+            </td>
+            <td>
+                <a class="button" href="{% url 'post_respon' post.pk  %}"><span class='glyphicon glyphicon-comment'></span> Comentar</a>
+            </td>
 
-                <a class="button" href="{% url 'post_respon' post.pk  %}">Comentar</a>
+            <td>
+                (rank: {{ post.rank_score|slice:":2" }})
+            </td>
+            <td>
+                <div id="div_post_info" class="pull-right">
+                     Escrit el:{{ post.datahora }}
+                    per:
+                    <a href="{% url 'perfil_user' post.autor.pk %}"> {{ post.autor }}</a>)
+                </div>
             </td>
             <td>
                 {{ post.text|slice:":60" }}
