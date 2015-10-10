@@ -9,7 +9,7 @@ class postForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        exclude = {"autor", "pare","recursos","moderacio", "cela", "rank_score"}
+        exclude = {"autor", "pare","recursos","moderacio", "cela", "rank_score", "num_comments"}
         widgets = {
         	'etiquetes': autocomplete_light.MultipleChoiceWidget('EtiquetaAutocomplete'),}
 

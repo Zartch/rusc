@@ -84,8 +84,10 @@ def postCreateView(request, pk=None):
         if pk:
             comentari = get_object_or_404(Post, pk=pk)
             f.pare = comentari
-            post = get_object_or_404(Post, pk=pk)
-            f.post = post
+
+            #a la espera de confirmar que no falla res i es poden borrar les seguents 2 linees:
+            # post = get_object_or_404(Post, pk=pk)
+            # f.post = post
 
         if not request.user.is_authenticated():
             return redirect('../../../../accounts/login')

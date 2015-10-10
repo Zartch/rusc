@@ -32,6 +32,7 @@
                 <div id="div_post_text">
                     {{ obj.text  }}
                 </div>
+                (numComm: {{ obj.num_comments }})
                 <div id="div_post_respondre">
                     <a href="{% url 'post_respon' obj.pk  %}">Respondre</a>
                 </div>
