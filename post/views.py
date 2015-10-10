@@ -19,7 +19,7 @@ def forum(request):
     #ToDo https://docs.djangoproject.com/en/1.8/topics/http/middleware/
     cela= get_cela(request)
     #Filtrem els posts a aparèixer i utilitzem el manager pq afegeixi la columna on es dona el nºtotal de vots
-    posts = Post.with_votes.get_queryset().filter(pare=None, cela = cela.pk).exclude(moderacio='R').filter(recurs=None)
+    posts = Post.with_votes.get_queryset().filter(pare=None, cela = cela.pk).exclude(moderacio='R').filter(recurs=None).order_by('-rank_score')
     #Generem la queryset on es recullen tots els vots del passat i la tornem llistat de nombres
     #això ens serveix per saber si l'usuari ha votat abans o no al post en concret
     if not request.user.is_anonymous():
@@ -110,6 +110,11 @@ def postCreateView(request, pk=None):
                 #Los tags que ya estaban en DB
                 for etiqueta in etqlist:
                     objEtq = Etiqueta.objects.filter(pk=etiqueta, cela=cela).first()
+
+                    if not objEtq:
+                        objEtqaux = Etiqueta.objects.filter(pk=etiqueta).first()
+                        objEtq, created = Etiqueta.objects.get_or_create(nom=objEtqaux.nom, cela=cela)
+
                     f.etiquetes.add(objEtq)
 
         if len(etqAdd) > 0:

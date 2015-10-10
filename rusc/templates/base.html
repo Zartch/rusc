@@ -13,6 +13,7 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 
+
 <body>
 
      <div id="sidebar">
@@ -29,7 +30,7 @@
                 <a href="#">Prox.Social</a>
                 {{ cela_context.pregunta }}
 
-               <h3><a href="{% url 'forum' %}">{{ cela.pregunta }}</a>  <small>{{ cela.descripcio }}</small> </h3>
+               <h3><a href="{% url 'forum' %}">{{ cela.pregunta }}</a>  <small>{{ cela.descripcio|truncatechars:140 }}</small> </h3>
 
         </div>
 

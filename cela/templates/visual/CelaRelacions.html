@@ -1,4 +1,4 @@
-{% extends "baserusc.html" %}
+{% extends "baseRusc.html" %}
 {%  load staticfiles %}
 {% block headers %}
     <script src="{% static 'js/d3.js'%}"></script>
@@ -17,7 +17,7 @@
     border: 1px solid #fff;
     -webkit-box-shadow: 0 3px 5px rgba(0,0,0,.3);
     -moz-box-shadow: rgba(0,0,0,.3) 0 3px 5px;
-    border-color: #a2a2a2    9;
+{% comment %}    border-color: #a2a2a29;{% endcomment %}
 }
 .node circle, circle.node {
     cursor:       pointer;
