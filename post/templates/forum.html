@@ -3,6 +3,17 @@
 {% csrf_token %}
 {% block headers %}
     <script src="{% static 'js/vote.js' %}"></script>
+
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script>
+        $( document ).ready(function() {
+
+            $(".etiquetes").select2({tags: true});
+
+        });
+    </script>
+
 {% endblock %}
 {% block content %}
 
@@ -44,14 +55,16 @@
                 <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b>
             </td>
             <td>
-                <a class="button" href="{% url 'post_respon' post.pk  %}"><span class='glyphicon glyphicon-comment'></span> Comentar</a>
+                <a href="{% url 'post' post.pk  %}">
+                <span id="notification_count">{{ post.num_comments }}</span>
+                    <span class='glyphicon glyphicon-comment'></span>
+                    </a>&nbsp;&nbsp;
+                <a class="button" href="{% url 'post_respon' post.pk  %}">
+                        Comentar</a>
             </td>
 
             <td>
                 (rank: {{ post.rank_score|slice:":2" }})
-            </td>
-            <td>
-                (numComm: {{ post.num_comments }})
             </td>
             <td>
                 <div id="div_post_info" class="pull-right">
@@ -66,8 +79,29 @@
             <td>
 
                 {% for etiqueta in post.etiquetes.all %}
-                    <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn btn-warning"> {{ etiqueta.nom}}</a>
+
+                    <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn  btn-default">
+                        <span class='glyphicon glyphicon-tag'>
+                             {{ etiqueta.nom}}
+                        </span>
+                    </a>
+
                 {% endfor %}
+            </td>
+            <td>
+                <form enctype="multipart/form-data" method="post" action="">
+                    {% csrf_token %}
+
+                    <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />
+                    <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+                    {% if not user.is_authenticated %}
+                            <button disabled title="Identificat per etiquetar">+</button>
+                         {% else %}
+                            <button type="submit" value=""><span class="glyphicon glyphicon-plus-sign"></span> </button>
+                         {% endif %}
+                    {{ formEtqs.as_p }}
+                </form>
+
 
             </td>
         </tr>

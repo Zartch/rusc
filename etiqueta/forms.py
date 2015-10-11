@@ -11,6 +11,26 @@ class etiquetaForm(forms.ModelForm):
         model = Etiqueta
         exclude = {"tipologia"}
 
+class newEtiquetaForm(forms.Form):
+
+    etiquetes = forms.ModelChoiceField(queryset="", initial="")
+
+    def clean(self):
+        super(newEtiquetaForm, self).clean() #if necessary
+        if 'etiquetes' in self._errors:
+            del self._errors['etiquetes']
+        return self.cleaned_data
+
+    def __init__(self, *args, **kwargs):
+            self.request = kwargs.pop('request')
+            super(newEtiquetaForm, self).__init__(*args, **kwargs)
+            self.fields['etiquetes'].required = False
+            self.fields['etiquetes'].queryset = Etiqueta.objects.filter(cela= get_cela(self.request))
+            self.fields['etiquetes'].widget.attrs['class'] = 'etiquetes'
+            self.fields['etiquetes'].widget.attrs['style'] = 'width: 100%'
+            self.fields['etiquetes'].widget.attrs['multiple'] = 'multiple'
+
+
 
 class tesauroForm(forms.ModelForm):
 

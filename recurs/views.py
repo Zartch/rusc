@@ -81,6 +81,9 @@ def recursCreateView(request):
                     try:
                         objEtq = Etiqueta.objects.filter(pk=etiqueta,cela=cela).first()
                     except ValueError:
+                        objEtq = None
+                    #afegim la seguent comprovacio pq si l'etiqueta valia com a pk (...si era un numero) petaba
+                    if not objEtq:
                     #creem etiqueta y la afegim al recurs
                         objEtq = Etiqueta.objects.create(nom= etiqueta,cela=cela)
 

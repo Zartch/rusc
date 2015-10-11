@@ -4,7 +4,7 @@ from post.models import  Post
 from etiqueta.models import Etiqueta
 from cela.models import Cela, get_cela
 from post.forms import postForm, VoteForm
-from etiqueta.forms import etiquetaForm
+from etiqueta.forms import etiquetaForm, newEtiquetaForm
 from django.contrib.auth.models import User
 from usuari.models import UserProfile
 from django.contrib import messages as notif_messages
@@ -18,6 +18,7 @@ from notifications import notify
 def forum(request):
     #ToDo https://docs.djangoproject.com/en/1.8/topics/http/middleware/
     cela= get_cela(request)
+    formEtqs = newEtiquetaForm(request.POST or None, request= request)
     #Filtrem els posts a aparèixer i utilitzem el manager pq afegeixi la columna on es dona el nºtotal de vots
     posts = Post.with_votes.get_queryset().filter(pare=None, cela = cela.pk).exclude(moderacio='R').filter(recurs=None).order_by('-rank_score')
     #Generem la queryset on es recullen tots els vots del passat i la tornem llistat de nombres
@@ -27,8 +28,28 @@ def forum(request):
         voted = voted.values_list('post_id', flat=True)
     else:
         voted= []
+    #formulari per a afegir etiquetes a qualsevol post encara que no sigui propi
+    if formEtqs.is_valid():
+        etqlist = request.POST.getlist('etiquetes', 0)
+        pstlist = request.POST.getlist('post', 0)
+        #le añadimos los tags al objeto una vez salvado
+        if type(etqlist) is list:
+            if len(etqlist) > 0:
+                #Los tags que ya estaban en DB
+                for etiqueta in etqlist:
+                    try:
+                        objEtq = Etiqueta.objects.filter(pk=etiqueta,cela=cela).first()
+                    except ValueError:
+                        objEtq = None
+                    #afegim la seguent comprovacio pq si l'etiqueta valia com a pk (...si era un numero) petaba
+                    if not objEtq:
+                    #creem etiqueta y la afegim al recurs
+                        objEtq = Etiqueta.objects.create(nom= etiqueta,cela=cela)
+                    objPst = Post.objects.filter(pk=pstlist[0],cela=cela).first()
+                    objPst.etiquetes.add(objEtq)
+        formEtqs.data.clear()
 
-    return render(request, "forum.html", {'posts': posts, 'voted':voted })
+    return render(request, "forum.html", {'posts': posts,'formEtqs': formEtqs, 'voted':voted })
 
 def postView(request, pkpost):
     # comentaris = Post.objects.filter(post = pkpost, pare = None)
@@ -40,6 +61,8 @@ def postView(request, pkpost):
         voted = voted.values_list('post_id', flat=True)
     else:
         voted= []
+
+
     return render(request, "post.html", {'post': post,'voted':voted, 'root':root})
 
 
