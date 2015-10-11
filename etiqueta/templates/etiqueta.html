@@ -9,18 +9,16 @@
 
 
 <div id="recurs_wraper" style="display: inline-block; margin:20px; ">
-
-        <div id="div_etiqueta"  style="float: left; border: 2px solid #0E0E0E;">
-            <div style="margin: 30px">
-            <h3>Etiqueta: "{{ etiqueta.nom }}"</h3><br />
+        <div id="div_etiqueta">
+            <span class='glyphicon glyphicon-tag'><b>{{ etiqueta.nom}}</b></span>
                <a href="{{ etiqueta.wiki }}">{{ etiqueta.wiki }}</a>
-            </div>
-        </div>
-
-        <div id="div_relacions_etiquetes"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px;" >
-           <div style="margin: 30px">
-              <h3>Etiquetes relacionades:</h3> <br />
-                <div class="table-responsive">
+{#        </div>#}
+{#        <div id="div_relacions_etiquetes"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px;" >#}
+{#           <div>#}
+              &nbsp; relació amb: &nbsp;
+                {% for s in posts_rel %}
+                    <a href="{% url 'nom_etiqueta' s|slugify cela.slug  %}">   {{ s }}  </a> , &nbsp;
+                {% endfor %}
                 <table class="table-striped">
                 <thead>
                 <tr>
@@ -37,23 +35,19 @@
                    </tr>
                {% endfor %}
                 </table>
-                <h2>Relacions tesauro:</h2>
+                Relacions tesauro:
                 {% for key,value in etiqueta.get_list_tesauros.items %}
-                    {{ key }} -- {{ value }} <br/>
-                {% endfor %}
-                <h2>Relacions post:</h2>
-                {% for key,value in posts_rel.items %}
                     {{ key }} -- {{ value }} <br/>
                 {% endfor %}
 
                 </div>
-           </div>
-        </div>
+{#           </div>#}
+{#        </div>#}
     </div>
 
-
-    <h3>Post Relacionats:</h3>
-     <br />
+{#    <h3>Post Relacionats:</h3>#}
+{#     <br />#}
+        <div class="table-responsive">
 
         <table class="table table-striped">
         {% for post in posts_relacionats %}
@@ -95,5 +89,6 @@
         </tr>
         {% endfor %}
         </table>
+        </div>
 
 {% endblock %}
