@@ -65,6 +65,7 @@ INSTALLED_APPS = (
     'buscador',
     'cela',
     'rusc.faq',
+    'micawber.contrib.mcdjango',
 
 
 )
@@ -98,7 +99,7 @@ TEMPLATES = [
                 'django_messages.context_processors.inbox',
                 'rusc.context_processors.notifications_user',
                 'cela.context_processors.cela_context',
-                'rusc.context_processors.perfil_usuari'
+                'rusc.context_processors.perfil_usuari',
 
             ],
         },

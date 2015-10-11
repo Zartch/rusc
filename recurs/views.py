@@ -9,6 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from recurs.forms import RecursForm
 from django.contrib import messages as notif_messages
 from django.core.urlresolvers import reverse
+from django.utils.datastructures import MultiValueDictKeyError
 
 def recursview(request,pk):
 
@@ -52,7 +53,7 @@ def recursCreateView(request):
         data = formRecurs.cleaned_data
         #handle_uploaded_file(request.FILES['file'])
 
-        from django.utils.datastructures import MultiValueDictKeyError
+
 
         try:
             aj = request.FILES['adjunt']

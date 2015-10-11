@@ -1,4 +1,6 @@
 
+{% load micawber_tags %}
+
 <form method="post" action="{% url 'vote' %}" class="vote_form">{% csrf_token %}
 <div id="div_post_wraper">
         <div id="div_post_vote">
@@ -30,7 +32,7 @@
             </div>
             <div id="div_post_content">
                 <div id="div_post_text">
-                    {{ obj.text  }}
+                        {{ obj.text|oembed  }}
                 </div>
                 (numComm: {{ obj.num_comments }})
                 <div id="div_post_respondre">
