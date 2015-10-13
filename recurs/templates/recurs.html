@@ -14,7 +14,8 @@
             {{ recurs.descripcio }}<br />
             {% if recurs.adjunt %}
                 <br />
-                <a href="{{ MEDIA_URL }}{{ recurs.adjunt.url }}" > Adjunt </a><br />
+                <a href="{{ MEDIA_URL }}{{ recurs.adjunt.url }}" > Adjunt </a>
+                <img src="{{ recurs.adjunt.url }}"> <br />
             {% endif %}
             <h4>Etiquetes:</h4>
             {% for etiqueta in recurs.etiquetes.all %}

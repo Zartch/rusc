@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-    <h3>Perfil Usuari<b>{{ usuari.username }}</b></h3>
+    <h3><b>{{ usuari.username }}</b></h3>
     {% if perfilusuari.avatar %}
         <img src="{{ perfilusuari.avatar.url }}" alt="avatar" height="120" width="120">
     {% else %}

@@ -9,14 +9,14 @@ class postForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        exclude = {"autor", "pare","recursos","moderacio", "cela"}
+        exclude = {"autor", "pare", "recursos", "moderacio", "cela", "rank_score", "num_comments"}
         widgets = {
         	'etiquetes': autocomplete_light.MultipleChoiceWidget('EtiquetaAutocomplete'),}
 
     def __init__(self, *args,**kwargs):
         super (postForm,self ).__init__(*args,**kwargs)
         self.fields['titol'].widget.attrs['class'] = 'form-control'
-        self.fields['text'].widget.attrs['class'] = 'form-control'
+        self.fields['text'].widget.attrs['class'] = 'form-control id_text'
         self.fields['etiquetes'].widget.attrs['class'] = 'form-control'
 
 

@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-    <h3>Configuració general usuari   <b>{{ user.username }}</b></h3>
+    <h3>Configuració de   <b>{{ user.username }}</b></h3>
     {% if perfilusuari.avatar %}
         <img src="{{ perfilusuari.avatar.url }}" alt="avatar" height="120" width="120">
     {% else %}
@@ -29,7 +29,7 @@
             </tr>
             {% for p in up %}
                 <tr>
-                <td><a href="{% url 'canviar_cela'  p.cela.pk  "opcions_user"  %}"> {{ p.cela }}</a></td>
+                <td><a href="{% url 'canviar_cela'  p.cela.pk  "opcions_user"  %}" title="Configuracio especifica de grup"> {{ p.cela }} <span class='glyphicon glyphicon-cog collapsed-element'></span> </a></td>
                 <td>{{ p.get_tipusSubscripcio_display}}</td>
                 <td>{{ p.get_mailConf_display}}</td>
                 </tr>

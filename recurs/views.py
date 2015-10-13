@@ -9,6 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from recurs.forms import RecursForm
 from django.contrib import messages as notif_messages
 from django.core.urlresolvers import reverse
+from django.utils.datastructures import MultiValueDictKeyError
 
 def recursview(request,pk):
 
@@ -52,7 +53,7 @@ def recursCreateView(request):
         data = formRecurs.cleaned_data
         #handle_uploaded_file(request.FILES['file'])
 
-        from django.utils.datastructures import MultiValueDictKeyError
+
 
         try:
             aj = request.FILES['adjunt']
@@ -81,6 +82,9 @@ def recursCreateView(request):
                     try:
                         objEtq = Etiqueta.objects.filter(pk=etiqueta,cela=cela).first()
                     except ValueError:
+                        objEtq = None
+                    #afegim la seguent comprovacio pq si l'etiqueta valia com a pk (...si era un numero) petaba
+                    if not objEtq:
                     #creem etiqueta y la afegim al recurs
                         objEtq = Etiqueta.objects.create(nom= etiqueta,cela=cela)
 

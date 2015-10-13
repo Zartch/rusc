@@ -10,13 +10,7 @@
 
     <form action="" enctype="multipart/form-data" method="post" >{% csrf_token %}
         <input type="submit" class="btn btn-primary btn-lg" value="Grabar" />
-
-        {% if form.instance.avatar %}
-            <img src="{{ form.instance.avatar.url }}" alt="avatar" height="120" width="120">
-        {% else %}
-            <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="120" width="120">
-        {% endif %}
-
+        <img src="{{ form.instance.avatar.url }}" />
         {{ form.as_p }}
     </form>
 

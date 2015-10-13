@@ -5,11 +5,12 @@ from cela.models import Cela, get_cela
 from django.shortcuts import render,get_object_or_404,redirect
 from django.db.models import Q
 from etiqueta.forms import tesauroForm
+from django.template.defaultfilters import slugify
 
 def etiquetaview(request,etq):
     cela = get_cela(request)
     etiqueta = Etiqueta.objects.filter(pk=etq, cela = cela).first()
-    posts_relacionats = Post.with_votes.get_queryset().filter(etiquetes = etiqueta, cela = cela.pk).exclude(moderacio='R')
+    posts_relacionats = Post.with_votes.get_queryset().filter(etiquetes = etiqueta, cela = cela.pk).exclude(moderacio='R').order_by()
 
     if not request.user.is_anonymous():
         voted = Vote.objects.filter(voter=request.user)
@@ -31,15 +32,15 @@ def etiquetaview(request,etq):
     #             d[key]= value
 
     d = folksonomia(posts_relacionats)
-    sorted_x = sorted(d, key=d.get)
 
+    sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': d, 'tesauros':tesauros, 'voted':voted, 'posts_relacionats': posts_relacionats})
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesauros':tesauros, 'voted':voted, 'posts_relacionats': posts_relacionats})
 
 def nometiquetaview(request,nometq,nomcela):
     #cela = get_cela(request)
-    cela = Cela.objects.filter(pregunta= nomcela).first()
-    etiqueta = Etiqueta.objects.filter(nom=nometq, cela = cela.pk).first()
+    cela = Cela.objects.filter(slug= nomcela).first()
+    etiqueta = Etiqueta.objects.filter(slug=nometq, cela = cela.pk).first()
     posts_relacionats = Post.with_votes.get_queryset().filter(etiquetes = etiqueta, cela = cela.pk).exclude(moderacio='R')
 
     if not request.user.is_anonymous():
@@ -50,9 +51,9 @@ def nometiquetaview(request,nometq,nomcela):
 
     tesauros = Tesauro.objects.filter(Q(etq1=etiqueta)|Q(etq2=etiqueta))
     d = folksonomia(posts_relacionats)
-    sorted_x = sorted(d, key=d.get)
+    sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': d, 'tesauros':tesauros, 'voted':voted, 'posts_relacionats': posts_relacionats})
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesauros':tesauros, 'voted':voted, 'posts_relacionats': posts_relacionats})
 
 
 def todoview(request):

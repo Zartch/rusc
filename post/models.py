@@ -8,6 +8,7 @@ from cela.models import Cela,get_cela
 #classe que gestiona(manager) els vots dels diferents posts. camp 'with_votes' del post
 from django.db.models import Count
 from django.utils.timezone import now
+from django.db.models import signals
 
 class PostVoteCountManager(models.Manager):
 
@@ -51,12 +52,14 @@ class Post(models.Model):
     etiquetes = models.ManyToManyField(Etiqueta, blank=True)
     cela = models.ForeignKey(Cela, related_name='posts', blank=True)
     rank_score = models.FloatField(default=0.0)
+    num_comments = models.IntegerField(default=0)
 
     with_votes =PostVoteCountManager()
     objects = models.Manager()
 
     def __str__(self):
         return self.titol
+
  #args=[str(self.id)]
     def get_absolute_url(self):
         return reverse('post', args=[str(self.get_root())] )
@@ -92,6 +95,7 @@ class Post(models.Model):
                 comment_root = comment_root.pare
             return comment_root
 
+
     #Llistat de usuaris subscrits al root de un post
     def get_subscriptors(self):
         post = self.get_root_object()
@@ -115,17 +119,30 @@ class Post(models.Model):
         self.rank_score = votes / pow((item_hour_age+2), GRAVITY)
         self.save()
 
-        # posts = Post.objects.filter(etiquetes=etq)
-        # list = dict()
-        # for post in posts:
-        #     for etk in post.etiquetes.all():
-        #         if etk in list:
-        #             val = list[etk.nom]
-        #             val = val +1
-        #             list[etk.nom] = val
-        #         else:
-        #             list[etk.nom] = 1
-        # return  list
+
+
+def post_post_save(sender, instance, created, *args, **kwargs):
+    """Argument explanation:
+
+       sender - The model class. (MyModel)
+       instance - The actual instance being saved.
+       created - Boolean; True if a new record was created.
+
+       *args, **kwargs - Capture the unneeded `raw` and `using`(1.3) arguments.
+    """
+    if created==True: #aixo indica que l'objecte es nou, pq no ens interessa que passi per aqui despres de cada .save
+       #informem el camp numero de comentaris que penjen del post. cada vegada que es crea un post es suma 1 a tots els pares
+        paidre = instance
+        while paidre != None:
+            paidre = paidre.pare
+            if paidre:
+                paidre.num_comments = paidre.num_comments + 1
+                paidre.save()
+
+
+from django.db.models.signals import post_save
+post_save.connect(post_post_save, sender=Post)
+
 
 
 #Folksonomia etiquetes_relacionades

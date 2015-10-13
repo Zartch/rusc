@@ -129,7 +129,7 @@
 </style>
 
 
-     <a href="/usuari/perfil">{{ user.username }}</a>
+     <a href="/usuari/perfil"><span class='glyphicon glyphicon-user'></span> &nbsp;{{ user.username }}</a>
      <a href="{% url 'auth_logout' %}?next=/rusc/"><span class="glyphicon glyphicon-log-out"></span></a><br />
     {% inbox_count as unread_mes_count %}
     {% if unread_mes_count > 0 %}

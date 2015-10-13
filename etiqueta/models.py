@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from cela.models import Cela
 from django.db.models import Q
+from django.template.defaultfilters import slugify
 # from post.views import get_reel_etq
 
 
@@ -26,6 +27,7 @@ class Etiqueta(models.Model):
 
     moderacio= models.CharField(max_length=1,choices=ESTAT_MODERACIO, default='E')
     nom = models.CharField(max_length=100)
+    slug = models.CharField(blank=True, max_length=100)
     tipologia = models.CharField(max_length=1, choices=TIPO_TIPOLOGIA, default='E')
     descripcio = models.TextField(verbose_name=('descripció'), blank=True) #Será un enllaç a la wikipedia
     wiki = models.URLField(blank=True, default="")
@@ -92,4 +94,20 @@ class TesauroFilter(django_filters.FilterSet):
         fields = ['etq1', 'etq2', 'tipo']
 
 
+def etiqueta_post_save(sender, instance, created, *args, **kwargs):
+    """Argument explanation:
 
+       sender - The model class. (MyModel)
+       instance - The actual instance being saved.
+       created - Boolean; True if a new record was created.
+
+       *args, **kwargs - Capture the unneeded `raw` and `using`(1.3) arguments.
+    """
+    #canviar per if created ==True; si nomes volem que s'executi la primera vegada que es crea
+    if created:
+        instance.slug = slugify(instance.nom)
+        instance.save()
+
+
+from django.db.models.signals import post_save
+post_save.connect(etiqueta_post_save, sender=Etiqueta)

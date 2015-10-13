@@ -358,7 +358,7 @@ def VisualCelas(request):
     for cela in celas:
         s.clear()
         s['artist']= str(cela.descripcio)
-        s['title']= cela.pregunta
+        s['title']= cela.slug
         s['color']= "#47738C"
         s['text']= "#0A0606"
         s['pk'] = cela.pk
@@ -366,7 +366,7 @@ def VisualCelas(request):
 
 
         for etq in cela.get_etiquetes():
-            d.append(etq.nom)
+            d.append(etq.slug)
         if len(d) > 0:
             s['musicians'] = d.copy()
         else:

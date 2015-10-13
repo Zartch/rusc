@@ -1,7 +1,7 @@
 from django import forms
 from etiqueta.models import Etiqueta
 from cela.models import get_cela
-
+from django.utils.datastructures import MultiValueDictKeyError
 class RecursForm(forms.Form):
     """
     Form for individual user links
@@ -27,13 +27,19 @@ class RecursForm(forms.Form):
         super(RecursForm, self).clean() #if necessary
         if 'etiquetes' in self._errors:
             del self._errors['etiquetes']
-        if self.data['adjunt']=="" and  self.data['url']== "":
-            self._errors['url'] = ["Es necesari un adjunt o una URL"]
-            self._errors['adjunt'] = ["Es necesari un adjunt o una URL"]
+        try:
+            if self.data['url']=='' and  self.data['adjunt']=='':
+                self._errors['url'] = ["Es necesari un adjunt o una URL"]
+                self._errors['adjunt'] = ["Es necesari un adjunt o una URL"]
+        except MultiValueDictKeyError:
+            pass
         return self.cleaned_data
 
     def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request')
+        try:
+            self.request = kwargs.pop('request')
+        except:
+            pass
         super(RecursForm, self).__init__(*args, **kwargs)
         self.fields['etiquetes'].required = False
         self.fields['descripcio'].required = False
@@ -41,7 +47,10 @@ class RecursForm(forms.Form):
         self.fields['descripcio'].widget.attrs['class'] = 'form-control'
         self.fields['adjunt'] = forms.FileField(u'imagen', widget=forms.ClearableFileInput(attrs={'class':'btn btn-md btn-primary'}))
         self.fields['adjunt'].required = False
-        self.fields['etiquetes'].queryset = Etiqueta.objects.filter(cela= get_cela(self.request))
+        try:
+            self.fields['etiquetes'].queryset = Etiqueta.objects.filter(cela= get_cela(self.request))
+        except:
+            pass
         self.fields['etiquetes'].widget.attrs['class'] = 'etiquetes'
         self.fields['etiquetes'].widget.attrs['style'] = 'width: 100%'
         self.fields['etiquetes'].widget.attrs['multiple'] = 'multiple'

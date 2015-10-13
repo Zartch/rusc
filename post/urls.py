@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^$', views.forum, name='forum'),
     url(r'^resums/$', views.view_resums, name='resums'),
     url(r'^vote/$', auth(VoteFormView.as_view()), name="vote"),
+    url(r'^url/$', views.link_verify),
 
 
 )

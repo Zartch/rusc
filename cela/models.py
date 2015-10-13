@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages as notif_messages
-
+from django.template.defaultfilters import slugify
 
 
 class Cela(models.Model):
@@ -22,11 +22,12 @@ class Cela(models.Model):
     )
 
     pregunta = models.CharField(max_length=70)
+    slug = models.CharField(blank=True, max_length=100)
     datacreacio = models.DateTimeField(auto_now_add=True)
     #etiquetes = models.ManyToManyField('Etiqueta', blank=True)
     moderadors = models.ManyToManyField(User)
     descripcio= models.TextField()
-    tipus = models.CharField(max_length=1,choices=TIPUS_CELA)
+    tipus = models.CharField(max_length=1,choices=TIPUS_CELA, default='P')
 
     def __str__(self):
         return self.pregunta
@@ -64,3 +65,20 @@ def get_cela(request):
 
 
 
+def cela_post_save(sender, instance, created, *args, **kwargs):
+    """Argument explanation:
+
+       sender - The model class. (MyModel)
+       instance - The actual instance being saved.
+       created - Boolean; True if a new record was created.
+
+       *args, **kwargs - Capture the unneeded `raw` and `using`(1.3) arguments.
+    """
+    #canviar per if created ==True; si nomes volem que s'executi la primera vegada que es crea
+    if created:
+        instance.slug = slugify(instance.pregunta)
+        instance.save()
+
+
+from django.db.models.signals import post_save
+post_save.connect(cela_post_save, sender=Cela)

@@ -4,7 +4,7 @@ from post.models import  Post
 from etiqueta.models import Etiqueta
 from cela.models import Cela, get_cela
 from post.forms import postForm, VoteForm
-from etiqueta.forms import etiquetaForm
+from etiqueta.forms import etiquetaForm, newEtiquetaForm
 from django.contrib.auth.models import User
 from usuari.models import UserProfile
 from django.contrib import messages as notif_messages
@@ -18,6 +18,7 @@ from notifications import notify
 def forum(request):
     #ToDo https://docs.djangoproject.com/en/1.8/topics/http/middleware/
     cela= get_cela(request)
+    formEtqs = newEtiquetaForm(request.POST or None, request= request)
     #Filtrem els posts a aparèixer i utilitzem el manager pq afegeixi la columna on es dona el nºtotal de vots
     posts = Post.with_votes.get_queryset().filter(pare=None, cela = cela.pk).exclude(moderacio='R').filter(recurs=None).order_by('-rank_score')
     #Generem la queryset on es recullen tots els vots del passat i la tornem llistat de nombres
@@ -27,8 +28,28 @@ def forum(request):
         voted = voted.values_list('post_id', flat=True)
     else:
         voted= []
+    #formulari per a afegir etiquetes a qualsevol post encara que no sigui propi
+    if formEtqs.is_valid():
+        etqlist = request.POST.getlist('etiquetes', 0)
+        pstlist = request.POST.getlist('post', 0)
+        #le añadimos los tags al objeto una vez salvado
+        if type(etqlist) is list:
+            if len(etqlist) > 0:
+                #Los tags que ya estaban en DB
+                for etiqueta in etqlist:
+                    try:
+                        objEtq = Etiqueta.objects.filter(pk=etiqueta,cela=cela).first()
+                    except ValueError:
+                        objEtq = None
+                    #afegim la seguent comprovacio pq si l'etiqueta valia com a pk (...si era un numero) petaba
+                    if not objEtq:
+                    #creem etiqueta y la afegim al recurs
+                        objEtq = Etiqueta.objects.create(nom= etiqueta,cela=cela)
+                    objPst = Post.objects.filter(pk=pstlist[0],cela=cela).first()
+                    objPst.etiquetes.add(objEtq)
+        formEtqs.data.clear()
 
-    return render(request, "forum.html", {'posts': posts, 'voted':voted })
+    return render(request, "forum.html", {'posts': posts,'formEtqs': formEtqs, 'voted':voted })
 
 def postView(request, pkpost):
     # comentaris = Post.objects.filter(post = pkpost, pare = None)
@@ -40,6 +61,8 @@ def postView(request, pkpost):
         voted = voted.values_list('post_id', flat=True)
     else:
         voted= []
+
+
     return render(request, "post.html", {'post': post,'voted':voted, 'root':root})
 
 
@@ -84,8 +107,10 @@ def postCreateView(request, pk=None):
         if pk:
             comentari = get_object_or_404(Post, pk=pk)
             f.pare = comentari
-            post = get_object_or_404(Post, pk=pk)
-            f.post = post
+
+            #a la espera de confirmar que no falla res i es poden borrar les seguents 2 linees:
+            # post = get_object_or_404(Post, pk=pk)
+            # f.post = post
 
         if not request.user.is_authenticated():
             return redirect('../../../../accounts/login')
@@ -130,52 +155,52 @@ def postCreateView(request, pk=None):
         #numerador per poder recuperar el formset de les etiquetes a afegir
         numFormset = 0
 
-        # for recurs_form in recurs_formset:
-        #     #nom del formset per a recuperar les etiqwuetes
-        #     nomFormset = 'form-'+numFormset.__str__()+'-etiquetes-autocomplete'
-        #     if recurs_form.is_valid():
-        #         url = recurs_form.cleaned_data.get('url',False)
-        #         descripcio = recurs_form.cleaned_data.get('descripcio',False)
-        #         etqlistFormSet = recurs_form.cleaned_data.get('etiquetes',False)
-        #
-        #         #Noves etiquetes o etiquetes sense haver fet correctament l'autocomplete
-        #         etqAddFormSet =request.POST.get(nomFormset, 0)
-        #
-        #         if url:
-        #             #treiem el espais per evitar duplicats
-        #             str.strip(url)
-        #             if descripcio:
-        #                 str.strip(descripcio)
-        #
-        #             #Creem o obtenim el recurs que s'ha introduit en el post
-        #             rec, bool = Recurs.objects.get_or_create(cela = get_cela(request), descripcio=descripcio, url=url)
-        #
-        #             #Associem el recurs al post
-        #             f.recursos.add(rec)
-        #
-        #             #Si el recurs s'ha creat i encara no existia creem el post del recurs
-        #             # i l'associem al recurs per a saber quin post ha creat el recurs
-        #             if bool:
-        #                 post_x = Post.objects.create(titol=rec.url, autor = request.user,  text="Discussio del recurs: "+ rec.descripcio, cela=get_cela(request))
-        #                 rec.post_debat = post_x
-        #
-        #
-        #             #Creem o no el recurs, sempre volem afegir-li etiquetes al Recurs
-        #             #Associem les etiquetes del formset al recurs
-        #             for etq in etqlistFormSet:
-        #                 rec.etiquetes.add(etq)
-        #
-        #             if len(etqAddFormSet) > 0:
-        #                 etqPerCrear = etqAddFormSet.split(',')
-        #                 #Los tags que se tienen que añadir
-        #                 for etiqueta in etqPerCrear:
-        #                     objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
-        #                     rec.etiquetes.add(objEtq)
-        #
-        #             #Guardem els canvis a recurs
-        #             rec.save()
-        #     #numerador per poder recuperar el formset de les etiquetes a afegir
-        #     numFormset = numFormset +1
+        for recurs_form in recurs_formset:
+            #nom del formset per a recuperar les etiqwuetes
+            nomFormset = 'form-'+numFormset.__str__()+'-etiquetes-autocomplete'
+            if recurs_form.is_valid():
+                url = recurs_form.cleaned_data.get('url',False)
+                descripcio = recurs_form.cleaned_data.get('descripcio',False)
+                etqlistFormSet = recurs_form.cleaned_data.get('etiquetes',False)
+
+                #Noves etiquetes o etiquetes sense haver fet correctament l'autocomplete
+                etqAddFormSet =request.POST.get(nomFormset, 0)
+
+                if url:
+                    #treiem el espais per evitar duplicats
+                    str.strip(url)
+                    if descripcio:
+                        str.strip(descripcio)
+
+                    #Creem o obtenim el recurs que s'ha introduit en el post
+                    rec, bool = Recurs.objects.get_or_create(cela = get_cela(request), descripcio=descripcio, url=url)
+
+                    #Associem el recurs al post
+                    f.recursos.add(rec)
+
+                    #Si el recurs s'ha creat i encara no existia creem el post del recurs
+                    # i l'associem al recurs per a saber quin post ha creat el recurs
+                    if bool:
+                        post_x = Post.objects.create(titol=rec.url, autor = request.user,  text="Discussio del recurs: "+ rec.descripcio, cela=get_cela(request))
+                        rec.post_debat = post_x
+
+
+                    #Creem o no el recurs, sempre volem afegir-li etiquetes al Recurs
+                    #Associem les etiquetes del formset al recurs
+                    for etq in etqlistFormSet:
+                        rec.etiquetes.add(etq)
+
+                    if len(etqAddFormSet) > 0:
+                        etqPerCrear = etqAddFormSet.split(',')
+                        #Los tags que se tienen que añadir
+                        for etiqueta in etqPerCrear:
+                            objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
+                            rec.etiquetes.add(objEtq)
+
+                    #Guardem els canvis a recurs
+                    rec.save()
+            #numerador per poder recuperar el formset de les etiquetes a afegir
+            numFormset = numFormset +1
 
 
 #Enviem les notificacions als usuaris subscrits
@@ -293,3 +318,45 @@ def view_resums(request):
     resums = Post.objects.filter(etiquetes__nom = 'Resum')
 
     return render(request, "forum.html", {'posts':resums})
+
+
+
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+import http.client as httplib
+
+from urllib.parse import urlparse
+
+def split_url(url):
+    parse_object = urlparse(url)
+    return parse_object.netloc, parse_object.path
+
+def verify_url(domain, path):
+        try:
+            conn = httplib.HTTPConnection(domain)
+            conn.request('HEAD', path)
+            response = conn.getresponse()
+            conn.close()
+        except:
+            return False
+
+
+def link_verify(request):
+
+
+    # linkv=[]
+        # array.array('i')
+    linkv={}
+    links = request.POST.getlist('links[]')
+    # validate = URLValidator()
+    # linkv.append("http://www.google.es")
+    # linkv.append("http://www.youtube.com")
+    i=0
+    for link in links:
+        url = link
+        domain, path = split_url(url)
+        if(verify_url(domain, path) is not False):
+                if(i<4):
+                    linkv[i]=link
+                    i=i+1
+    return HttpResponse(json.dumps(linkv), content_type='application/json')

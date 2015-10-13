@@ -10,7 +10,7 @@ class celaForm(forms.ModelForm):
 
     class Meta:
         model = Cela
-        exclude = {}
+        exclude = {'slug'}
         widgets = {
             'moderadors': autocomplete_light.MultipleChoiceWidget('UserAutocomplete'),}
 

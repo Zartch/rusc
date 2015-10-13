@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load micawber_tags %}
 {% block headers %}
 
     <script src="{% static 'js/jquery.formset.js' %}"></script>
     <script src="{% static 'js/custom-formset.js' %}"></script>
-
+    <script src="{% static 'js/jquery.oembed.js' %}"></script>
 {% endblock  %}
 {% block content %}
 
@@ -28,7 +29,7 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
-        {% endfor %}
+    {% endfor %}
 
     <form id="MyForm" method="post" action="">
         {% csrf_token %}
@@ -37,47 +38,50 @@
 
         <table>
         <tbody>
-{#        {% for recurs_form in recurs_formset %}#}
-{#            <div  class="recurs-formset">#}
-{#                <tr>#}
-{#                <td>#}
-{#                {{ recurs_form.descripcio }}#}
-{#                {% if recurs_form.anchor.errors %}#}
-{#                    {% for error in recurs_form.anchor.errors %}#}
-{#                        {{ error|escape }}#}
-{#                    {% endfor %}#}
-{#                {% endif %}#}
-{#                </td>#}
-{#                <td>#}
-{#                {{ recurs_form.url }}#}
-{#                {% if recurs_form.url.errors %}#}
-{#                    {% for error in recurs_form.url.errors %}#}
-{#                        {{ error|escape }}#}
-{#                    {% endfor %}#}
-{#                {% endif %}#}
-{#                </td>#}
-{#                <td>#}
-{#                {{ recurs_form.etiquetes }}#}
-{#                {% if recurs_form.anchor.errors %}#}
-{#                    {% for error in recurs_form.anchor.errors %}#}
-{#                        {{ error|escape }}#}
-{#                    {% endfor %}#}
-{#                {% endif %}#}
-{#                </td>#}
-{#                </tr>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#        </tbody>#}
-{#        </table>#}
-{#        {{ recurs_formset.management_form }}#}
-{#        {% if recurs_formset.non_form_errors %}#}
-{#            {% for error in link_formset.non_form_errors %}#}
-{#                {{ error|escape }}#}
-{#            {% endfor %}#}
-{#        {% endif %}#}
+        {% for recurs_form in recurs_formset %}
 
+            <div  class="recurs-formset" >
+                <tr>
+                <td>
+                {{ recurs_form.descripcio }}
+                {% if recurs_form.anchor.errors %}
+                    {% for error in recurs_form.anchor.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+                </td>
+                <td>
+                {{ recurs_form.url }}
+                {% if recurs_form.url.errors %}
+                    {% for error in recurs_form.url.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+                </td>
+{#                <td>#}
+{#                    {{ recurs_form.etiquetes }}#}
+{#                    {% if recurs_form.anchor.errors %}#}
+{#                        {% for error in recurs_form.anchor.errors %}#}
+{#                            {{ error|escape }}#}
+{#                        {% endfor %}#}
+{#                    {% endif %}#}
+{#                </td>#}
+                </tr>
+            </div>
+        {% endfor %}
+        </tbody>
+        </table>
+        {{ recurs_formset.management_form }}
+        {% if recurs_formset.non_form_errors %}
+            {% for error in link_formset.non_form_errors %}
+                {{ error|escape }}
+            {% endfor %}
+        {% endif %}
 
-
+        <div id="result1"></div>
+        <div id="result2"></div>
+        <div id="result3"></div>
+        <div id="result4"></div>
 
 
         <p class="submit"><input type="submit" class="btn btn-primary" value="OK"></p>
