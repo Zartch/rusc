@@ -6,11 +6,15 @@
     <script  src="{% static 'js/m2m.js' %}" ></script>
 {% endblock %}
 {%  block content %}
-    <h3><b>Configuració específica de cel·la</b></h3><br>
+    <h3><b>Configuració específica del grup '<a href="{% url 'forum' %}">{{ cela.pregunta }}</a>'</b></h3><br>
 
     <form action="" enctype="multipart/form-data" method="post" >{% csrf_token %}
         <input type="submit" class="btn btn-primary btn-lg" value="Grabar" />
-        <img src="{{ form.instance.avatar.url }}" />
+          {% if form.instance.avatar %}
+                    <img src="{{ form.instance.avatar.url }}" alt="avatar" height="42" width="42">
+          {% else %}
+                    <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="42" width="42">
+          {% endif %}
         {{ form.as_p }}
     </form>
 

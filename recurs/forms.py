@@ -36,7 +36,10 @@ class RecursForm(forms.Form):
         return self.cleaned_data
 
     def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request')
+        try:
+            self.request = kwargs.pop('request')
+        except:
+            pass
         super(RecursForm, self).__init__(*args, **kwargs)
         self.fields['etiquetes'].required = False
         self.fields['descripcio'].required = False
@@ -44,7 +47,10 @@ class RecursForm(forms.Form):
         self.fields['descripcio'].widget.attrs['class'] = 'form-control'
         self.fields['adjunt'] = forms.FileField(u'imagen', widget=forms.ClearableFileInput(attrs={'class':'btn btn-md btn-primary'}))
         self.fields['adjunt'].required = False
-        self.fields['etiquetes'].queryset = Etiqueta.objects.filter(cela= get_cela(self.request))
+        try:
+            self.fields['etiquetes'].queryset = Etiqueta.objects.filter(cela= get_cela(self.request))
+        except:
+            pass
         self.fields['etiquetes'].widget.attrs['class'] = 'etiquetes'
         self.fields['etiquetes'].widget.attrs['style'] = 'width: 100%'
         self.fields['etiquetes'].widget.attrs['multiple'] = 'multiple'

@@ -155,52 +155,52 @@ def postCreateView(request, pk=None):
         #numerador per poder recuperar el formset de les etiquetes a afegir
         numFormset = 0
 
-        # for recurs_form in recurs_formset:
-        #     #nom del formset per a recuperar les etiqwuetes
-        #     nomFormset = 'form-'+numFormset.__str__()+'-etiquetes-autocomplete'
-        #     if recurs_form.is_valid():
-        #         url = recurs_form.cleaned_data.get('url',False)
-        #         descripcio = recurs_form.cleaned_data.get('descripcio',False)
-        #         etqlistFormSet = recurs_form.cleaned_data.get('etiquetes',False)
-        #
-        #         #Noves etiquetes o etiquetes sense haver fet correctament l'autocomplete
-        #         etqAddFormSet =request.POST.get(nomFormset, 0)
-        #
-        #         if url:
-        #             #treiem el espais per evitar duplicats
-        #             str.strip(url)
-        #             if descripcio:
-        #                 str.strip(descripcio)
-        #
-        #             #Creem o obtenim el recurs que s'ha introduit en el post
-        #             rec, bool = Recurs.objects.get_or_create(cela = get_cela(request), descripcio=descripcio, url=url)
-        #
-        #             #Associem el recurs al post
-        #             f.recursos.add(rec)
-        #
-        #             #Si el recurs s'ha creat i encara no existia creem el post del recurs
-        #             # i l'associem al recurs per a saber quin post ha creat el recurs
-        #             if bool:
-        #                 post_x = Post.objects.create(titol=rec.url, autor = request.user,  text="Discussio del recurs: "+ rec.descripcio, cela=get_cela(request))
-        #                 rec.post_debat = post_x
-        #
-        #
-        #             #Creem o no el recurs, sempre volem afegir-li etiquetes al Recurs
-        #             #Associem les etiquetes del formset al recurs
-        #             for etq in etqlistFormSet:
-        #                 rec.etiquetes.add(etq)
-        #
-        #             if len(etqAddFormSet) > 0:
-        #                 etqPerCrear = etqAddFormSet.split(',')
-        #                 #Los tags que se tienen que añadir
-        #                 for etiqueta in etqPerCrear:
-        #                     objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
-        #                     rec.etiquetes.add(objEtq)
-        #
-        #             #Guardem els canvis a recurs
-        #             rec.save()
-        #     #numerador per poder recuperar el formset de les etiquetes a afegir
-        #     numFormset = numFormset +1
+        for recurs_form in recurs_formset:
+            #nom del formset per a recuperar les etiqwuetes
+            nomFormset = 'form-'+numFormset.__str__()+'-etiquetes-autocomplete'
+            if recurs_form.is_valid():
+                url = recurs_form.cleaned_data.get('url',False)
+                descripcio = recurs_form.cleaned_data.get('descripcio',False)
+                etqlistFormSet = recurs_form.cleaned_data.get('etiquetes',False)
+
+                #Noves etiquetes o etiquetes sense haver fet correctament l'autocomplete
+                etqAddFormSet =request.POST.get(nomFormset, 0)
+
+                if url:
+                    #treiem el espais per evitar duplicats
+                    str.strip(url)
+                    if descripcio:
+                        str.strip(descripcio)
+
+                    #Creem o obtenim el recurs que s'ha introduit en el post
+                    rec, bool = Recurs.objects.get_or_create(cela = get_cela(request), descripcio=descripcio, url=url)
+
+                    #Associem el recurs al post
+                    f.recursos.add(rec)
+
+                    #Si el recurs s'ha creat i encara no existia creem el post del recurs
+                    # i l'associem al recurs per a saber quin post ha creat el recurs
+                    if bool:
+                        post_x = Post.objects.create(titol=rec.url, autor = request.user,  text="Discussio del recurs: "+ rec.descripcio, cela=get_cela(request))
+                        rec.post_debat = post_x
+
+
+                    #Creem o no el recurs, sempre volem afegir-li etiquetes al Recurs
+                    #Associem les etiquetes del formset al recurs
+                    for etq in etqlistFormSet:
+                        rec.etiquetes.add(etq)
+
+                    if len(etqAddFormSet) > 0:
+                        etqPerCrear = etqAddFormSet.split(',')
+                        #Los tags que se tienen que añadir
+                        for etiqueta in etqPerCrear:
+                            objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
+                            rec.etiquetes.add(objEtq)
+
+                    #Guardem els canvis a recurs
+                    rec.save()
+            #numerador per poder recuperar el formset de les etiquetes a afegir
+            numFormset = numFormset +1
 
 
 #Enviem les notificacions als usuaris subscrits
@@ -318,3 +318,45 @@ def view_resums(request):
     resums = Post.objects.filter(etiquetes__nom = 'Resum')
 
     return render(request, "forum.html", {'posts':resums})
+
+
+
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+import http.client as httplib
+
+from urllib.parse import urlparse
+
+def split_url(url):
+    parse_object = urlparse(url)
+    return parse_object.netloc, parse_object.path
+
+def verify_url(domain, path):
+        try:
+            conn = httplib.HTTPConnection(domain)
+            conn.request('HEAD', path)
+            response = conn.getresponse()
+            conn.close()
+        except:
+            return False
+
+
+def link_verify(request):
+
+
+    # linkv=[]
+        # array.array('i')
+    linkv={}
+    links = request.POST.getlist('links[]')
+    # validate = URLValidator()
+    # linkv.append("http://www.google.es")
+    # linkv.append("http://www.youtube.com")
+    i=0
+    for link in links:
+        url = link
+        domain, path = split_url(url)
+        if(verify_url(domain, path) is not False):
+                if(i<4):
+                    linkv[i]=link
+                    i=i+1
+    return HttpResponse(json.dumps(linkv), content_type='application/json')
