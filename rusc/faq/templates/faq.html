@@ -9,6 +9,17 @@
 
     <br />
 
+    {% if  faqs.count < 1  %}
+        Todavia no hay FAQ, solicita al moderador tus preguntas. <br />
+        Los moderadores de esta red son:
+        <ul>
+        {% for moderador in cela.moderadors.all %}
+            <li>
+                <a href="{% url 'perfil_user' moderador.pk %}">{{ moderador }}</a> <br />
+            </li>
+        {%  endfor %}
+        </ul>
+    {% endif %}
     {% for faq in faqs %}
         <b>{{ faq.text }}</b>
         {% if user in cela.moderadors.all %}
