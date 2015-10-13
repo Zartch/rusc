@@ -11,10 +11,14 @@
 {%  block content %}
 
 
-{#    {% for element in llista_tesauros %}#}
-{#       {{ element.pk }}-  {{ element.etq1 }} - {{ element.etq2 }} -{{ element.get_tipo_display }} -#}
-{#        <a href="{% url 'mod_tesauro' element.pk  %}"> Edit </a> <a href="{% url 'delete_tesauro' element.pk %}"> Delete </a>  <br />#}
-{#    {% endfor %}#}
+    {% for etiqueta in llista_etiquetes %}
+        <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn  btn-default">
+            <span class='glyphicon glyphicon-tag'>
+                 {{ etiqueta.nom}}
+            </span>
+        </a>
+    {% endfor %}
+
 
     <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
         {{ form.as_p }}
