@@ -91,7 +91,7 @@ class tesauroCreateView(CreateView):
         context = super(tesauroCreateView, self).get_context_data(**kwargs)
         cela = get_cela(self.request)
         context['llista_tesauros'] = Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela)
-
+        context['llista_etiquetes'] = Etiqueta.objects.filter(cela= cela)
         listado = TesauroFilter(self.request.GET, queryset=Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela))
         table = tesauroTable(listado)
         RequestConfig(self.request,paginate={"per_page": 25}).configure(table)

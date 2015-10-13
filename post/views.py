@@ -89,7 +89,7 @@ def postCreateView(request, pk=None):
         reply_rootid = reply.get_root()
         reply_root = Post.objects.filter(pk=reply_rootid)
 
-    formPost = postForm(request.POST or None, initial={'titol': titol, 'etiquetes': etiquetes})
+    formPost = postForm(request.POST or None, initial={'titol': titol, 'etiquetes': etiquetes}, request= request)
     formEtiqueta = etiquetaForm(request.POST or None)
     RecursFormSet = formset_factory(RecursForm, formset=BaseFormSet)
 

@@ -21,6 +21,10 @@ class postForm(forms.ModelForm):
             del self._errors['etiquetes']
 
     def __init__(self, *args,**kwargs):
+        try:
+            self.request = kwargs.pop('request')
+        except:
+            pass
         super (postForm,self ).__init__(*args,**kwargs)
         self.fields['titol'].widget.attrs['class'] = 'form-control'
         self.fields['text'].widget.attrs['class'] = 'form-control id_text'
