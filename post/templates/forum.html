@@ -88,22 +88,22 @@
 
                 {% endfor %}
             </td>
-            <td>
-                <form enctype="multipart/form-data" method="post" action="">
-                    {% csrf_token %}
-
-                    <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />
-                    <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
-                    {% if not user.is_authenticated %}
-                            <button disabled title="Identificat per etiquetar">+</button>
-                         {% else %}
-                            <button type="submit" value=""><span class="glyphicon glyphicon-plus-sign"></span> </button>
-                         {% endif %}
-                    {{ formEtqs.as_p }}
-                </form>
-
-
-            </td>
+{#            <td>#}
+{#                <form enctype="multipart/form-data" method="post" action="">#}
+{#                    {% csrf_token %}#}
+{##}
+{#                    <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />#}
+{#                    <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />#}
+{#                    {% if not user.is_authenticated %}#}
+{#                            <button disabled title="Identificat per etiquetar">+</button>#}
+{#                         {% else %}#}
+{#                            <button type="submit" value=""><span class="glyphicon glyphicon-plus-sign"></span> </button>#}
+{#                         {% endif %}#}
+{#                    {{ formEtqs.as_p }}#}
+{#                </form>#}
+{##}
+{##}
+{#            </td>#}
         </tr>
         {% endfor %}
         </table>

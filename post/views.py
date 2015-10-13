@@ -130,24 +130,19 @@ def postCreateView(request, pk=None):
 
         #le añadimos los tags al objeto una vez salvado
         if type(etqlist) is list:
-            #ToDo Comprobar si este if está de mas o es necesario
             if len(etqlist) > 0:
                 #Los tags que ya estaban en DB
                 for etiqueta in etqlist:
-                    objEtq = Etiqueta.objects.filter(pk=etiqueta, cela=cela).first()
-
+                    try:
+                        objEtq = Etiqueta.objects.filter(pk=etiqueta,cela=cela).first()
+                    except ValueError:
+                        objEtq = None
+                    #afegim la seguent comprovacio pq si l'etiqueta valia com a pk (...si era un numero) petaba
                     if not objEtq:
-                        objEtqaux = Etiqueta.objects.filter(pk=etiqueta).first()
-                        objEtq, created = Etiqueta.objects.get_or_create(nom=objEtqaux.nom, cela=cela)
+                    #creem etiqueta y la afegim al recurs
+                        objEtq = Etiqueta.objects.create(nom= etiqueta,cela=cela)
 
                     f.etiquetes.add(objEtq)
-
-        if len(etqAdd) > 0:
-            etqAdd = str.split(etqAdd, ",")
-            #Los tags que se tienen que añadir
-            for etiqueta in etqAdd:
-                objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
-                f.etiquetes.add(objEtq)
 
 
         #Affegim els recursos
@@ -185,17 +180,17 @@ def postCreateView(request, pk=None):
                         rec.post_debat = post_x
 
 
-                    #Creem o no el recurs, sempre volem afegir-li etiquetes al Recurs
-                    #Associem les etiquetes del formset al recurs
-                    for etq in etqlistFormSet:
-                        rec.etiquetes.add(etq)
-
-                    if len(etqAddFormSet) > 0:
-                        etqPerCrear = etqAddFormSet.split(',')
-                        #Los tags que se tienen que añadir
-                        for etiqueta in etqPerCrear:
-                            objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
-                            rec.etiquetes.add(objEtq)
+                    # #Creem o no el recurs, sempre volem afegir-li etiquetes al Recurs
+                    # #Associem les etiquetes del formset al recurs
+                    # for etq in etqlistFormSet:
+                    #     rec.etiquetes.add(etq)
+                    #
+                    # if len(etqAddFormSet) > 0:
+                    #     etqPerCrear = etqAddFormSet.split(',')
+                    #     #Los tags que se tienen que añadir
+                    #     for etiqueta in etqPerCrear:
+                    #         objEtq, created = Etiqueta.objects.get_or_create(nom=etiqueta.strip(), cela=cela)
+                    #         rec.etiquetes.add(objEtq)
 
                     #Guardem els canvis a recurs
                     rec.save()
