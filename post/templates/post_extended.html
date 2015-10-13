@@ -36,9 +36,7 @@
                         {{ obj.text|oembed  }}
                 </div>
 
-                <div id="div_post_respondre">
-                    <a href="{% url 'post_respon' obj.pk  %}" class="btn btn-primary btn-sm">Respondre</a>
-                </div>
+
                 <div id="div_post_etiquetes" class="text-right">
                     {% for etiqueta in obj.etiquetes.all %}
                         <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn  btn-default btn-xs">
@@ -59,6 +57,9 @@
 
                         <br />
                     {% endfor %}
+                </div>
+                <div id="div_post_respondre">
+                    <a href="{% url 'post_respon' obj.pk  %}" class="btn btn-primary btn-sm">Respondre</a>
                 </div>
             </div>
         </div>
