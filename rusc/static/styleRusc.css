@@ -35,10 +35,17 @@ a {
     background-color: #2e70c8;
     height: 80px;
     top: 0px;
-    position: fixed;
+    position: absolute;
     z-index: 2;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 101%;
 
 }
+#div_header::-webkit-scrollbar {
+ display: none;
+}
+
 #div_header a:link { color: #ffffff; }
 #div_header a:visited { color: #ffffff; }
 #div_header a:hover { color: #c2c2c2; }
