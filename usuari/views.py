@@ -44,7 +44,8 @@ def viewuserprofile(request,pk):
         return redirect('auth_login')
 
     usuari = User.objects.filter(pk=pk).first()
-    perfilusuari = UserProfile.objects.filter(user__pk=pk, cela=get_cela(request)).first()
+    profile = UserProfile.objects.filter(user__pk=pk, cela=get_cela(request)).first()
+
     posts_publicats = Post.objects.filter(autor=usuari, pare = None)
     respostes_publicades = Post.objects.filter(autor=usuari).exclude(pare = None)
     etiquetes1 = Etiqueta.objects.filter(post= posts_publicats)
@@ -53,7 +54,7 @@ def viewuserprofile(request,pk):
     etiquetes = list(chain(etiquetes2, etiquetes1))
 
     return render(request, 'perfil_view.html', {'usuari': usuari, 'nMiss': posts_publicats.count(), 'nRes':respostes_publicades.count(), 'antig':usuari.date_joined,
-                                                'posts_publicats':posts_publicats,'etiquetes':etiquetes})
+                                                'posts_publicats':posts_publicats,'etiquetes':etiquetes, 'profile': profile})
 
 class UserProfileUpdateView(UpdateView):
     model = UserProfile
