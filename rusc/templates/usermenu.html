@@ -1,7 +1,5 @@
 {% load notifications_tags %}
-
 {% load inbox %}
-
 {% load static %}
 
 {% if user.is_authenticated %}
@@ -45,6 +43,11 @@
     z-index: 999;
     display: none;
 }
+#notificationContainer a:link { color: #000000; }
+#notificationContainer a:visited { color: #373737; }
+#notificationContainer a:hover { color: #d1d1d1; }
+#notificationContainer a:active { color: #1d83ff; }
+
 #notificationContainer:before {
     content: '';
     display: block;
@@ -159,8 +162,8 @@
                       <td>
                         <div class="div_notification_image inline">
                             <a href="{% url 'perfil_user' notif.actor_object_id %}">
-                                {% if perfilusuari.avatar %}
-                                    <img src="{{ perfilusuari.avatar.url }}" alt="avatar" height="42" width="42">
+                                {% if notif.url %}
+                                    <img src="{{ notif.url }}" alt="avatar" height="42" width="42">
                                 {% else %}
                                     <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="42" width="42">
                                 {% endif %}

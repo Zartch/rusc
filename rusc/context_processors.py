@@ -1,6 +1,6 @@
 __author__ = 'Zartch'
-from usuari.models import UserProfile
 from cela.models import get_cela
+from usuari.models import UserProfile
 
 def notifications_user(request):
     if not request.user.is_authenticated():
@@ -10,6 +10,10 @@ def notifications_user(request):
         return ''
 
     ret = request.user.notifications.all()
+    for r in ret:
+        userp = UserProfile.objects.filter(pk= r.actor_object_id).first()
+        r.url = userp.avatar.url
+
     return { 'notifications_user' : ret}
 
 def perfil_usuari(request):
