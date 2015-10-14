@@ -15,41 +15,95 @@
 {#        </div>#}
 {#        <div id="div_relacions_etiquetes"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px;" >#}
 {#           <div>#}
-              &nbsp; relació amb: &nbsp;
+              &nbsp; /relació amb: &nbsp;
                 {% for s in posts_rel %}
-                    <a href="{% url 'nom_etiqueta' s|slugify cela.slug  %}">   {{ s }}  </a> , &nbsp;
+                    {% if not etiqueta.nom == s %}
+                        <a href="{% url 'nom_etiqueta' s|slugify cela.slug  %}">   {{ s }}  </a> , &nbsp;
+                    {% endif %}
                 {% endfor %}
-                <table class="table-striped">
-                <thead>
-                <tr>
-                    <th>Node Fort &nbsp;</th>
-                    <th>Node dèbil  &nbsp;</th>
-                    <th>Tipus vincle &nbsp; </th>
-                </tr>
-                </thead>
-               {% for tesauro in tesauros %}
-                   <tr>
-                   <td>{{ tesauro.etq1 }}</td>
-                    <td>{{ tesauro.etq2 }}</td>
-                    <td>{{ tesauro.tipo }}</td>
-                   </tr>
-               {% endfor %}
-                </table>
-                Relacions tesauro:
-                {% for key,value in etiqueta.get_list_tesauros.items %}
-                    {{ key }} -- {{ value }} <br/>
+
+              &nbsp; /sinonims: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "S" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
                 {% endfor %}
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "S" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /antònims: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "A" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "A" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /associat a: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "B" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "B" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /conté: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "J" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /contingut per: &nbsp;
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "J" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+{#                <table class="table-striped">#}
+{#                <thead>#}
+{#                <tr>#}
+{#                    <th>Node Fort &nbsp;</th>#}
+{#                    <th>Node dèbil  &nbsp;</th>#}
+{#                    <th>Tipus vincle &nbsp; </th>#}
+{#                </tr>#}
+{#                </thead>#}
+{#               {% for tesauro in tesauros %}#}
+{#                   <tr>#}
+{#                   <td>{{ tesauro.etq1 }}</td>#}
+{#                    <td>{{ tesauro.etq2 }}</td>#}
+{#                    <td>{{ tesauro.tipo }}</td>#}
+{#                   </tr>#}
+{#               {% endfor %}#}
+{#                </table>#}
+{#                Relacions tesauro:#}
+{#                {% for key,value in etiqueta.get_list_tesauros.items %}#}
+{#                    {{ key }} -- {{ value }} <br/>#}
+{#                {% endfor %}#}
 
                 </div>
 {#           </div>#}
 {#        </div>#}
     </div>
 
-{#    <h3>Post Relacionats:</h3>#}
-{#     <br />#}
         <div class="table-responsive">
-
         <table class="table table-striped">
+{#        <thead>#}
+{#                <tr>#}
+{#                    <th>Vots</th>#}
+{#                    <th>Post</th>#}
+{#                    <th>Quan?Qui?</th>#}
+{#                    <th>Text</th>#}
+{#                    <th>Etiquetes</th>#}
+{#                </tr>#}
+{#            </thead>#}
         {% for post in posts_relacionats %}
         <tr>
             <td>
@@ -63,18 +117,35 @@
                          {% if not user.is_authenticated %}
                             <button disabled title="Identificat per votar">+</button>
                          {% elif post.pk not in voted %}
-                            <button>+</button>
+                            <button class="btn-primary btn-sm">+</button>
                          {% else %}
-                            <button>-</button>
+                            <button class="btn-primary btn-sm">- </button>
                          {% endif %}
                     </form>
 
             </td>
             <td>
                 <a href="{% url 'post' post.pk  %}"> ({{ post.pk }}) </a>
-                <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
+                <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b>
+            </td>
+            <td>
+                <a href="{% url 'post' post.pk  %}">
+                <span id="notification_count">{{ post.num_comments }}</span>
+                    <span class='glyphicon glyphicon-comment'></span>
+                    </a>&nbsp;&nbsp;
+                <a class="button" href="{% url 'post_respon' post.pk  %}">
+                        Comentar</a>
+            </td>
 
-                <a class="button" href="{% url 'post_respon' post.pk  %}">Comentar</a>
+            <td>
+                (rank: {{ post.rank_score|slice:":2" }})
+            </td>
+            <td>
+                <div id="div_post_info" class="pull-right">
+                     Escrit el:{{ post.datahora }}
+                    per:
+                    <a href="{% url 'perfil_user' post.autor.pk %}"> {{ post.autor }}</a>)
+                </div>
             </td>
             <td>
                 {{ post.text|slice:":60" }}
@@ -82,13 +153,78 @@
             <td>
 
                 {% for etiqueta in post.etiquetes.all %}
-                    {{ etiqueta.nom}}/{{etiqueta.descripcio}}
-                {% endfor %}
 
+                    <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn  btn-default">
+                        <span class='glyphicon glyphicon-tag'>
+                             {{ etiqueta.nom}}
+                        </span>
+                    </a>
+
+                {% endfor %}
             </td>
+{#            <td>#}
+{#                <form enctype="multipart/form-data" method="post" action="">#}
+{#                    {% csrf_token %}#}
+{##}
+{#                    <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />#}
+{#                    <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />#}
+{#                    {% if not user.is_authenticated %}#}
+{#                            <button disabled title="Identificat per etiquetar">+</button>#}
+{#                         {% else %}#}
+{#                            <button type="submit" value=""><span class="glyphicon glyphicon-plus-sign"></span> </button>#}
+{#                         {% endif %}#}
+{#                    {{ formEtqs.as_p }}#}
+{#                </form>#}
+{##}
+{##}
+{#            </td>#}
         </tr>
         {% endfor %}
         </table>
         </div>
+
+{#        <div class="table-responsive">#}
+{##}
+{#        <table class="table table-striped">#}
+{#        {% for post in posts_relacionats %}#}
+{#        <tr>#}
+{#            <td>#}
+{#                    <form method="post" action="{% url 'vote' %}" class="vote_form">#}
+{##}
+{#                         [{{ post.votes }}]#}
+{##}
+{#                        {% csrf_token %}#}
+{#                         <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />#}
+{#                         <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />#}
+{#                         {% if not user.is_authenticated %}#}
+{#                            <button disabled title="Identificat per votar">+</button>#}
+{#                         {% elif post.pk not in voted %}#}
+{#                            <button>+</button>#}
+{#                         {% else %}#}
+{#                            <button>-</button>#}
+{#                         {% endif %}#}
+{#                    </form>#}
+{##}
+{#            </td>#}
+{#            <td>#}
+{#                <a href="{% url 'post' post.pk  %}"> ({{ post.pk }}) </a>#}
+{#                <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}#}
+{##}
+{#                <a class="button" href="{% url 'post_respon' post.pk  %}">Comentar</a>#}
+{#            </td>#}
+{#            <td>#}
+{#                {{ post.text|slice:":60" }}#}
+{#            </td>#}
+{#            <td>#}
+{##}
+{#                {% for etiqueta in post.etiquetes.all %}#}
+{#                    {{ etiqueta.nom}}/{{etiqueta.descripcio}}#}
+{#                {% endfor %}#}
+{##}
+{#            </td>#}
+{#        </tr>#}
+{#        {% endfor %}#}
+{#        </table>#}
+{#        </div>#}
 
 {% endblock %}

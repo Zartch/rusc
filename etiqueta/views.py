@@ -18,7 +18,9 @@ def etiquetaview(request,etq):
     else:
         voted= []
 
-    tesauros = Tesauro.objects.filter(Q(etq1=etiqueta)|Q(etq2=etiqueta))
+    tesauros_forts = Tesauro.objects.filter(Q(etq1=etiqueta))
+    tesauros_debils = Tesauro.objects.filter(Q(etq2=etiqueta))
+
     # d = dict()
     # for post_rel in posts_relacionats:
     #     a=post_rel.folksonomia(etiqueta)
@@ -35,7 +37,7 @@ def etiquetaview(request,etq):
 
     sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesauros':tesauros, 'voted':voted, 'posts_relacionats': posts_relacionats})
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesaurosforts':tesauros_forts, 'tesaurosdebils':tesauros_debils, 'voted':voted, 'posts_relacionats': posts_relacionats})
 
 def nometiquetaview(request,nometq,nomcela):
     #cela = get_cela(request)
@@ -49,11 +51,12 @@ def nometiquetaview(request,nometq,nomcela):
     else:
         voted= []
 
-    tesauros = Tesauro.objects.filter(Q(etq1=etiqueta)|Q(etq2=etiqueta))
+    tesauros_forts = Tesauro.objects.filter(Q(etq1=etiqueta)).exclude(Q(etq2=etiqueta))
+    tesauros_debils = Tesauro.objects.filter(Q(etq2=etiqueta)).exclude(Q(etq1=etiqueta))
     d = folksonomia(posts_relacionats)
     sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesauros':tesauros, 'voted':voted, 'posts_relacionats': posts_relacionats})
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesaurosforts':tesauros_forts, 'tesaurosdebils':tesauros_debils, 'voted':voted, 'posts_relacionats': posts_relacionats})
 
 
 def todoview(request):
