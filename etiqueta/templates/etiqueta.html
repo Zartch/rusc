@@ -15,30 +15,75 @@
 {#        </div>#}
 {#        <div id="div_relacions_etiquetes"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px;" >#}
 {#           <div>#}
-              &nbsp; relació amb: &nbsp;
+              &nbsp; /relació amb: &nbsp;
                 {% for s in posts_rel %}
                     <a href="{% url 'nom_etiqueta' s|slugify cela.slug  %}">   {{ s }}  </a> , &nbsp;
                 {% endfor %}
-                <table class="table-striped">
-                <thead>
-                <tr>
-                    <th>Node Fort &nbsp;</th>
-                    <th>Node dèbil  &nbsp;</th>
-                    <th>Tipus vincle &nbsp; </th>
-                </tr>
-                </thead>
-               {% for tesauro in tesauros %}
-                   <tr>
-                   <td>{{ tesauro.etq1 }}</td>
-                    <td>{{ tesauro.etq2 }}</td>
-                    <td>{{ tesauro.tipo }}</td>
-                   </tr>
-               {% endfor %}
-                </table>
-                Relacions tesauro:
-                {% for key,value in etiqueta.get_list_tesauros.items %}
-                    {{ key }} -- {{ value }} <br/>
+              &nbsp; /sinonims: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "S" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
                 {% endfor %}
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "S" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /antònims: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "A" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "A" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /associat a: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "B" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "B" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /conté: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "J" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /contingut per: &nbsp;
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "J" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+{#                <table class="table-striped">#}
+{#                <thead>#}
+{#                <tr>#}
+{#                    <th>Node Fort &nbsp;</th>#}
+{#                    <th>Node dèbil  &nbsp;</th>#}
+{#                    <th>Tipus vincle &nbsp; </th>#}
+{#                </tr>#}
+{#                </thead>#}
+{#               {% for tesauro in tesauros %}#}
+{#                   <tr>#}
+{#                   <td>{{ tesauro.etq1 }}</td>#}
+{#                    <td>{{ tesauro.etq2 }}</td>#}
+{#                    <td>{{ tesauro.tipo }}</td>#}
+{#                   </tr>#}
+{#               {% endfor %}#}
+{#                </table>#}
+{#                Relacions tesauro:#}
+{#                {% for key,value in etiqueta.get_list_tesauros.items %}#}
+{#                    {{ key }} -- {{ value }} <br/>#}
+{#                {% endfor %}#}
 
                 </div>
 {#           </div>#}
