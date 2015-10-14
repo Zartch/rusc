@@ -32,12 +32,19 @@ a {
 }
 
 #div_header{
-    background-color: #12A9C7;
+    background-color: #2e70c8;
     height: 80px;
     top: 0px;
     position: fixed;
     z-index: 2;
+
 }
+#div_header a:link { color: #ffffff; }
+#div_header a:visited { color: #ffffff; }
+#div_header a:hover { color: #c2c2c2; }
+#div_header a:active { color: #7c7c7c; }
+
+
 #div_menu1{
     float: left;
     display: inline;
