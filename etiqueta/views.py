@@ -16,7 +16,7 @@ def etiquetaview(request,etq):
         voted = Vote.objects.filter(voter=request.user)
         voted = voted.values_list('post_id', flat=True)
     else:
-        voted= []
+        voted = []
 
     d = folksonomia(posts_relacionats)
     sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
