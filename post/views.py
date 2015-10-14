@@ -177,7 +177,9 @@ def postCreateView(request, pk=None):
                     # i l'associem al recurs per a saber quin post ha creat el recurs
                     if bool:
                         post_x = Post.objects.create(titol=rec.url, autor = request.user,  text="Discussio del recurs: "+ rec.descripcio, cela=get_cela(request))
+                        post_x.recursos.add(rec)
                         rec.post_debat = post_x
+
 
 
                     # #Creem o no el recurs, sempre volem afegir-li etiquetes al Recurs

@@ -101,6 +101,12 @@ def recursCreateView(request):
 
         notif_messages.add_message(request, notif_messages.INFO, "Has creat un nou recurs", 'success')
 
+        #creem el post del recurs
+        post_x = Post.objects.create(titol=rec.url, autor = request.user,  text="Discussio del recurs: "+ rec.descripcio, cela=get_cela(request))
+        post_x.recursos.add(rec)
+        rec.post_debat = post_x
+
+
 
     return render(request, 'recurs/recurs_form.html',
                   {'formRecurs': formRecurs, 'request':request})
