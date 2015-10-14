@@ -25,7 +25,7 @@ def etiquetaview(request,etq):
     tesauros_debils = Tesauro.objects.filter(etq2=etiqueta)
 
     tesauro = {}
-    tesauro['relacio']= sorted_rel
+    tesauro['relacio']= d
     sinonims= list(Tesauro.objects.filter(etq1=etiqueta,tipo='S').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='S').values_list('etq1__nom', flat=True))
     antonims =list(Tesauro.objects.filter(etq1=etiqueta,tipo='A').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='A').values_list('etq1__nom', flat=True))
     associat = list(Tesauro.objects.filter(etq1=etiqueta,tipo='B').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='B').values_list('etq1__nom', flat=True))
@@ -58,7 +58,7 @@ def nometiquetaview(request,nometq,nomcela):
     sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
 
     tesauro = {}
-    tesauro['relacio']= sorted_rel
+    tesauro['relacio']= d
     sinonims= list(Tesauro.objects.filter(etq1=etiqueta,tipo='S').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='S').values_list('etq1__nom', flat=True))
     antonims =list(Tesauro.objects.filter(etq1=etiqueta,tipo='A').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='A').values_list('etq1__nom', flat=True))
     associat = list(Tesauro.objects.filter(etq1=etiqueta,tipo='B').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='B').values_list('etq1__nom', flat=True))

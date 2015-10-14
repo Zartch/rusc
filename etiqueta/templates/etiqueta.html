@@ -17,10 +17,10 @@
         <h3>Relacions</h3>
         <div class="list-group">
             <div class="list-group-item">
-                <b class="list-group-item-heading">Relació amb:</b>
+                <h4 class="list-group-item-heading">Relació a través de altres post (nº coincidencias):</h4>
                 <p class="list-group-item-text btn-group">
-                    {% for s in tesauro.relacio %}
-                        <a href="{% url 'nom_etiqueta' s cela.slug %}" class="btn btn-default btn-group-xs"> <span class='glyphicon glyphicon-tag'> {{ s }} </span> </a>
+                    {% for Key, value in tesauro.relacio.items %}
+                        <a href="{% url 'nom_etiqueta' Key cela.slug %}" class="btn btn-default btn-group-xs"> <span class='glyphicon glyphicon-tag'> {{ Key }} ({{ value }}) </span> </a>
                 {% endfor %}
                 </p>
             </div>
