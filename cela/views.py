@@ -21,11 +21,15 @@ def celaview(request,cela):
     else:
         extensVar = "baseRusc.html"
 
+    llistat_usuaris = UserProfile.objects.filter(cela = celax)
+    llistat_etq = Etiqueta.objects.filter(cela=celax)
+
+
     if request.user.is_authenticated():
        if  UserProfile.objects.filter(user = request.user, cela=celax.pk).exists():
           return redirect('forum')
 
-    return render(request,"cela.html", {'extensVar':extensVar})
+    return render(request,"cela.html", {'extensVar':extensVar, 'llistat_usuaris':llistat_usuaris, 'llistat_etq':llistat_etq})
 
 #la seguent funció serveix per a canviarli la cela on es troba l'usuari i redireccionarlo
 #a la URL que se li hagi passat a la funció

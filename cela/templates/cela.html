@@ -4,13 +4,43 @@
 {% csrf_token %}
 {% block content %}
 
-    {{ cela.pregunta }}<br />
-    {{ cela.descripcio }}
+    <h1>{{ cela.pregunta }}</h1>
+    <br />
+    <h4>{{ cela.descripcio }}</h4>
 
+    <h3>Etiquetas</h3>
+        {% for etq in llistat_etq %}
+
+                <a href="{% url "etiqueta" etq.pk %}" class="btn btn-default btn-xs">
+                    <span class='glyphicon glyphicon-user'>
+                    {{ etq.nom }}
+                </a>
+
+        {% endfor %}
+
+
+    <h3>Usuaris</h3>
+    <ul>
+        {% for user in llistat_usuaris %}
+            <li>
+                <a href="{% url "perfil_user" user.pk %}" class="btn btn-default btn-xs">
+                    <span class='glyphicon glyphicon-user'>
+                    {{ user.user }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{#    #Todo Modificar això per tal de que sigui choerent:#}
+{#    si el usuari es membre de la cela pot entrar,#}
+{#    si no ho es y es publica pot entrar, #}
+{#    si el usuari no es mebre i es publica pot entrar#}
+{#    si el usuari no es mebre i es registrada no pot entrar#}
+{#    si el usuari no es mebre i es Privada, no es pot veure la informació #}
     {% if cela.tipus != 'P' %}
-        Solicitar entrada acceso a la red. <a href="{% url 'acces_cela' %}">Solicitar Acceso</a>
+        Solicitar entrada acceso a la red: <a href="{% url 'acces_cela' %}" class="btn btn-primary">Solicitar Acceso</a>
     {% else %}
-        <a href="{% url 'forum' %}" > Entrar </a>
+        <a href="{% url 'forum' %}" class="btn btn-primary" > Entrar </a>
     {% endif %}
 
 
