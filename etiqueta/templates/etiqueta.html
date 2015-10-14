@@ -17,8 +17,11 @@
 {#           <div>#}
               &nbsp; /relació amb: &nbsp;
                 {% for s in posts_rel %}
-                    <a href="{% url 'nom_etiqueta' s|slugify cela.slug  %}">   {{ s }}  </a> , &nbsp;
+                    {% if not etiqueta.nom == s %}
+                        <a href="{% url 'nom_etiqueta' s|slugify cela.slug  %}">   {{ s }}  </a> , &nbsp;
+                    {% endif %}
                 {% endfor %}
+
               &nbsp; /sinonims: &nbsp;
                 {% for s in tesaurosforts %}
                     {% if s.tipo == "S" %}
