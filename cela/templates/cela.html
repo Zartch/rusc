@@ -28,6 +28,7 @@
         <h3>Usuaris</h3>
         <ul>
             <div class="columns">
+            <ul>
             {% for user in llistat_usuaris %}
                 <li>
                     <a href="{% url "perfil_user" user.pk %}" class="btn btn-default btn-xs">
@@ -36,6 +37,7 @@
                     </a>
                 </li>
             {% endfor %}
+            </ul>
             </div>
         </ul>.
     </div>

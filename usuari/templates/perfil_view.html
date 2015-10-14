@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block headers %}
+    <link rel="stylesheet" type="text/css" href="{% static 'llistasResponsive.css' %}">
+{% endblock %}
 {% block content %}
 
     <h3><b>{{ profile.user }}</b></h3>
@@ -31,13 +35,22 @@
 
 
 
+     <div id="content">
+        <h3>Tags</h3>
+            <div class="columns">
+            <ul>
+            {% for etq in etiquetes %}
+                <li>
+                    <a href="{% url "etiqueta" etq.pk %}" class="btn btn-default btn-xs">
+                        <span class='glyphicon glyphicon-tag'>
+                        {{ etq.nom }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+            </div>
+    </div>
 
-    Tags:
-    {% for etiqueta in  etiquetes  %}
-        <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn btn-warning"> {{ etiqueta.nom}}</a>
-    {% endfor %}
-    <br />
-    <br />
     Posts:
     <br />
     <table class="table table-striped">
