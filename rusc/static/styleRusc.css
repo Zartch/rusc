@@ -20,6 +20,7 @@ a {
     padding: 100px 20px 20px 60px ;
     position: relative;
     z-index: 1;
+
 }
 
 .nonfluid {
@@ -35,21 +36,29 @@ a {
     background-color: #2e70c8;
     height: 80px;
     top: 0px;
-    position: absolute;
-    z-index: 2;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    width: 101%;
+    position: fixed;
+    z-index: 50;
 
 }
-#div_header::-webkit-scrollbar {
- display: none;
+@media screen and (max-width: 750px) {
+  #div_menu1 {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    margin: 10px auto 5px 20px;
+    width: 28%;
+    display: none;
+  }
 }
+#page-content {
+    z-index: 500;
+}
+
 
 #div_header a:link { color: #ffffff; }
 #div_header a:visited { color: #ffffff; }
 #div_header a:hover { color: #c2c2c2; }
-#div_header a:active { color: #7c7c7c; }
+#div_header a:active { color: #ffffff; }
 
 
 #div_menu1{
@@ -62,6 +71,7 @@ a {
     margin: 20px;
     float: right;
     display: inline;
+    position: relative;
 }
 
 #div_footer {

@@ -68,9 +68,11 @@
 		
         <!-- Page Content -->
         <div id="page-content-wrapper" class="page-content-wrapper">
-            {% block sidebar %} {% endblock %}
-			{% block content %}
-			{% endblock %}
+            <div id="page-content" class="page-content">
+                {% block sidebar %} {% endblock %}
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
         <!-- /#page-content-wrapper -->
 
