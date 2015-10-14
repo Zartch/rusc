@@ -6,7 +6,7 @@ from django.views.generic.edit import UpdateView
 from usuari.forms import userProfileGeneralForm, userProfileForm
 from cela.models import get_cela
 from django.contrib import messages as notif_messages
-from post.models import Post
+from post.models import Post, Vote
 from etiqueta.models import Etiqueta
 
 from datetime import date, datetime, timedelta
@@ -53,8 +53,11 @@ def viewuserprofile(request,pk):
 
     etiquetes = list(chain(etiquetes2, etiquetes1))
 
+    voted = Vote.objects.filter(voter=request.user)
+    voted = voted.values_list('post_id', flat=True)
+
     return render(request, 'perfil_view.html', {'usuari': usuari, 'nMiss': posts_publicats.count(), 'nRes':respostes_publicades.count(), 'antig':usuari.date_joined,
-                                                'posts_publicats':posts_publicats,'etiquetes':etiquetes, 'profile': profile})
+                                                'posts':posts_publicats,'etiquetes':etiquetes, 'profile': profile, 'voted':voted })
 
 class UserProfileUpdateView(UpdateView):
     model = UserProfile
