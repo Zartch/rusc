@@ -51,8 +51,8 @@ def nometiquetaview(request,nometq,nomcela):
     else:
         voted= []
 
-    tesauros_forts = Tesauro.objects.filter(Q(etq1=etiqueta))
-    tesauros_debils = Tesauro.objects.filter(Q(etq2=etiqueta))
+    tesauros_forts = Tesauro.objects.filter(Q(etq1=etiqueta)).exclude(Q(etq2=etiqueta))
+    tesauros_debils = Tesauro.objects.filter(Q(etq2=etiqueta)).exclude(Q(etq1=etiqueta))
     d = folksonomia(posts_relacionats)
     sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
 
