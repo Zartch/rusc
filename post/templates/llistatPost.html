@@ -1,0 +1,90 @@
+
+        <div class="table-responsive">
+        <table class="table table-striped">
+{#        <thead>#}
+{#                <tr>#}
+{#                    <th>Vots</th>#}
+{#                    <th>Post</th>#}
+{#                    <th>Quan?Qui?</th>#}
+{#                    <th>Text</th>#}
+{#                    <th>Etiquetes</th>#}
+{#                </tr>#}
+{#            </thead>#}
+        {% for post in posts %}
+        <tr>
+            <td>
+                    <form method="post" action="{% url 'vote' %}" class="vote_form">
+
+                         [{{ post.votes }}]
+
+                        {% csrf_token %}
+                         <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />
+                         <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+                         {% if not user.is_authenticated %}
+                            <button disabled title="Identificat per votar">+</button>
+                         {% elif post.pk not in voted %}
+                            <button class="btn-primary btn-sm">+</button>
+                         {% else %}
+                            <button class="btn-primary btn-sm">- </button>
+                         {% endif %}
+                    </form>
+
+            </td>
+            <td>
+                <a href="{% url 'post' post.pk  %}"> ({{ post.pk }}) </a>
+                <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b>
+            </td>
+            <td>
+                <a href="{% url 'post' post.pk  %}">
+                <span id="notification_count">{{ post.num_comments }}</span>
+                    <span class='glyphicon glyphicon-comment'></span>
+                    </a>&nbsp;&nbsp;
+                <a class="button" href="{% url 'post_respon' post.pk  %}">
+                        Comentar</a>
+            </td>
+
+            <td>
+                (rank: {{ post.rank_score|slice:":2" }})
+            </td>
+            <td>
+                <div id="div_post_info" class="pull-right">
+                     Escrit el:{{ post.datahora }}
+                    per:
+                    <a href="{% url 'perfil_user' post.autor.pk %}"> {{ post.autor }}</a>)
+                </div>
+            </td>
+            <td>
+                {{ post.text|slice:":60" }}
+            </td>
+            <td>
+
+                {% for etiqueta in post.etiquetes.all %}
+
+                    <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn  btn-default">
+                        <span class='glyphicon glyphicon-tag'>
+                             {{ etiqueta.nom}}
+                        </span>
+                    </a>
+
+                {% endfor %}
+            </td>
+{#            <td>#}
+{#                <form enctype="multipart/form-data" method="post" action="">#}
+{#                    {% csrf_token %}#}
+{##}
+{#                    <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ post.pk }}" />#}
+{#                    <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />#}
+{#                    {% if not user.is_authenticated %}#}
+{#                            <button disabled title="Identificat per etiquetar">+</button>#}
+{#                         {% else %}#}
+{#                            <button type="submit" value=""><span class="glyphicon glyphicon-plus-sign"></span> </button>#}
+{#                         {% endif %}#}
+{#                    {{ formEtqs.as_p }}#}
+{#                </form>#}
+{##}
+{##}
+{#            </td>#}
+        </tr>
+        {% endfor %}
+        </table>
+        </div>
