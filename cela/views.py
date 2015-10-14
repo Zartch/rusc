@@ -24,7 +24,7 @@ def celaview(request,cela):
     llistat_usuaris = UserProfile.objects.filter(cela = celax)
     llistat_etq = Etiqueta.objects.filter(cela=celax)
 
-
+    #todo afegir automaticament com a moderador el usuari que está creant la cela
     if request.user.is_authenticated():
        if  UserProfile.objects.filter(user = request.user, cela=celax.pk).exists():
           return redirect('forum')
