@@ -18,26 +18,27 @@ def etiquetaview(request,etq):
     else:
         voted= []
 
-    tesauros_forts = Tesauro.objects.filter(Q(etq1=etiqueta))
-    tesauros_debils = Tesauro.objects.filter(Q(etq2=etiqueta))
-
-    # d = dict()
-    # for post_rel in posts_relacionats:
-    #     a=post_rel.folksonomia(etiqueta)
-    #     for key,value in a.items():
-    #         if key in d:
-    #             #suma els values
-    #             val = d[key]
-    #             val = val + value
-    #             d[key] = val
-    #         else:
-    #             d[key]= value
-
     d = folksonomia(posts_relacionats)
-
     sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesaurosforts':tesauros_forts, 'tesaurosdebils':tesauros_debils, 'voted':voted, 'posts_relacionats': posts_relacionats})
+    tesauros_forts = Tesauro.objects.filter(etq1=etiqueta)
+    tesauros_debils = Tesauro.objects.filter(etq2=etiqueta)
+
+    tesauro = {}
+    tesauro['relacio']= sorted_rel
+    sinonims= list(Tesauro.objects.filter(etq1=etiqueta,tipo='S').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='S').values_list('etq1__nom', flat=True))
+    antonims =list(Tesauro.objects.filter(etq1=etiqueta,tipo='A').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='A').values_list('etq1__nom', flat=True))
+    associat = list(Tesauro.objects.filter(etq1=etiqueta,tipo='B').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='B').values_list('etq1__nom', flat=True))
+    tesauro['sinonims']= sinonims
+    tesauro['antonims']= antonims
+    tesauro['associat']= associat
+    tesauro['conte']= Tesauro.objects.filter(etq1=etiqueta).values_list('etq2__nom', flat=True)
+    tesauro['contingut']= Tesauro.objects.filter(etq2=etiqueta).values_list('etq1__nom', flat=True)
+
+
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesaurosforts':tesauros_forts,
+                                            'tesaurosdebils':tesauros_debils, 'voted':voted, 'posts': posts_relacionats,
+                                            'tesauro':tesauro})
 
 def nometiquetaview(request,nometq,nomcela):
     #cela = get_cela(request)
@@ -51,12 +52,29 @@ def nometiquetaview(request,nometq,nomcela):
     else:
         voted= []
 
-    tesauros_forts = Tesauro.objects.filter(Q(etq1=etiqueta)).exclude(Q(etq2=etiqueta))
-    tesauros_debils = Tesauro.objects.filter(Q(etq2=etiqueta)).exclude(Q(etq1=etiqueta))
+    tesauros_forts = Tesauro.objects.filter(etq1=etiqueta).exclude(etq2=etiqueta)
+    tesauros_debils = Tesauro.objects.filter(etq2=etiqueta).exclude(etq1=etiqueta)
     d = folksonomia(posts_relacionats)
     sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
 
-    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesaurosforts':tesauros_forts, 'tesaurosdebils':tesauros_debils, 'voted':voted, 'posts_relacionats': posts_relacionats})
+    tesauro = {}
+    tesauro['relacio']= sorted_rel
+    sinonims= list(Tesauro.objects.filter(etq1=etiqueta,tipo='S').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='S').values_list('etq1__nom', flat=True))
+    antonims =list(Tesauro.objects.filter(etq1=etiqueta,tipo='A').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='A').values_list('etq1__nom', flat=True))
+    associat = list(Tesauro.objects.filter(etq1=etiqueta,tipo='B').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='B').values_list('etq1__nom', flat=True))
+    tesauro['sinonims']= sinonims
+    tesauro['antonims']= antonims
+    tesauro['associat']= associat
+    tesauro['conte']= Tesauro.objects.filter(etq1=etiqueta).values_list('etq2__nom', flat=True)
+    tesauro['contingut']= Tesauro.objects.filter(etq2=etiqueta).values_list('etq1__nom', flat=True)
+
+
+
+    return render(request,"etiqueta.html", {'etiqueta':etiqueta, 'posts_rel': sorted_rel, 'tesaurosforts':tesauros_forts,
+                                            'tesaurosdebils':tesauros_debils, 'voted':voted, 'posts': posts_relacionats,
+                                            'tesauro':tesauro})
+
+
 
 
 def todoview(request):
