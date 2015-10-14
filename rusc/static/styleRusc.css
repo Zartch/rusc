@@ -8,7 +8,7 @@ body {
     padding: 0px;
     min-height: 100%;
     position: relative;
-    background-color: #FFC; !important;
+    background-color: #fffddf; !important;
 }
 
 a {
@@ -16,7 +16,7 @@ a {
 }
 
 #page-content-wrapper {
-    background-color: #FFC;
+    background-color: #fffddf;
     padding: 100px 20px 20px 60px ;
     position: relative;
     z-index: 1;
