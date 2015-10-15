@@ -658,7 +658,7 @@ var nodeClicked = function(node) {
 
         // Now add the notes content.
 
-        notes.append('h1').text(node.title).on("click", function() { window.open("/cela/"+node.pk+""); });
+        notes.append('h1').text(node.title).attr("class", "btn btn-primary btn-lg").on("click", function() { window.open("/cela/"+node.pk+""); });
 
         notes.append('h4').text(node.subtitle);
         if (node.url && node.image) {
@@ -672,7 +672,9 @@ var nodeClicked = function(node) {
         var list = notes.append('ul');
         node.links.forEach(function(link){
             list.append('li')
-                .text(link).on("click", function() { window.open("/etiqueta/"+link+"/"+node.title+""); });
+                .text(link).attr("class", "btn btn-default btn-xs")
+                           .append("xhtml:span").attr("class", "control glyphicon glyphicon-tag")
+                           .on("click", function() { window.open("/etiqueta/"+link+"/"+node.title+""); });
         })
 
         // With the content in place, transition
