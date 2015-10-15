@@ -7,24 +7,31 @@
 
     <script  src="{% static 'js/style2selectors.js' %}" ></script>
 
+    <link rel="stylesheet" type="text/css" href="{% static 'llistasResponsive.css' %}">
 {% endblock %}
 {%  block content %}
 
-
-    {% for etiqueta in llista_etiquetes %}
-        <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn  btn-default">
-            <span class='glyphicon glyphicon-tag'>
-                 {{ etiqueta.nom}}
-            </span>
-        </a>
-    {% endfor %}
-
+    <div id="content">
+        <h3>Etiquetas a la xarxa</h3>
+            <div class="columns">
+            <ul>
+            {% for etq in llista_etiquetes %}
+                <li>
+                    <a href="{% url "etiqueta" etq.pk %}" class="btn btn-default btn-xs">
+                        <span class='glyphicon glyphicon-tag'>
+                        {{ etq.nom }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+            </div>
+    </div>
 
     <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" class="btn-primary btn-lg" />
     </form>
-
+    <h3>Relacións a la xarxa</h3>
     {% load render_table from django_tables2 %}
     {% render_table table %}
 
