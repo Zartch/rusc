@@ -44,6 +44,6 @@ urlpatterns = [
 
     #url(r'^boot/', include('etiqueta.urls')),
     # url(r'^', views.ruscView),
-    #url(r'^$', RedirectView.as_view(url='/rusc/', permanent=True)),
+    url(r'^$', RedirectView.as_view(url='/rusc/')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
