@@ -5,8 +5,17 @@ from post.models import Post
 from cela.models import Cela
 from django.shortcuts import render,get_object_or_404,redirect
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ValidationError
 
 class UserProfile(models.Model):
+
+    #La imatge del avatar no pot ser de més de 5Mb
+    def validate_image(fieldfile_obj):
+        filesize = fieldfile_obj.file.size
+        megabyte_limit = 2.0
+        if filesize > megabyte_limit*1024*1024:
+            raise ValidationError("Max file size is %sMB" % str(megabyte_limit))
+
 
     TIPUS_SUBSCRIPCIO = (
         ('T','Total'),
@@ -30,7 +39,7 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, null=True )
     # The additional attributes we wish to include.
     website = models.URLField(null=True)
-    avatar = models.FileField(upload_to='profiles/%Y/%m/%d', null=True)
+    avatar = models.FileField(upload_to='profiles/%Y/%m/%d', null=True, validators=[validate_image])
     subscripcions = models.ManyToManyField(Post,blank=True, related_name="subscripcions")
     tipusSubscripcio = models.CharField(max_length=1,choices= TIPUS_SUBSCRIPCIO,default='S')
     cela= models.ForeignKey(Cela)
@@ -44,10 +53,8 @@ class UserProfile(models.Model):
     class Meta:
         unique_together = (("cela", "user"),)
 
-
     def __str__(self):
         return self.user.username
-
 
     def get_absolute_url(self):
         return reverse('forum')
@@ -61,11 +68,6 @@ class UserProfile(models.Model):
         self.subscripcions.add(post_afegir)
 
         return result
-
-
-
-
-
 
 
 from registration.signals import user_registered
