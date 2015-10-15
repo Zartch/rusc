@@ -13,7 +13,7 @@
              <div class="btn-group" >
                  <select name="slc_modaction" class="form-control nonfluid">
                      <option value="A">Acceptar</option>
-                     <option value="R">Rebutjar</option>
+                    {# <option value="R">Rebutjar</option>#}
                  </select>
              </div>
             <input type="submit" value="GO" class="btn-primary btn" />
@@ -34,9 +34,13 @@
                 <td>
                     <input type="checkbox" name="chk_post" value="{{ post.pk }}" />
                 </td>
+
                 <td>
-                    <a href="{% url 'post' post.pk  %}"> ({{ post.pk }}) </a>
                     <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
+                    </br>
+                    <a href="#" class="btn btn-success btn-xs">OK</a>
+                    <a href="{% url 'missatgeriaModeracio' post.pk %}" class="btn btn-info btn-xs">Let's talk</a>
+                    <a href="#" class="btn btn-danger btn-xs">NO</a>
                 </td>
                 <td>
                     {{ post.text}}

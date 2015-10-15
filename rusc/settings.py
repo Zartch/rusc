@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     'notifications',
     'registration',
     'autocomplete_light',
+    'micawber.contrib.mcdjango',
     'post',
     'etiqueta',
     'recurs',
@@ -65,7 +66,7 @@ INSTALLED_APPS = (
     'buscador',
     'cela',
     'rusc.faq',
-    'micawber.contrib.mcdjango',
+    'cela.moderaciomodels',
 
 
 )

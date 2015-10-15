@@ -2,16 +2,14 @@
 from .models import Cela, get_cela
 from post.models import Post,folksonomia
 from etiqueta.models import Etiqueta, Tesauro
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView
 from .forms import celaForm
-from django.http import HttpResponse
 from usuari.models import UserProfile
 from django.contrib.auth.models import User
 from notifications import notify
 from django.contrib import messages as notif_messages
 from django.core.urlresolvers import reverse
-import json
 
 def celaview(request,cela):
     request.session["cell"] = cela
@@ -36,13 +34,6 @@ def celaview(request,cela):
 def celachange(request,cela,url):
     request.session["cell"] = cela
     return redirect(url, request.user)
-
-def peticioAcces(request):
-    cela = get_cela(request)
-    if not request.user.is_authenticated():
-        return redirect('auth_login')
-    perfilusuari, created =  UserProfile.objects.get_or_create(user=request.user,estat='E')
-    return HttpResponse(" has solicitat acces.")
 
 class celaCreateView(CreateView):
     model = Cela
@@ -78,91 +69,6 @@ class celaUpdateView(UpdateView):
             UserProfile.objects.get_or_create(user=mod, cela=self.object)
         notif_messages.add_message(self.request, notif_messages.INFO, "Cela modificada correctament", 'success')
         return reverse('cela', args=[self.object.pk] )
-
-def moderacioPostView(request):
-
-    ChekUsuariCellAdmin(request)
-    cela = get_cela(request)
-    posts = Post.objects.filter(moderacio='E', cela = cela)
-
-    #Recollim els checkbboxes dels post
-    frm_modepost = request.POST.getlist('chk_post')
-    #Recollim la acció a realizar
-    acction =  request.POST.get('slc_modaction')
-    if frm_modepost and acction:
-        #només aceptem la acció 'A'(acceptar), o 'R'(rebutjar)
-        if acction == 'A':
-            estatmod = 'A'
-        else: estatmod = 'R'
-        #updatejem el estat de moderacio dels post
-        for post_pk in frm_modepost:
-            Post.objects.filter(pk=post_pk).update(moderacio = estatmod)
-        notif_messages.add_message(request, notif_messages.INFO, "Moderació realitzada" , 'success')
-
-    return render(request, "moderacio/mode_post.html", {'posts':posts})
-
-#vista per a que el moderador modifiqui usuaris ja creats i aprovats previament
-def usuaris_cela(request):
-
-    ChekUsuariCellAdmin(request)
-    cela = get_cela(request)
-    usuaris = UserProfile.objects.filter(cela=cela )
-
-    frm_users = request.POST.getlist('chk_usuaris')
-    acction =  request.POST.get('slc_modaction')
-    missatge= "Usuaris "
-    if frm_users and acction:
-        if acction == 'A':
-            estatmod = 'A'
-            missatge= missatge + " acceptats"
-        elif acction == 'R':
-            estatmod = 'R'
-            missatge= missatge + " rebutjats"
-        elif acction == 'T':
-            estatmod = 'T'
-            missatge= missatge + " marcats com troll"
-
-        for user in frm_users:
-            UserProfile.objects.filter(pk=user, cela=cela).update(estat = estatmod)
-
-        notif_messages.add_message(request, notif_messages.INFO, missatge , 'success')
-
-    return render(request, "moderacio/membres_cela.html",{'usuaris':usuaris})
-
-#vista per a que el moderador accepti o rebutji nous ingressos d'usuari
-def acceptar_usuari(request):
-    ChekUsuariCellAdmin(request)
-    cela = get_cela(request)
-    usuaris = UserProfile.objects.filter(cela=cela, estat = 'E' )
-
-    frm_users = request.POST.getlist('chk_usuaris')
-    acction =  request.POST.get('slc_modaction')
-
-    missatge= "Usuaris "
-    if frm_users and acction:
-        if acction == 'A':
-            estatmod = 'A'
-            missatge= missatge + " acceptats"
-        else:
-            estatmod = 'R'
-            missatge= missatge + " rebutjats"
-        for user in frm_users:
-            UserProfile.objects.filter(pk=user, cela=cela).update(estat = estatmod)
-
-        notif_messages.add_message(request, notif_messages.INFO, missatge , 'success')
-
-    return render(request, "moderacio/solicitud_ingres.html",{'usuaris':usuaris})
-
-#funció que comprova que el usuari loguejat sigui admin de la cela on es troba
-def ChekUsuariCellAdmin(request):
-    cela = get_cela(request)
-    if request.user.is_authenticated():
-        up = UserProfile.objects.filter(user=request.user)
-        if request.user in cela.moderadors.all():
-            return True
-        else:
-            notif_messages.add_message(request, notif_messages.INFO, "Te estamos observando espabilao" , 'success')
-            return redirect( 'forum' )
 
 #vista per a convidar usuaris a la cela
 def cela_convidar(request):
@@ -324,18 +230,6 @@ def visual(request):
         data.append(s.copy())
 
     return render(request,"visual/visual.html", {'data':data} )
-
-from django_messages.models import Message
-def missatge_cela(request):
-
-    if request.POST:
-        usuaris = UserProfile.objects.filter(cela= get_cela(request))
-        for user in usuaris:
-            Message.objects.create(subject=request.POST['asumpte'], body=request.POST['text'],
-                                   sender= request.user, recipient= user.user)
-        notif_messages.add_message(request, notif_messages.INFO, "Enviats Missatges a tota la xarxa", 'success')
-
-    return render(request,"moderacio/missatgeriaCela.html", {} )
 
 def VisualCelas(request):
 
