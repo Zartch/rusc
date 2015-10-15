@@ -231,6 +231,7 @@ var nodes = data.map(function(entry, idx, list) {
     node.url      = entry.itunes;
     node.color    = entry.color;
     node.text     = entry.text;
+    node.cela     = entry.cela;
 
     // We'll also copy the musicians, again using
     // a more neutral property. At the risk of
@@ -659,8 +660,10 @@ var nodeClicked = function(node) {
 
         // Now add the notes content.
 
-        notes.append('h1').text(node.title);
-        notes.append('h2').text(node.subtitle);
+        notes.append('h1').text(node.title).attr("class", "btn btn-default btn-lg")
+                          .on("click", function() { window.open("/etiqueta/"+node.title+"/"+node.cela+""); })
+                          .append("xhtml:span").attr("class", "control glyphicon glyphicon-tag");
+        notes.append('h4').text(node.subtitle);
         if (node.url && node.image) {
             notes.append('div')
                 .classed('artwork',true)
@@ -674,7 +677,9 @@ var nodeClicked = function(node) {
         var list = notes.append('ul');
         node.links.forEach(function(link){
             list.append('li')
-                .text(link);
+                .text(link).on("click", function() { window.open("/etiqueta/"+link+"/"+node.cela+""); })
+                            .attr("class", "btn btn-default btn-xs")
+                            .append("xhtml:span").attr("class", "control glyphicon glyphicon-tag");
         })
 
         // With the content in place, transition

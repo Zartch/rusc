@@ -41,11 +41,8 @@ def peticioAcces(request):
     cela = get_cela(request)
     if not request.user.is_authenticated():
         return redirect('auth_login')
-
     perfilusuari, created =  UserProfile.objects.get_or_create(user=request.user,estat='E')
-
     return HttpResponse(" has solicitat acces.")
-
 
 class celaCreateView(CreateView):
     model = Cela
@@ -61,7 +58,6 @@ class celaCreateView(CreateView):
     def form_invalid(self, form):
         notif_messages.add_message(self.request, notif_messages.INFO, "corregeix els errors indicats", 'warning')
         return super(celaCreateView, self).form_invalid(form)
-
 
 class celaUpdateView(UpdateView):
     model = Cela
@@ -133,7 +129,6 @@ def usuaris_cela(request):
 
     return render(request, "moderacio/membres_cela.html",{'usuaris':usuaris})
 
-
 #vista per a que el moderador accepti o rebutji nous ingressos d'usuari
 def acceptar_usuari(request):
     ChekUsuariCellAdmin(request)
@@ -168,7 +163,6 @@ def ChekUsuariCellAdmin(request):
         else:
             notif_messages.add_message(request, notif_messages.INFO, "Te estamos observando espabilao" , 'success')
             return redirect( 'forum' )
-
 
 #vista per a convidar usuaris a la cela
 def cela_convidar(request):
@@ -220,15 +214,11 @@ def cela_convidar(request):
 
         return render(request, "convidar.html",{'usuaris':usuaris_list})
 
-
 from django.core.mail import send_mail
-
 #funció exclusivament per a enviar invitacio a cela a un usuari que se li passa a la funció
 def enviarInvitacio(user,cela):
 
     send_mail("Convidat a RUSC", "T'han convidat a la xarxa "+ cela.pregunta+ "http://127.0.0.1:8000/accounts/register/", 'RUSC@example.com',  [user] , fail_silently=True )
-
-
 
 #en cas de que si estigui, enviar invitació al usuari
 def validateEmail( email ):
@@ -240,7 +230,6 @@ def validateEmail( email ):
         return True
     except ValidationError:
         return False
-
 
 from django.http import JsonResponse
 def tesauro_jerarquic_json(request):
@@ -268,7 +257,6 @@ def network(request):
     reel = list(reel)
     return render(request,"visual/network.html", {'etq':etq, 'reel': reel, 'posts':posts, 'd':d} )
 
-
 def visualPost(request):
 
     posts = Post.objects.filter(cela=get_cela(request))
@@ -294,12 +282,11 @@ def visualPost(request):
 
     return render(request,"visual/PostRelacions.html", {'data':data} )
 
-
 def visual(request):
 
     chk_folk =  request.POST.get('chk_folk')
-
-    etqs = Etiqueta.objects.filter(cela=get_cela(request))
+    cela = get_cela(request)
+    etqs = Etiqueta.objects.filter(cela=cela)
     data = []
     s = {'artist':"",'title':"",'itunes':"",'cover':"",'color':"",'text':"",'musicians':[]}
     d=[]
@@ -311,6 +298,7 @@ def visual(request):
         s['cover']= "Cover"
         s['color']= "#47738C"
         s['text']= "#0A0606"
+        s['cela']= cela.slug
         d.clear()
 
         #taxonomia
@@ -337,7 +325,6 @@ def visual(request):
 
     return render(request,"visual/visual.html", {'data':data} )
 
-
 from django_messages.models import Message
 def missatge_cela(request):
 
@@ -349,8 +336,6 @@ def missatge_cela(request):
         notif_messages.add_message(request, notif_messages.INFO, "Enviats Missatges a tota la xarxa", 'success')
 
     return render(request,"moderacio/missatgeriaCela.html", {} )
-
-
 
 def VisualCelas(request):
 
