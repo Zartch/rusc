@@ -15,25 +15,6 @@ class PostVoteCountManager(models.Manager):
     def get_queryset(self):
         return super(PostVoteCountManager, self).get_queryset().annotate(votes=Count('vote'))
 
-
-
-
-#La Barra per comentar es "/"
-#He solucionat això a Recurs
-# class PostRecurs(models.Model):
-#
-#     TIPUS_RELACIO = (
-#         ('R','Referent A'),
-#     )
-#
-#     post = models.ForeignKey('Post')
-#     recurs = models.ForeignKey(Recurs)
-#     tipus = models.CharField(max_length=1,choices=TIPUS_RELACIO, blank=True,default="")
-#
-#     def __str__(self):
-#         return self.etq1 + self.etq2 + self.tipo
-
-
 class Post(models.Model):
 
     ESTAT_MODERACIO = (
@@ -145,10 +126,13 @@ post_save.connect(post_post_save, sender=Post)
 
 
 
-#Folksonomia etiquetes_relacionades
-#Rep un llistat de posts
-#retorna un dicionari amb el nom de la etiqueta i el numero de coincidencies
+
 def folksonomia(posts):
+    """
+        Folksonomia etiquetes_relacionades
+        Rep un llistat de posts
+        retorna un dicionari amb el nom de la etiqueta i el numero de coincidencies
+    """
     d = dict()
     for post_rel in posts:
         for etq in post_rel.etiquetes.all():
@@ -161,14 +145,10 @@ def folksonomia(posts):
                 d[etq.nom]= 1
     return d
 
-
-
-
 # from django.db.models.signals import post_save
-#
 # def post_handler(sender, instance, created, **kwargs):
-#
 # post_save.connect(post_handler, sender=Post)
+
 
 class Vote(models.Model):
     voter = models.ForeignKey(User)
@@ -176,3 +156,6 @@ class Vote(models.Model):
 
     def __str__(self):
         return "%s voted %s" % (self.voter.username, self.post.titol)
+
+
+
