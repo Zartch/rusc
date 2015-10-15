@@ -13,33 +13,7 @@
                 {% else %}
                       <div class="div_coment" >
                 {% endif  %}
-
                      {% include "post_extended.html" %}
-{#                    <form method="post" action="{% url 'vote' %}" class="vote_form">#}
-{#                         [{{ obj.votes }}]#}
-{#                        {% csrf_token %}#}
-{#                         <input type="hidden" id="id_post" name="post" class="hidden_id" value="{{ obj.pk }}" />#}
-{#                         <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />#}
-{#                         {% if not user.is_authenticated %}#}
-{#                            <button disabled title="Please login to vote">+</button>#}
-{#                         {% elif obj.pk not in voted %}#}
-{#                            <button>+</button>#}
-{#                         {% else %}#}
-{#                            <button>-</button>#}
-{#                             {% endif %}#}
-{#                        ({{ obj.pk }}) <b>{{ obj.titol }}</b> {{ obj.pare_id }}#}
-{#                        <a href="{% url 'perfil' obj.autor.pk %}"> {{ obj.autor }}</a>)<br />#}
-{#                        {% for etiqueta in obj.etiquetes.all %}#}
-{#                            {{ etiqueta.nom}}/{{etiqueta.descripcio}}#}
-{#                        {% endfor %}#}
-{#                        <a href="{% url 'post_respon' obj.pk  %}">Re</a>#}
-{#                         {{ obj.text  }}#}
-{#    #}
-{#                        {% for recurs in obj.recursos.all %}#}
-{#                            <br /><a href="http://{{ recurs.url}}"> {{ recurs.url}} </a> /#}
-{#                            <a href="{% url 'recurs' recurs.pk %}"> Accès al recurs</a>#}
-{#                        {% endfor %}#}
-{#                    </form>#}
                 </div>
                 {% if branch %}
                      {% if post.pk == obj.pk %}
@@ -47,11 +21,7 @@
                 {% else %}
                       <div class="div_coment" >
                 {% endif  %}
-
-                {% else %}
-
-
-                {% endif %}
+            {% endif %}
 
             {% else %}
                 {% if branch %}
