@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h4>Post a moderar:</h4>
+    <div class="div_post">
+    <div id="div_post_wraper">
+        <div id="div_post_header">
+            <div id="div_post_info" class="pull-right">
+                 {{ post.datahora }}
+            </div>
+        </div>
+        <div id="div_post_content">
+            <div id="div_post_text">
+                    {{ post.text  }}
+            </div>
+        </div>
+    </div>
+    </div>
+    <h4>Mensajes:</h4>
+    {% for obj in missatge %}
+        <hr />
+        <div id="div_mess_header" class="nonfluid">
+            <div id="div_post_info" class="pull-right nonfluid">
+                 {{ obj.datahora }}
+            </div>
+        </div>
+        <div id="div_mess_content">
+            <div id="div_post_text">
+                    {{ obj.text  }}
+            </div>
+        </div>
+
+    {% endfor %}
+
+    <div id="div_post_respondre">
+        <form method="post" action="" class="" >{% csrf_token %}
+            <input type="textarea" name="textmissatge" />
+            <input type="submit" value="Send">
+        </form>
+    </div>
+
+{% endblock %}
