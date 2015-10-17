@@ -293,6 +293,15 @@ nav.sidebar ul.level1 ul.level2 li a {
               </a>
             </li>
 
+            <li class=''>
+              <a class='expandable' href="{% url 'post_modreracio_usuari' %}" title='moderaciopost'>
+                <span class='glyphicon glyphicon-comment collapsed-element'></span>
+                <span class='expanded-element'>moderaciopost</span>
+              </a>
+            </li>
+
+
+
             {% if user in cela.moderadors.all %}
                  <li class='active'>
                    <a class='expandable active' href="{% url 'mode_post' %}"  title='Administracio'>

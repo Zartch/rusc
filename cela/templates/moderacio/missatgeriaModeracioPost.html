@@ -1,35 +1,80 @@
 {% extends 'base.html' %}
+{% load micawber_tags %}
+
 {% block content %}
 
     <h4>Post a moderar:</h4>
     <div class="div_post">
     <div id="div_post_wraper">
         <div id="div_post_header">
-            <div id="div_post_info" class="pull-right">
-                 {{ post.datahora }}
-            </div>
+            <div id="div_post_titol">
+                    <a href="{% url 'post'  post.pk   %}">({{ post.pk }})</a>
+                    <b>{{ obj.titol }}</b>
+                    {% if obj.pare_id %}
+                        pare:
+                       <a href="{% url 'post'  post.pare_id  %}">{{ post.pare_id }}</a>
+                    {% endif %}
+
+                </div>
+                <div id="div_post_info" class="pull-right">
+                     Escrit el:{{ post.datahora }}
+                    per:
+                    <a href="{% url 'perfil_user' post.autor.pk %}"> {{ post.autor }}</a>
+                     {{ post.num_comments }} comentaris )
+                </div>
         </div>
         <div id="div_post_content">
             <div id="div_post_text">
-                    {{ post.text  }}
-            </div>
+                        {{ post.text|oembed  }}
+                </div>
+
+
+                <div id="div_post_etiquetes" class="text-right">
+                    {% for etiqueta in post.etiquetes.all %}
+                        <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn  btn-default btn-xs">
+                        <span class='glyphicon glyphicon-tag'>
+                             {{ etiqueta.nom}}
+                        </span>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div id="div_post_recursos">
+                    {% for recurs in post.recursos.all %}
+
+                        <a href="{% url 'recurs' recurs.pk %}" class="btn  btn-default  btn-xs">
+                            <span class='glyphicon glyphicon-folder-open'>
+                             <a href="{{ recurs.url}}"> {{ recurs.url}} </a>
+                        </span>
+                        </a>
+
+                        <br />
+                    {% endfor %}
+                </div>
         </div>
     </div>
     </div>
     <h4>Mensajes:</h4>
     {% for obj in missatge %}
-        <hr />
-        <div id="div_mess_header" class="nonfluid">
-            <div id="div_post_info" class="pull-right nonfluid">
-                 {{ obj.datahora }}
+        <div id="div_mess_wraper" style="width: 300px;">
+            <div id="div_mess_header">
+                     <small>{{ obj.datahora }}-{{ obj.usari }}</small>
             </div>
-        </div>
-        <div id="div_mess_content">
-            <div id="div_post_text">
-                    {{ obj.text  }}
-            </div>
-        </div>
+            <div id="div_mess_content">
+                <div id="div_mess_text">
 
+                    {% if obj.usari = user %}
+                        <div style="float: right">
+                        {{ obj.text  }}
+                        </div>
+                    {% else %}
+                        <div style="float: left">
+                        {{ obj.text  }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr />
     {% endfor %}
 
     <div id="div_post_respondre">

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock %}
+{% block content %}
+
+    <h4>Posts EnTramit</h4>
+    {% for post in post_entramit %}
+        <a href="{% url 'missatgeriaModeracio' post.pk %}" >{{ post.titol }}</a><br>
+    {%  endfor %}
+<br>
+    <h4>Post Rebutjats</h4>
+    {% for post in post_rebutjats %}
+    <br>    <a href="{% url 'missatgeriaModeracio' post.pk %}" >{{ post.titol }}</a>
+    {%  endfor %}
+
+
+{% endblock %}

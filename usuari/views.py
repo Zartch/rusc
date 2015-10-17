@@ -11,6 +11,14 @@ from etiqueta.models import Etiqueta
 
 from datetime import date, datetime, timedelta
 
+#vista peer mostrar els post en estat de moderacio del usuari
+def moderacioPostView(request):
+    cela = get_cela(request)
+    post_entramit = Post.objects.filter(autor=request.user,moderacio ='E', cela=cela)
+    post_rebutjats = Post.objects.filter(autor=request.user,moderacio ='R', cela=cela)
+
+    return render(request, 'moderacioPost.html', {'post_entramit':post_entramit, 'post_rebutjats':post_rebutjats})
+
 def perfilview(request):
 
     if not request.user.is_authenticated():
