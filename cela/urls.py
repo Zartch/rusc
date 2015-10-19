@@ -21,5 +21,6 @@ urlpatterns = patterns('',
         url(r'^visualcelas/', views.VisualCelas, name='VisualCelas'),
         url(r'^missatge_cela/', login_required(moderacioViews.missatge_cela), name='missatge_cela'),
         url(r'^missMod/(?P<pkpost>\d+)/$', login_required(moderacioViews.moderacioPost), name='missatgeriaModeracio'),
+        url(r'^acceptarRebutjarPost/(?P<pkpost>\d+)/(?P<action>\w+)$', login_required(moderacioViews.acceptarRebutjarPost), name='acceptarRebutjarPost'),
 
 )

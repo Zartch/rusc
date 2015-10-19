@@ -57,12 +57,12 @@
     {% for obj in missatge %}
         <div id="div_mess_wraper" style="width: 300px;">
             <div id="div_mess_header">
-                     <small>{{ obj.datahora }}-{{ obj.usari }}</small>
+                     <small>{{ obj.datahora }}-{{ obj.usuari }}</small>
             </div>
             <div id="div_mess_content">
                 <div id="div_mess_text">
 
-                    {% if obj.usari = user %}
+                    {% if obj.usuari = user %}
                         <div style="float: right">
                         {{ obj.text  }}
                         </div>
