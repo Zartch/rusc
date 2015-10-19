@@ -210,7 +210,7 @@ def postCreateView(request, pk=None):
         subscriptors.update(f.get_subscriptors())
         for usr in subscriptors:
             notify.send(f.autor, recipient= usr, verb=u''+verbn+'', action_object=f,
-                 description=f.titol + " <br /> " + str(f.etiquetes.all()), target=f.cela)
+                 description=f.titol + "  (" + str(f.etiquetes.all())+")", target=f.cela)
 
             #Enviem el mail als subscrits, que tinguin activada la opció del mail
             up = UserProfile.objects.filter(user=usr, cela = f.cela).exclude(mailConf='N').first()
