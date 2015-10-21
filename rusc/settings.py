@@ -67,6 +67,7 @@ INSTALLED_APPS = (
     'cela',
     'rusc.faq',
     'cela.moderaciomodels',
+    'missatgeModeracio',
 
 
 )

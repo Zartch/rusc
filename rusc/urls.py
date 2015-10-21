@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^busk/', include('buscador.urls')),
     url(r'^recurs/', include('recurs.urls')),
     url(r'^etiqueta/', include('etiqueta.urls')),
+    url(r'^missatgeModeracio/', include('missatgeModeracio.urls')),
     url(r'^messages/', include('django_messages.urls')),
     url('^inbox/notifications/', include('notifications.urls')),
     url(r'^faq/', include('rusc.faq.urls')),

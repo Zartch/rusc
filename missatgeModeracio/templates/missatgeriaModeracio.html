@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load micawber_tags %}
+
+{% block content %}
+
+    {% if tipus == 'Post' %}
+        <h4>Post a moderar:</h4>
+        {% with obj=objecte %}
+            <div class="div_post">
+                {% include "post_extended.html" %}
+            </div>
+        {% endwith %}
+
+    {% elif tipus == 'Recurs' %}
+        <h4>Recurs a moderar:</h4>
+        {{ objecte.url }}
+        {{ objecte.descripcio }}
+    {% endif %}
+
+
+
+
+    <h4>Mensajes:</h4>
+    {% for obj in missatge %}
+        <div id="div_mess_wraper" style="width: 400px;">
+            <div id="div_mess_header">
+                     <small>{{ obj.datahora }}-{{ obj.author }}</small>
+            </div>
+            <div id="div_mess_content">
+                <div id="div_mess_text">
+
+
+                    {% if obj.author = user %}
+                        <div style="float: right">
+                        {{ obj.body  }}
+                        </div>
+                    {% else %}
+                        <div style="float: left">
+                        {{ obj.body  }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        <hr />
+        </div>
+
+    {% endfor %}
+
+    <div id="div_post_respondre">
+        <form method="post" action="" class="" >{% csrf_token %}
+            <input type="textarea" name="textmissatge" />
+            <input type="submit" value="Send">
+        </form>
+    </div>
+
+{% endblock %}
