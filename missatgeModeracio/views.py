@@ -34,9 +34,13 @@ def moderacioPost(request, pk, tipus):
     miss = request.POST.get('textmissatge' or None)
     if miss:
         p = objecte.missModeracio.create(author=user, body=miss)
-        #posem el post en el estat de moderació 'en tramit
-        objecte.moderacio= 'E'
-        objecte.save()
+        #posem el post en el estat de moderació 'en tramit, només si el usari es moderador
+        #(això es per que els usaris co tornin a posar en estat E un post ja rebutjat)
+        #Però que si siguin capaços de fero els admins
+        cela = objecte.cela
+        if request.user in cela.moderadors.all():
+            objecte.moderacio= 'E'
+            objecte.save()
 
         #El usuari ha de rebre una notificació quan un missatge es creat al debat de moderació de un post
         notify.send(user, recipient = receptor, verb = u'comentat el missatge de moderacio', action_object = objecte,
