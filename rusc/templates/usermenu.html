@@ -176,7 +176,11 @@
                             {% if notif.unread %}
                                 *
                             {% endif %}
-                             {{ notif.actor }} {{ notif.actor_object_id  }} ha {{ notif.verb }} el {{ notif.action_object_content_type }} {{ notif.action_object_object_id }} : {{ notif.description|slice:":40" }}
+                             Qui:{{ notif.actor }} (pk: {{ notif.actor_object_id  }})
+                                ha: {{ notif.verb }}
+                                el: {{ notif.action_object_content_type }} (pk:{{ notif.action_object_object_id }})
+                                {{ notif.description|slice:":40" }}
+
                             </div>
                         </a>
                       </td>

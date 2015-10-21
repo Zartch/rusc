@@ -5,7 +5,12 @@ from django.db import models
 
 #Classe per controlar els missatges de moderació
 class ModeracioMissatge(models.Model):
-    usari = models.ForeignKey(User)
+    usuari = models.ForeignKey(User)
     post = models.ForeignKey(Post)
     text = models.TextField()
     datahora =models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text
+
+#http://stackoverflow.com/questions/20895429/how-exactly-do-django-content-types-work

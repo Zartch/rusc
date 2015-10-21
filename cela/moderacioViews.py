@@ -5,21 +5,62 @@ from django.http import HttpResponse
 from usuari.models import UserProfile
 from django.contrib import messages as notif_messages
 from cela.moderaciomodels import ModeracioMissatge
+from notifications import notify
 
 
+#Vista de la missatgeria entre admin-user de la moderació de un post conctret
 def moderacioPost(request, pkpost):
     post = Post.objects.filter(pk=pkpost).first()
-
+    user = request.user
     miss = request.POST.get('textmissatge' or None)
+
     if miss:
-        ModeracioMissatge.objects.create(usari= request.user, post= post, text = miss)
+        m = ModeracioMissatge.objects.create(usuari= user, post= post, text = miss)
+        #posem el post en el estat de moderació 'en tramit
         post.moderacio= 'E'
         post.save()
+
+        #El usuari ha de rebre una notificació quan un missatge es creat al debat de moderació de un post
+        notify.send(user, recipient= post.autor, verb=u'comentat', action_object= m ,
+                 description=' sobre el post '+ post.titol , target = post.cela)
 
     missatge = ModeracioMissatge.objects.filter(post=post)
 
     return render(request, "moderacio/missatgeriaModeracioPost.html", {'post':post, 'missatge': missatge})
 
+#Vista per acceptar o rebutjar post, en cas de acceptació tornem a la mateixa pagina
+#En cas de negació enviém un missatge al usuari per tal de donar la explicació de per que rebutjem el post
+def acceptarRebutjarPost(request,pkpost, action):
+    cela = get_cela(request)
+    posts = Post.objects.filter(cela = cela).exclude(moderacio='A').exclude(moderacio='R')
+
+    post = Post.objects.filter(pk=pkpost).first()
+
+    verb = 'Error'
+    descripcio= ""
+    if action == 'cancel':
+        text_rebutg =  request.POST.get('text') or None
+        user = request.user
+        if text_rebutg:
+            ModeracioMissatge.objects.create(post= post, usuari = user, text= text_rebutg)
+            post.moderacio = 'R'
+            verb = 'Rebutjat'
+            descripcio = text_rebutg
+        else:
+            a=""
+            notif_messages.add_message(request, notif_messages.warning, "S'ha de indicar una raò per el rebutg del post" , 'error')
+    elif action == 'OK':
+        post.moderacio = 'A'
+        verb = 'acteptat'
+        descripcio = post.text
+
+    #El usuari ha de rebre una notificació quan un missatge es creat al debat de moderació de un post
+    notify.send(request.user, recipient= post.autor, verb=u' '+verb+' ', action_object= post ,
+             description=  descripcio , target = post.cela)
+
+    post.save()
+    notif_messages.add_message(request, notif_messages.INFO, "Moderació realitzada" , 'success')
+    return render(request, "moderacio/mode_post.html", {'posts':posts} )
 
 def peticioAcces(request):
     cela = get_cela(request)
@@ -33,7 +74,7 @@ def moderacioPostView(request):
 
     ChekUsuariCellAdmin(request)
     cela = get_cela(request)
-    posts = Post.objects.filter(moderacio='E', cela = cela)
+    posts = Post.objects.filter(cela = cela).exclude(moderacio='A').exclude(moderacio='R')
 
     #Recollim els checkbboxes dels post
     frm_modepost = request.POST.getlist('chk_post')
