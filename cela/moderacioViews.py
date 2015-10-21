@@ -4,29 +4,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from usuari.models import UserProfile
 from django.contrib import messages as notif_messages
-from cela.moderaciomodels import ModeracioMissatge
 from notifications import notify
 
-
-#Vista de la missatgeria entre admin-user de la moderació de un post conctret
-def moderacioPost(request, pkpost):
-    post = Post.objects.filter(pk=pkpost).first()
-    user = request.user
-    miss = request.POST.get('textmissatge' or None)
-
-    if miss:
-        m = ModeracioMissatge.objects.create(usuari= user, post= post, text = miss)
-        #posem el post en el estat de moderació 'en tramit
-        post.moderacio= 'E'
-        post.save()
-
-        #El usuari ha de rebre una notificació quan un missatge es creat al debat de moderació de un post
-        notify.send(user, recipient= post.autor, verb=u'comentat', action_object= m ,
-                 description=' sobre el post '+ post.titol , target = post.cela)
-
-    missatge = ModeracioMissatge.objects.filter(post=post)
-
-    return render(request, "moderacio/missatgeriaModeracioPost.html", {'post':post, 'missatge': missatge})
 
 #Vista per acceptar o rebutjar post, en cas de acceptació tornem a la mateixa pagina
 #En cas de negació enviém un missatge al usuari per tal de donar la explicació de per que rebutjem el post
@@ -34,7 +13,7 @@ def acceptarRebutjarPost(request,pkpost, action):
     cela = get_cela(request)
     posts = Post.objects.filter(cela = cela).exclude(moderacio='A').exclude(moderacio='R')
 
-    post = Post.objects.filter(pk=pkpost).first()
+    post = Post.objects.get(pk=pkpost)
 
     verb = 'Error'
     descripcio= ""
@@ -42,7 +21,7 @@ def acceptarRebutjarPost(request,pkpost, action):
         text_rebutg =  request.POST.get('text') or None
         user = request.user
         if text_rebutg:
-            ModeracioMissatge.objects.create(post= post, usuari = user, text= text_rebutg)
+            post.missModeracio.create(author = user, body= text_rebutg)
             post.moderacio = 'R'
             verb = 'Rebutjat'
             descripcio = text_rebutg

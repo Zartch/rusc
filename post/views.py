@@ -20,7 +20,7 @@ def forum(request):
     cela= get_cela(request)
     formEtqs = newEtiquetaForm(request.POST or None, request= request)
     #Filtrem els posts a aparèixer i utilitzem el manager pq afegeixi la columna on es dona el nºtotal de vots
-    posts = Post.with_votes.get_queryset().filter(pare=None, cela = cela.pk).exclude(moderacio='R').filter(recurs=None).order_by('-rank_score')
+    posts = Post.with_votes.get_queryset().filter(pare=None, cela = cela.pk).exclude(moderacio='R') #.filter(recurs=None).order_by('-rank_score')
     #Generem la queryset on es recullen tots els vots del passat i la tornem llistat de nombres
     #això ens serveix per saber si l'usuari ha votat abans o no al post en concret
     if not request.user.is_anonymous():
