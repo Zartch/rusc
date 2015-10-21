@@ -7,6 +7,8 @@
             function modpost(action, pkpost){
                var retVal = prompt("Raò rebutj : ", "");
                $.post('/cela/acceptarRebutjarPost/'+pkpost+"/"+action, {'text': retVal});
+               //setTimeout(function(){},4000);
+               //location.reload(false);
             }
       </script>
 {% endblock %}

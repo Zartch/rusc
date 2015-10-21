@@ -21,13 +21,12 @@ def acceptarRebutjarPost(request,pkpost, action):
         text_rebutg =  request.POST.get('text') or None
         user = request.user
         if text_rebutg:
-            post.missModeracio.create(author = user, body= text_rebutg)
+            post.missModeracio.create(author = user, body = text_rebutg)
             post.moderacio = 'R'
             verb = 'Rebutjat'
             descripcio = text_rebutg
         else:
-            a=""
-            notif_messages.add_message(request, notif_messages.warning, "S'ha de indicar una raò per el rebutg del post" , 'error')
+            notif_messages.add_message(request, notif_messages.warning, "S'ha de indicar una raò per el rebutg del post", 'error')
     elif action == 'OK':
         post.moderacio = 'A'
         verb = 'acteptat'
