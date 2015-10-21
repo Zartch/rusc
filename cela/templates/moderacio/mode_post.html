@@ -45,7 +45,7 @@
                     <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
                     </br>
                     <a href="{% url 'acceptarRebutjarPost'  post.pk 'OK' %}" class="btn btn-success btn-xs" >OK</a>
-                    <a href="{% url 'missatgeriaModeracio' post.pk %}" class="btn btn-info btn-xs">Let's talk</a>
+                    <a href="{% url 'missModeracio' post.pk 'Post' %}" class="btn btn-info btn-xs">Let's talk</a>
                     <input type="button" class="btn btn-danger btn-xs" value="NO" onClick="modpost('cancel', {{ post.pk }});" />
                 </td>
                 <td>
