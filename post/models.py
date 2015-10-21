@@ -9,6 +9,8 @@ from cela.models import Cela,get_cela
 from django.db.models import Count
 from django.utils.timezone import now
 from django.db.models import signals
+from django.contrib.contenttypes import generic
+from missatgeModeracio.models import ModComment
 #from cela.moderaciomodels import ModeracioMissatge
 
 class PostVoteCountManager(models.Manager):
@@ -39,16 +41,18 @@ class Post(models.Model):
     with_votes =PostVoteCountManager()
     objects = models.Manager()
 
+    missModeracio = generic.GenericRelation(ModComment)
+
     def __str__(self):
         return self.titol
 
-    # #retorna false si el ultim missatge de moderació ha estat ecrit per el usuari actual
-    # def mmoderacio_mis_last(self):
-    #     missatge = ModeracioMissatge.objects.filter(post=self).last
-    #     user = self.request.user
-    #     if self.usuari == missatge.usuari:
-    #         return False
-    #     return True
+    #retorna false si el ultim missatge de moderació ha estat ecrit per el usuari actual
+    def mmoderacio_mis_last(self):
+        missatge = ModComment.objects.filter(post=self).last
+        user = self.request.user
+        if self.usuari == missatge.author:
+            return False
+        return True
 
     def get_absolute_url(self):
         return reverse('post', args=[str(self.get_root())] )
