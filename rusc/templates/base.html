@@ -29,7 +29,11 @@
     </style>
 
      <div id="sidebar">
+         {% if cela != '0' %}
 			{% include "leftmenu.html" %}
+         {% else %}
+             {% include "leftmenurusc.html" %}
+         {% endif %}
 	</div>
 
     <div id="div_header" >
