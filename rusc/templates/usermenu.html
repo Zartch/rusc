@@ -153,7 +153,7 @@
     <div id="notificationContainer">
         <div id="notificationTitle">
             Notifications
-            <a href="{% url 'mark_all_as_read' %}" style="float: right" >Mark All As Read</a>
+            <a href="{% url 'notifications:mark_all_as_read' %}" style="float: right" >Mark All As Read</a>
         </div>
         <div id="notificationsBody" class="notifications  table table-hover">
             {% for notif in notifications_user %}
@@ -198,7 +198,7 @@
 
 
         <div id="notificationFooter">
-            <a href="{% url 'all' %}"> See All</a>
+            <a href="{% url 'notifications:all' %}"> See All</a>
         </div>
     </div>
 

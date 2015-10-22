@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^etiqueta/', include('etiqueta.urls')),
     url(r'^missatgeModeracio/', include('missatgeModeracio.urls')),
     url(r'^messages/', include('django_messages.urls')),
-    url('^inbox/notifications/', include('notifications.urls')),
+    url('^inbox/notifications/', include('notifications.urls', namespace="notifications")),
     url(r'^faq/', include('rusc.faq.urls')),
 
     #url(r'^boot/', include('etiqueta.urls')),
