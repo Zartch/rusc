@@ -29,7 +29,7 @@
             <input type="submit" value="GO" class="btn-primary btn" />
         </div>
         <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-hover">
         <thead>
                 <tr>
                     <th><input type="checkbox" class="chk_all" name="chk_all" /></th>
@@ -44,9 +44,9 @@
 
             {% endif %}
             {% if post.mmoderacio_mis_last != user %}
-                <tr class = "warning" >
+                <tr class = "warning" onclick="document.location = '{% url 'missModeracio' post.pk 'Post' %}';" >
             {% else %}
-                <tr class = "active" >
+                <tr class = "active" onclick="document.location = '{% url 'missModeracio' post.pk 'Post' %}';" >
             {% endif %}
 
                 <td>

@@ -3,7 +3,7 @@
 {% block content %}
 
     {% if user in cela.moderadors.all %}
-        <a href="{% url 'faq_nova' %}">Nova Pregunta</a>
+        <a href="{% url 'faq_nova' %}" class="btn btn-primary">Nova Pregunta</a>
         <br />
     {% endif %}
 
@@ -15,7 +15,7 @@
         <ul>
         {% for moderador in cela.moderadors.all %}
             <li>
-                <a href="{% url 'perfil_user' moderador.pk %}">{{ moderador }}</a> <br />
+                <a href="{% url 'perfil_user' moderador.pk %}" class="btn btn-default" ><span class='glyphicon glyphicon-user'> </span> &nbsp;{{ moderador }}</a> <br />
             </li>
         {%  endfor %}
         </ul>
