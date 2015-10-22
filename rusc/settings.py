@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'registration',
     'autocomplete_light',
     'micawber.contrib.mcdjango',
+    'missatgeModeracio',
     'post',
     'etiqueta',
     'recurs',
@@ -67,7 +68,7 @@ INSTALLED_APPS = (
     'cela',
     'rusc.faq',
     'cela.moderaciomodels',
-    'missatgeModeracio',
+
 
 
 )
