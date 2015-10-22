@@ -121,6 +121,12 @@ a {
     z-index: 10;
 }
 
+.btn-es {
+    padding: 1px 5px;
+    font-size: 7px;
+    line-height: 0.5;
+    border-radius: 1px;
+}
 /*LEFT MENU */
 /*
 .row{
