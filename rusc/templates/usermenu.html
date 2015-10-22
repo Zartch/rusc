@@ -71,6 +71,15 @@
     padding:0px 0px 0px 0px !important;
     min-height:300px;
 }
+#notificationsBody {
+    direction: ltr;
+    max-height:150px;
+    overflow-y: auto;
+    font-size: 11px;
+    overflow-x: hidden;
+    white-space:initial;
+
+ }
 #notificationFooter {
     background-color: #e9eaed;
     text-align: center;
@@ -106,22 +115,14 @@
 .div_notifications {
     border: 1px solid rgba(100, 100, 100, 0.4);
     width: 100%;
-
+    margin-bottom: -25px;
+    margin-top: -5px;
 }
 
 .inline {
     display: inline;
 }
 
-#notificationsBody {
-    direction: ltr;
-    max-height:150px;
-    overflow-y: auto;
-    font-size: 11px;
-    overflow-x: hidden;
-    white-space:initial;
-
- }
 
 .div_notification_text {
     font-size: 11px;
@@ -154,11 +155,15 @@
             Notifications
             <a href="{% url 'mark_all_as_read' %}" style="float: right" >Mark All As Read</a>
         </div>
-        <div id="notificationsBody" class="notifications">
+        <div id="notificationsBody" class="notifications  table table-hover">
             {% for notif in notifications_user %}
-                <div class="div_notifications " >
-                 <table>
-                    <tr>
+                 <div class="div_notifications" >
+                 <table class="table table-hover">
+                    {% if notif.unread %}
+                        <tr class="active">
+                    {% else %}
+                        <tr>
+                    {% endif %}
                       <td>
                         <div class="div_notification_image inline">
                             <a href="{% url 'perfil_user' notif.actor_object_id %}">
@@ -171,11 +176,9 @@
                         </div>
                       </td>
                       <td>
+                        <input type="button" title="Marca com llegit" class="btn btn-default btn-es  pull-right" value="x" />
                         <a href="{% url 'post' notif.action_object_object_id  %}">
                             <div class="div_notification_text inline">
-                            {% if notif.unread %}
-                                *
-                            {% endif %}
                              Qui:{{ notif.actor }} (pk: {{ notif.actor_object_id  }})
                                 ha: {{ notif.verb }}
                                 el: {{ notif.action_object_content_type }} (pk:{{ notif.action_object_object_id }})
@@ -183,6 +186,7 @@
 
                             </div>
                         </a>
+
                       </td>
                     </tr>
                  </table>
