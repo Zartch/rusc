@@ -46,13 +46,10 @@ class Post(models.Model):
     def __str__(self):
         return self.titol
 
-    #retorna false si el ultim missatge de moderació ha estat ecrit per el usuari actual
+    #retorna el usuari del ultim missatge de moderació
     def mmoderacio_mis_last(self):
-        missatge = ModComment.objects.filter(post=self).last
-        user = self.request.user
-        if self.usuari == missatge.author:
-            return False
-        return True
+        missatge =self.missModeracio.last()
+        return missatge.author
 
     def get_absolute_url(self):
         return reverse('post', args=[str(self.get_root())] )

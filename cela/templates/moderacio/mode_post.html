@@ -38,7 +38,15 @@
                 </tr>
             </thead>
         {% for post in posts %}
-            <tr>
+            {% if post.moderacio == 'E' %}
+
+            {% endif %}
+            {% if post.mmoderacio_mis_last != user %}
+                <tr class = "warning" >
+            {% else %}
+                <tr class = "active" >
+            {% endif %}
+
                 <td>
                     <input type="checkbox" name="chk_post" value="{{ post.pk }}" />
                 </td>
