@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^messages/', include('django_messages.urls')),
     url('^inbox/notifications/', include('notifications.urls', namespace="notifications")),
     url(r'^faq/', include('rusc.faq.urls')),
+    url(r'^linkMeta/', include('linksMeta.urls')),
 
     #url(r'^boot/', include('etiqueta.urls')),
     # url(r'^', views.ruscView),
