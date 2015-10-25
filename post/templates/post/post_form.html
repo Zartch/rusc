@@ -9,13 +9,10 @@
 
     <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
     <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/extracioLinks.js' %}"></script>
+
     <script>
-        $( document ).ready(function() {
-            $(".etiquetes").select2({tags: true});
-{#            $('.select2-search__field').on("keydown", function(e) {#}
-{#                $(".etiquetes").select2({data:[{id:0,text:"enhancement"}]});#}
-{#            });#}
-        });
+
     </script>
 
 {% endblock  %}
@@ -47,7 +44,7 @@
         {% csrf_token %}
         {{ formPost.as_p }}
 
-
+        <div id="div_recursos"></div>
         <table>
         <tbody>
         {% for recurs_form in recurs_formset %}
@@ -83,31 +80,14 @@
         {% endfor %}
         </tbody>
         </table>
+
         {{ recurs_formset.management_form }}
         {% if recurs_formset.non_form_errors %}
             {% for error in link_formset.non_form_errors %}
                 {{ error|escape }}
             {% endfor %}
         {% endif %}
-        <table>
-            <tbody>
-            <tr>
-                <td>
-                    <div id="result1"></div>
-                </td>
-                <td>
-        <div id="result2"></div>
-                </td>
-                <td>
-        <div id="result3"></div>
-                </td>
-                <td>
-        <div id="result4"></div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
+        <div id="links_results"></div>
         <p class="submit"><input type="submit" class="btn btn-primary" value="OK"></p>
     </form>
 
