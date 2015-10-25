@@ -143,7 +143,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'rusc/static'),)
+STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static').replace('\\','/'),] #os.path.join(BASE_DIR, 'rusc/static'),)
 STATICFILES_DIRS = STATICFILES_DIRS
 
 EMAIL_USE_TLS = True
