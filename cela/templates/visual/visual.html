@@ -103,9 +103,10 @@ ul.connection.hidden {
         <input type="checkbox" name="chk_folk" />
         <input type="submit" value="GO" class="btn-primary btn" />
     </form>
+
     <div id='container'>
-        <div id='graph'></div>
         <div id='notes'></div>
+        <div id='graph'></div>
     </div>
 
 <script>
@@ -114,8 +115,8 @@ ul.connection.hidden {
 // a size that's convenient for displaying the graphic on
 // http://jsDataV.is
 
-var width = 436,
-    height = 476;
+var width = window.innerWidth - (window.innerWidth/3),
+    height = window.innerHeight;
 
 // Visual properties of the graph are next. We need to make
 // those that are going to be animated accessible to the
