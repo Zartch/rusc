@@ -60,10 +60,30 @@ class Etiqueta(models.Model):
 
         return etq_lst
 
-
+    def get_subdits(self):
+        pks = Tesauro.objects.filter(etq1=self).values_list('etq2',flat=True)
+        subdits = Etiqueta.objects.filter(pk__in=pks).all()
+        return subdits
 
     def __str__(self):
         return self.nom
+
+
+
+def jsonSubdits(etq, maxRec = 10):
+    json = {}
+    if maxRec >0:
+        maxRec -= 1
+        json['name']= etq.nom
+        json['size']= 800
+        json['children'] = []
+
+        for subdit in etq.get_subdits():
+            fills = json['children']
+            fills.append(jsonSubdits(subdit,maxRec))
+            json['children'] = fills
+    return json
+
 
 class Tesauro(models.Model):
 
