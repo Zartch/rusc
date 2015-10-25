@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from .models import Cela, get_cela
 from post.models import Post,folksonomia
-from etiqueta.models import Etiqueta, Tesauro
+from etiqueta.models import Etiqueta, Tesauro, jsonSubdits
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView
 from .forms import celaForm
@@ -139,7 +139,29 @@ def validateEmail( email ):
 
 from django.http import JsonResponse
 def tesauro_jerarquic_json(request):
-    data = {"name": "AUTOMÓVIL", "size": 3534, "children": [{"name": "Sedan", "size": 6714},{"name": "Todoterreno", "size": 743}]}
+    #data = {"name": "AUTOMÓVIL", "size": 3534, "children": [{"name": "Sedan", "size": 6714},{"name": "Todoterreno", "size": 743}]}
+    data = {"name": get_cela(request).pregunta, "size": 200, "children":[]}
+
+    #lista de etiquetas que forman parte de un tesauro jerarquico
+    arbre = Tesauro.objects.filter(tipo='J')
+    #selecionar els pares de tots
+    #fem un llistat de id de etiquetes que son formen part de una relació jerarquica
+    etqforts = {}
+    etqdebil = {}
+    for tes in arbre:
+        etqforts[tes.etq1] = 0
+        etqdebil[tes.etq2] = 0
+
+    #restem la llista de debils als forts, per obtenir aquells que mai han sigut debils
+    #hi son a les 2 llistas:?
+    #pares={ k:int(etqforts[k]) - int(etqdebil[k]) for k in etqdebil if k in etqdebil }
+    pares = set(etqforts) - set(etqdebil)
+    for etq in pares:
+        childs = data['children']
+        nens = jsonSubdits(etq)
+        childs.append(nens)
+        data['children'] = childs
+
 
     return JsonResponse(dict(data), safe=False)
 
