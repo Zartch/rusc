@@ -2,7 +2,7 @@ import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rusc.settings")
 
-from post.models import  Post
+from rusc.post.models import  Post
 
 def rank_all():
     for link in Post.with_votes.all():
