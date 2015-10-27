@@ -3,8 +3,10 @@ from notifications import notify
 from django.shortcuts import get_object_or_404
 
 from rusc.post.models import Post
-from recurs.models import Recurs
-from etiqueta.models import Etiqueta
+from rusc.recurs.models import Recurs
+from rusc.etiqueta.models import Etiqueta
+
+
 
 
 

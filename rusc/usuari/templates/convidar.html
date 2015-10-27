@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{%  load staticfiles %}
+{% block headers %}
+  <script>
+  $(function() {
+    var availableTags = {{ usuaris|safe }};
+    function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+
+    $( "#usuaris" )
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            availableTags, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      });
+  });
+  </script>
+{% endblock %}
+{% block content %}
+
+    <form action="" method="post">{% csrf_token %}
+        <h3>Convidar Usuaris a la cel·la</h3>
+        {{ usuaris }}
+        <div class="ui-widget">
+          <label for="usuaris">Usuaris RUSC: </label>
+          <input id="usuaris" class="form-control" name="usuaris" size="50">
+        </div>
+        <h3>Convidar Usuaris - via Mail a la cel·la</h3>
+        <div class="ui-widget">
+          <label for="mails">EMails: </label>
+          <input id="mails" class="form-control" name="mails" size="50">
+        </div>
+
+        <input class="btn-primary btn" type="submit" value="Convidar">
+    </form>
+{% endblock %}

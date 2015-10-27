@@ -21,21 +21,19 @@ from django.views.generic import RedirectView
 
 autocomplete_light.autodiscover()
 admin.autodiscover()
-
-from rusc import views
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls), name="admin"),
     url(r'^forum/', include('rusc.post.urls')),
-    url(r'^cela/', include('rusc.cela.urls')),
-    url(r'^rusc/', views.ruscView, name="rusc"),
+    url(r'^cela/', include('cela.urls')),
+    url(r'^rusc/', include('cela.urls')),
     url(r'^usuari/', include('rusc.usuari.urls')),
     url(r'^autocomplete/', include('autocomplete_light.urls')),
     #url(r'^accounts/register/$', RegistrationView.as_view(form_class = ExRegistrationForm), name = 'registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
-    url(r'^busk/', include('rusc.buscador.urls')),
+    url(r'^busk/', include('buscador.urls')),
     url(r'^recurs/', include('rusc.recurs.urls')),
     url(r'^etiqueta/', include('rusc.etiqueta.urls')),
     url(r'^missatgeModeracio/', include('missatgeModeracio.urls')),

@@ -133,7 +133,7 @@
 </style>
 
 
-     <a href="/rusc/usuari/perfil"><span class='glyphicon glyphicon-user'></span> &nbsp;{{ user.username }}</a>
+     <a href="{% url 'mi_perfil' %}"><span class='glyphicon glyphicon-user'></span> &nbsp;{{ user.username }}</a>
      <a href="{% url 'auth_logout' %}?next=/rusc/"><span class="glyphicon glyphicon-log-out"></span></a><br />
     {% inbox_count as unread_mes_count %}
     {% if unread_mes_count > 0 %}
@@ -177,7 +177,7 @@
                       </td>
                       <td>
                         <input type="button" title="Marca com llegit" class="btn btn-default btn-es  pull-right" value="x" />
-                        <a href="{% url 'rusc.post' notif.action_object_object_id  %}">
+                        <a href="{% url 'post' notif.action_object_object_id  %}">
                             <div class="div_notification_text inline">
                              Qui:{{ notif.actor }} (pk: {{ notif.actor_object_id  }})
                                 ha: {{ notif.verb }}

@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+from django.db.models import Q
+from django.shortcuts import render, redirect, get_object_or_404
+
+from rusc.post.models import Post
+from rusc.etiqueta.models import Etiqueta
+from rusc.recurs.models import Recurs
+from cela.models import Cela
+
+
+def buskador(request):
+
+    searchString = request.POST.get('searchString', 0)
+    posts = Post.objects.filter(Q(titol__icontains = searchString) | Q(text__icontains = searchString) )
+    etiquetes = Etiqueta.objects.filter(nom__icontains = searchString)
+    recursos = Recurs.objects.filter(Q(url__icontains = searchString))
+
+    return render(request, "buscador.html", {'posts': posts, 'etiquetes': etiquetes, 'recursos': recursos})
+
+
+def buskadorCela(request):
+
+    cela_pk = request.session.get('cell', 'NoCell')
+    if cela_pk == 'NoCell':
+        redirect('/rusc')
+    cela = get_object_or_404(Cela, pk=cela_pk)
+    searchString = request.POST.get('searchString', 0)
+    #ToDo Afegir Cela al Buscador, Django no permet Ands i Ors, Construir query manualment
+    posts = Post.objects.filter(Q(titol__icontains = searchString) | Q(text__icontains = searchString, cela=cela) )
+    etiquetes = Etiqueta.objects.filter( Q(nom__icontains = searchString) | Q(descripcio__icontains = searchString, cela=cela))
+    recursos = Recurs.objects.filter(Q(url__icontains = searchString, cela=cela))
+
+    return render(request, "buscador.html", {'posts': posts, 'etiquetes': etiquetes, 'recursos': recursos, 'cela': cela})

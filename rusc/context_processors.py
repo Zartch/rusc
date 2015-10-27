@@ -1,5 +1,5 @@
 __author__ = 'Zartch'
-from rusc.cela.models import get_cela
+from cela.models import get_cela
 from rusc.usuari.models import UserProfile
 
 def notifications_user(request):

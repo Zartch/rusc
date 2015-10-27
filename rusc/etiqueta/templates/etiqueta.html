@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% csrf_token %}
+{% block headers %}
+    <script src="{% static 'js/vote.js' %}"></script>
+{% endblock %}
+{% block content %}
+
+
+
+<div id="recurs_wraper" style="display: inline-block; margin:20px; ">
+        <div id="div_etiqueta">
+            <span class='glyphicon glyphicon-tag btn btn-info btn-lg'><b>{{ etiqueta.nom}}</b></span>
+               <a href="{{ etiqueta.wiki }}">{{ etiqueta.wiki }}</a>
+
+
+        <h3>Relacions</h3>
+        <div class="list-group">
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">Relació a través de altres post (nº coincidencias):</h4>
+                <p class="list-group-item-text btn-group">
+                    {% for Key, value in tesauro.relacio.items %}
+                        <a href="{% url 'nom_etiqueta' Key cela.slug %}" class="btn btn-default btn-group-xs"> <span class='glyphicon glyphicon-tag'> {{ Key }} ({{ value }}) </span> </a>
+                {% endfor %}
+                </p>
+            </div>
+            <div class="list-group-item">
+                <b class="list-group-item-heading">sinonims:</b>
+                <p class="list-group-item-text btn-group">
+                    {% for s in tesauro.sinonims %}
+                    {% if not etiqueta.nom == s %}
+                        <a href="{% url 'nom_etiqueta' s cela.slug %}" class="btn btn-default btn-group-xs"> <span class='glyphicon glyphicon-tag' > {{ s }}</span>  </a>
+                    {% endif %}
+                {% endfor %}
+                </p>
+            </div>
+            <div class="list-group-item">
+                <b class="list-group-item-heading">antònims:</b>
+                <p class="list-group-item-text btn-group">
+                    {% for s in tesauro.antonims %}
+                    {% if not etiqueta.nom == s %}
+                        <a href="{% url 'nom_etiqueta' s cela.slug %}" class="btn btn-default btn-group-xs"> <span class='glyphicon glyphicon-tag' > {{ s }}</span>  </a>
+                    {% endif %}
+                {% endfor %}
+                </p>
+            </div>
+            <div class="list-group-item">
+                <b class="list-group-item-heading">associat:</b>
+                <p class="list-group-item-text btn-group">
+                    {% for s in tesauro.associat %}
+                    {% if not etiqueta.nom == s %}
+                        <a href="{% url 'nom_etiqueta' s cela.slug %}" class="btn btn-default btn-group-xs"> <span class='glyphicon glyphicon-tag' > {{ s }}</span>  </a>
+                    {% endif %}
+                {% endfor %}
+                </p>
+            </div>
+            <div class="list-group-item">
+                <b class="list-group-item-heading">conte:</b>
+                <p class="list-group-item-text btn-group">
+                    {% for s in tesauro.conte %}
+                    {% if not etiqueta.nom == s %}
+                        <a href="{% url 'nom_etiqueta' s cela.slug %}" class="btn btn-default btn-group-xs"> <span class='glyphicon glyphicon-tag' > {{ s }}</span>  </a>
+                    {% endif %}
+                {% endfor %}
+                </p>
+            </div>
+            <div class="list-group-item">
+                <b class="list-group-item-heading">contingut per:</b>
+                <p class="list-group-item-text btn-group">
+                    {% for s in tesauro.contingut %}
+                    {% if not etiqueta.nom == s %}
+                        <a href="{% url 'nom_etiqueta' s cela.slug %}" class="btn btn-default btn-group-xs"> <span class='glyphicon glyphicon-tag' > {{ s }}</span>  </a>
+                    {% endif %}
+                {% endfor %}
+                </p>
+            </div>
+        </div>
+
+
+
+
+{#        </div>#}
+{#        <div id="div_relacions_etiquetes"  style="float: left; border: 2px solid #0E0E0E; margin-left: 30px;" >#}
+{#           <div>#}
+              &nbsp; /relació amb: &nbsp;
+                {% for s in posts_rel %}
+                    {% if not etiqueta.nom == s %}
+                        <a href="{% url 'nom_etiqueta' s cela.slug %}">  {{ s }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+
+              &nbsp; /sinonims: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "S" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "S" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /antònims: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "A" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "A" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /associat a: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "B" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "B" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /conté: &nbsp;
+                {% for s in tesaurosforts %}
+                    {% if s.tipo == "J" %}
+                    <a href="{% url 'nom_etiqueta' s.etq2|slugify cela.slug  %}">   {{ s.etq2 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+              &nbsp; /contingut per: &nbsp;
+                {% for s in tesaurosdebils %}
+                    {% if s.tipo == "J" %}
+                    <a href="{% url 'nom_etiqueta' s.etq1|slugify cela.slug  %}">   {{ s.etq1 }}  </a> , &nbsp;
+                    {% endif %}
+                {% endfor %}
+{#                <table class="table-striped">#}
+{#                <thead>#}
+{#                <tr>#}
+{#                    <th>Node Fort &nbsp;</th>#}
+{#                    <th>Node dèbil  &nbsp;</th>#}
+{#                    <th>Tipus vincle &nbsp; </th>#}
+{#                </tr>#}
+{#                </thead>#}
+{#               {% for tesauro in tesauros %}#}
+{#                   <tr>#}
+{#                   <td>{{ tesauro.etq1 }}</td>#}
+{#                    <td>{{ tesauro.etq2 }}</td>#}
+{#                    <td>{{ tesauro.tipo }}</td>#}
+{#                   </tr>#}
+{#               {% endfor %}#}
+{#                </table>#}
+{#                Relacions tesauro:#}
+{#                {% for key,value in etiqueta.get_list_tesauros.items %}#}
+{#                    {{ key }} -- {{ value }} <br/>#}
+{#                {% endfor %}#}
+
+                </div>
+{#           </div>#}
+{#        </div>#}
+    </div>
+
+      {%  include "llistatPost.html" %}
+
+{% endblock %}

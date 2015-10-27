@@ -3,7 +3,7 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
-from rusc.cela.models import Cela
+from cela.models import Cela
 
 
 class Pregunta(models.Model):

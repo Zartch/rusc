@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock %}
+{% block content %}
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#PostEnTramit">Posts EnTramit</a></li>
+        <li><a data-toggle="tab" href="#PostRebutjats">Post Rebutjats</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="PostEnTramit" class="tab-pane fade in active">
+            <h3>Posts EnTramit</h3>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Titol</th>
+                                <th>Text</th>
+                                <th>Etiquetes</th>
+                            </tr>
+                        </thead>
+                {% for post in post_entramit %}
+
+                        {% if post.mmoderacio_mis_last != user %}
+                            <tr class = "warning"   onclick="document.location = '{% url 'missModeracio' post.pk 'Post' %}';" >
+                        {% else %}
+                            <tr class = "active"   onclick="document.location = '{% url 'missModeracio' post.pk 'Post' %}';" >
+                        {% endif %}
+
+                            <td><a href="{% url 'missModeracio' post.pk 'Post' %}" ><span class='glyphicon glyphicon-envelope'></span> </a></td>
+                            <td>
+                                <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
+                            </td>
+                            <td>
+                                {{ post.text}}
+                            </td>
+                            <td>
+                                {% for etiqueta in obj.etiquetes.all %}
+                                    <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn  btn-default btn-xs">
+                                    <span class='glyphicon glyphicon-tag'>
+                                         {{ etiqueta.nom}}
+                                    </span>
+                                    </a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                {%  endfor %}
+                </table>
+                </div>
+        </div>
+
+        <div id="PostRebutjats" class="tab-pane fade">
+            <h3>Post Rebutjats</h3>
+            <div class="table-responsive">
+                <table class="table table-hover" >
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Titol</th>
+                            <th>Text</th>
+                            <th>Etiquetes</th>
+                        </tr>
+                    </thead>
+            {% for post in post_rebutjats %}
+                        {% if post.mmoderacio_mis_last != user %}
+                        <tr class = "warning"  onclick="document.location = '{% url 'missModeracio' post.pk 'Post' %}';" >
+                    {% else %}
+                        <tr class = "active" onclick="document.location = '{% url 'missModeracio' post.pk 'Post' %}';" >
+                    {% endif %}
+                        <td><a href="{% url 'missModeracio' post.pk 'Post' %}" ><span class='glyphicon glyphicon-envelope'></span> </a></td>
+                        <td>
+                            <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
+                        </td>
+                        <td>
+                            {{ post.text}}
+                        </td>
+                        <td>
+                            {% for etiqueta in obj.etiquetes.all %}
+                                <a href="{% url 'etiqueta' etiqueta.pk  %}" class="btn  btn-default btn-xs">
+                                <span class='glyphicon glyphicon-tag'>
+                                     {{ etiqueta.nom}}
+                                </span>
+                                </a>
+                            {% endfor %}
+                        </td>
+                    </tr>
+
+            {%  endfor %}
+            </table>
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}

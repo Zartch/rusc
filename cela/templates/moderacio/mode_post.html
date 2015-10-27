@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% csrf_token %}
+{% block headers %}
+    <script src="{% static 'js/check_all.js' %}"></script>
+      <script type="text/javascript">
+            function modpost(action, pkpost){
+               var retVal = prompt("Raò rebutj : ", "");
+               $.post(
+                    '/cela/acceptarRebutjarPost/'+pkpost+"/"+action,
+                    {'text': retVal},
+                    function(response){ location.reload(); }
+                );
+            }
+      </script>
+{% endblock %}
+{% block content %}
+
+
+    <form name="frm_modepost" action="" method="post">{% csrf_token %}
+
+         <div class="input-group" >
+             <div class="btn-group" >
+                 <select name="slc_modaction" class="form-control nonfluid">
+                     <option value="A">Acceptar</option>
+                    {# <option value="R">Rebutjar</option>#}
+                 </select>
+             </div>
+            <input type="submit" value="GO" class="btn-primary btn" />
+        </div>
+        <div class="table-responsive">
+        <table class="table table-hover">
+        <thead>
+                <tr>
+                    <th><input type="checkbox" class="chk_all" name="chk_all" /></th>
+                    <th>Titol</th>
+                    <th>Text</th>
+                    <th>Etiquetes</th>
+
+                </tr>
+            </thead>
+        {% for post in posts %}
+            {% if post.moderacio == 'E' %}
+
+            {% endif %}
+            {% if post.mmoderacio_mis_last != user %}
+                <tr class = "warning" onclick="document.location = '{% url 'missModeracio' post.pk 'Post' %}';" >
+            {% else %}
+                <tr class = "active" onclick="document.location = '{% url 'missModeracio' post.pk 'Post' %}';" >
+            {% endif %}
+
+                <td>
+                    <input type="checkbox" name="chk_post" value="{{ post.pk }}" />
+                </td>
+
+                <td>
+                    <b><a href="{% url 'post' post.pk  %}"> {{ post.titol }}</a></b> {{ post.autor }}
+                    </br>
+                    <a href="{% url 'acceptarRebutjarPost'  post.pk 'OK' %}" class="btn btn-success btn-xs" >OK</a>
+                    <a href="{% url 'missModeracio' post.pk 'Post' %}" class="btn btn-info btn-xs">Let's talk</a>
+                    <input type="button" class="btn btn-danger btn-xs" value="NO" onClick="modpost('cancel', {{ post.pk }});" />
+                </td>
+                <td>
+                    {{ post.text}}
+                </td>
+                <td>
+                    {% for etiqueta in post.etiquetes.all %}
+                        {{ etiqueta.nom}}/{{etiqueta.descripcio}}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+        </div>
+
+    </form>
+    
+
+{% endblock %}

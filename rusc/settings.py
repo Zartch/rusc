@@ -64,10 +64,10 @@ INSTALLED_APPS = (
     'rusc.etiqueta',
     'rusc.recurs',
     'rusc.usuari',
-    'rusc.buscador',
-    'rusc.cela',
+    'buscador',
+    'cela',
     'rusc.faq',
-    'rusc.cela.moderaciomodels',
+    'cela.moderaciomodels',
 
 
 

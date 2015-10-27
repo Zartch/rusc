@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages as notif_messages
 
 from rusc.faq.models import Pregunta
-from rusc.cela.models import get_cela
+from cela.models import get_cela
 from rusc.faq.forms import faqForm
 
 

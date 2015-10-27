@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{%  load staticfiles %}
+{% block headers %}
+
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/select2.js' %}"></script>
+
+    <script  src="{% static 'js/style2selectors.js' %}" ></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'llistasResponsive.css' %}">
+{% endblock %}
+{%  block content %}
+
+    <div id="content">
+        <h3>Etiquetas a la xarxa</h3>
+            <div class="columns">
+            <ul>
+            {% for etq in llista_etiquetes %}
+                <li>
+                    <a href="{% url "rusc.etiqueta" etq.pk %}" class="btn btn-default btn-xs">
+                        <span class='glyphicon glyphicon-tag'>
+                        {{ etq.nom }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+            </div>
+    </div>
+
+    <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" class="btn-primary btn-lg" />
+    </form>
+    <h3>Relacións a la xarxa</h3>
+    {% load render_table from django_tables2 %}
+    {% render_table table %}
+
+{% endblock %}

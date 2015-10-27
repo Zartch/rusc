@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    <h3>Configuració de   <b>{{ user.username }}</b></h3>
+    {% if perfilusuari.avatar %}
+        <img src="{{ perfilusuari.avatar.url }}" alt="avatar" height="120" width="120">
+    {% else %}
+        <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="120" width="120">
+    {% endif %}
+
+    {{ user }}<br />
+    {{ perfilusuari.website }}<br />
+    {{ perfilusuari.usuari }}<br />
+
+
+
+    <form action="" method="post">{% csrf_token %}
+        {{ form_user.as_p }}
+        <input type="submit" class="btn btn-primary" value="A totes" onClick="return confirm('Copiar a totes les celes?')" />
+    </form>
+    <br />
+    <br />
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <td><b>Cela</b></td><td><b>TipusS</b></td><td><b>Tipus Enviament</b></td>
+
+            </tr>
+            {% for p in up %}
+                <tr>
+                <td><a href="{% url 'canviar_cela'  p.cela.pk  "opcions_user"  %}" title="Configuracio especifica de grup"> {{ p.cela }} <span class='glyphicon glyphicon-cog collapsed-element'></span> </a></td>
+                <td>{{ p.get_tipusSubscripcio_display}}</td>
+                <td>{{ p.get_mailConf_display}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

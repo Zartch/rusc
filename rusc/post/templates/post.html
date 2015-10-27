@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{%  load staticfiles %}
+{% block headers %}
+    <script src="{% static 'js/vote.js' %}"></script>
+    <link href="{% static 'post_css.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <ul>
+        {% for branch, obj in root.as_tree %}
+            {% if obj %}
+                {% if post.pk == obj.pk %}
+                     <div class="div_coment div_post">
+                {% else %}
+                      <div class="div_coment" >
+                {% endif  %}
+                     {% include "post_extended.html" %}
+                </div>
+                {% if branch %}
+                     {% if post.pk == obj.pk %}
+                     <div class="div_coment div_post">
+                {% else %}
+                      <div class="div_coment" >
+                {% endif  %}
+            {% endif %}
+
+            {% else %}
+                {% if branch %}
+                     </div >
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+
+
+{% endblock %}
