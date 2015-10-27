@@ -60,14 +60,14 @@ INSTALLED_APPS = (
     'autocomplete_light',
     'micawber.contrib.mcdjango',
     'missatgeModeracio',
-    'post',
-    'etiqueta',
-    'recurs',
-    'usuari',
-    'buscador',
-    'cela',
+    'rusc.post',
+    'rusc.etiqueta',
+    'rusc.recurs',
+    'rusc.usuari',
+    'rusc.buscador',
+    'rusc.cela',
     'rusc.faq',
-    'cela.moderaciomodels',
+    'rusc.cela.moderaciomodels',
 
 
 

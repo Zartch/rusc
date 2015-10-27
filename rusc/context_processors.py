@@ -1,6 +1,6 @@
 __author__ = 'Zartch'
-from cela.models import get_cela
-from usuari.models import UserProfile
+from rusc.cela.models import get_cela
+from rusc.usuari.models import UserProfile
 
 def notifications_user(request):
     if not request.user.is_authenticated():

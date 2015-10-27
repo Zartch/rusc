@@ -1,11 +1,11 @@
-from cela.models import Cela, get_cela
-from post.models import Post
-from recurs.models import Recurs
-from etiqueta.models import Etiqueta
 from django.shortcuts import render
-from cela.moderaciomodels import ModeracioMissatge
 from notifications import notify
 from django.shortcuts import get_object_or_404
+
+from rusc.post.models import Post
+from recurs.models import Recurs
+from etiqueta.models import Etiqueta
+
 
 
 #Vista de la missatgeria entre admin-user de la moderació
