@@ -17,6 +17,39 @@
 
 {% endblock  %}
 {% block content %}
+    <script type="text/javascript">
+    $( document ).ready(function() {
+        $('.id_text').on("keydown", function (e) {
+            var etqProp = new Array;
+            var paraula;
+            var text = $('#id_text').val();
+            var etiquetas = "{{etiquetas|safe}}";
+            var words = /(\w+)/g;
+
+            //cicle que llegeix el text i proposa etiquetes segons les paraules
+            while (proposades = words.exec(text)) {
+                paraula = proposades[0];
+                etqProp.push(paraula);
+            }
+            if (etqProp.length > 0) {
+                if (paraula in {{etiquetas|safe}}) {
+                    $("#div_proposta_etq").empty();
+                    var div_proposta_etq = document.getElementById("div_proposta_etq");
+                    //for (i = 0; i < links.length; i++) {
+                    btnetq = document.createElement('a');
+                    btnetq.className = "btn btn-default btn-xs";
+                    btnetq.name = "etq_prp_" + 5;
+                    btnetq.text = paraula;
+                    var icon = document.createElement("span")
+                    icon.className ="glyphicon glyphicon-tag";
+                    btnetq.appendChild(icon)
+
+                }
+                div_proposta_etq.appendChild(btnetq);
+            }
+        });
+    });
+    </script>
 
     {% for post in reply_root %}
             {% for branch, obj in post.as_tree %}
@@ -43,7 +76,8 @@
     <form id="MyForm" method="post" action="">
         {% csrf_token %}
         {{ formPost.as_p }}
-
+        <div id="div_proposta_etq"></div>
+        <table>
         <div id="div_recursos"></div>
         <table>
         <tbody>

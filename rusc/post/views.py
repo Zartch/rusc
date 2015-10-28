@@ -246,11 +246,14 @@ def postCreateView(request, pk=None):
     #Variable per a coneixer fins a quin punt ha de pintar el debat, si no existeix vol dir que estém creant un debat nou.
     if pk == None:
         pk = 0
-
+    etqs = {}
+    etiquetas = Etiqueta.objects.filter(cela = cela)
+    for etq in etiquetas:
+        etqs[etq.nom] = etq.pk
 
     return render(request, 'post/post_form.html',
                   {'id_pare': int(pk), 'reply_root': reply_root, 'formPost': formPost,
-                   'formEtiqueta': formEtiqueta,'recurs_formset': RecursFormSet})
+                   'formEtiqueta': formEtiqueta,'recurs_formset': RecursFormSet, 'etiquetas':etqs})
 
 
 
