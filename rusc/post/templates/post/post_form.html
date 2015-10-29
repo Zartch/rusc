@@ -6,14 +6,9 @@
     <script src="{% static 'js/jquery.formset.js' %}"></script>
     <script src="{% static 'js/custom-formset.js' %}"></script>
     <script src="{% static 'js/jquery.oembed.js' %}"></script>
-
     <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
     <script src="{% static 'js/select2.js' %}"></script>
     <script src="{% static 'js/extracioLinks.js' %}"></script>
-
-    <script>
-
-    </script>
 
 {% endblock  %}
 {% block content %}
@@ -32,20 +27,41 @@
                 etqProp.push(paraula);
             }
             if (etqProp.length > 0) {
-                if (paraula in {{etiquetas|safe}}) {
-                    $("#div_proposta_etq").empty();
-                    var div_proposta_etq = document.getElementById("div_proposta_etq");
-                    //for (i = 0; i < links.length; i++) {
-                    btnetq = document.createElement('a');
-                    btnetq.className = "btn btn-default btn-xs";
-                    btnetq.name = "etq_prp_" + 5;
-                    btnetq.text = paraula;
-                    var icon = document.createElement("span")
-                    icon.className ="glyphicon glyphicon-tag";
-                    btnetq.appendChild(icon)
+                var div_proposta_etq = document.getElementById("div_proposta_etq");
+                $("#div_proposta_etq").empty();
 
+                for (i = 0; i < etqProp.length; i++) {
+                    if (etqProp[i] in {{etiquetas|safe}}) {
+
+                            var icon = document.createElement("span");
+                            icon.className = "glyphicon glyphicon-tag";
+
+                            btnetq = document.createElement('input');
+                            btnetq.className = "btn btn-default btn-xs";
+                            btnetq.name = "etq_prp_" + i;
+                            btnetq.type = "button";
+                            $dict = {{etiquetas|safe}};
+                            btnetq.value = etqProp[i];
+                            btnetq.id = $dict[etqProp[i]];
+                            btnetq.onclick = function(event){
+                                var select = $('.etiquetes');
+                                var option = $('<option></option>').
+                                     attr('selected', true).
+                                     text(event.target.value).
+                                     val(event.target.id);
+                                /* insert the option (which is already 'selected'!) into the select */
+                                option.appendTo(select);
+                                /* Let select2 do whatever it likes with this */
+                                select.trigger('change');
+                                //alert("Has pres el botó "+event.target.id);
+                            };
+
+
+                            icon.appendChild(btnetq);
+                            div_proposta_etq.appendChild(icon);
+                    }
                 }
-                div_proposta_etq.appendChild(btnetq);
+
             }
         });
     });
