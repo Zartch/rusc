@@ -1,21 +1,30 @@
 {% extends "base.html" %}
-
 {% block content %}
 
+
     {% for recurs in recursos %}
-        <li>
-            <b><a href="{% url 'recurs' recurs.pk  %}"> {{ recurs.descripcio }} </a></b><br />
-            <a href="{{ recurs.url }}">  {{ recurs.url }}</a>
-            {{ recurs.datahora }}<br />
-            {{ recurs.autor }}<br />
-            {{ recurs.adjunt }}<br />
-            {% if recurs.etiquetes.all.count > 0 %}
-                <b>Etiquetes:</b>
-            {% endif %}
-            {% for etiqueta in recurs.etiquetes.all %}
-                {{ etiqueta.nom}}/{{etiqueta.descripcio}}
-            {% endfor %}
-        </li>
+        <div class="list-group">
+            <div class="list-group-item">
+                <b class="list-group-item-heading">
+                    Desc: <b><a href="{% url 'recurs' recurs.pk  %}"> {{ recurs.descripcio }} </a></b><br />
+                </b>
+                <p class="list-group-item-text btn-group">
+                    url:<a href="{{ recurs.url }}">  {{ recurs.url }}</a>
+                    time:{{ recurs.datahora }}<br />
+                    autor:{{ recurs.autor }}<br />
+                    fitcher:{{ recurs.adjunt }}<br />
+                </p>
+                <p class="list-group-item-text btn-group">
+                    {% if recurs.etiquetes.all.count > 0 %}
+                        <b>Etiquetes:</b>
+                    {% endif %}
+                    {% for etiqueta in recurs.etiquetes.all %}
+                        {{ etiqueta.nom}}/{{etiqueta.descripcio}}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
     {% endfor %}
+
 
 {% endblock %}
