@@ -211,10 +211,8 @@ var positionLabelText = function(text, pseudonode, fillColor) {
     select.attr('transform', 'translate(' + shiftX + ',' + shiftY + ')');
 };
 
-
 // Define the data.
-
-var data = {{ data|safe }}
+var data = {{ data|safe }};
 
 // Find the graph nodes from the data set. Each
 // album is a separate node.
