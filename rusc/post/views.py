@@ -14,15 +14,6 @@ from rusc.usuari.models import UserProfile
 from rusc.recurs.forms import RecursForm
 from rusc.recurs.models import Recurs
 
-
-
-
-
-
-
-
-
-# Create your views here.
 def forum(request):
     #ToDo https://docs.djangoproject.com/en/1.8/topics/http/middleware/
     cela= get_cela(request)
@@ -329,7 +320,6 @@ def view_resums(request):
 
 
 import http.client as httplib
-
 from urllib.parse import urlparse
 
 def split_url(url):

@@ -5,18 +5,20 @@ from notifications import notify
 from django.contrib import messages as notif_messages
 from django.core.urlresolvers import reverse
 
-from cela.models import get_cela
+from cela.forms import celaForm
+from cela.models import get_cela, Cela
 from rusc.post.models import Post,folksonomia
 from rusc.etiqueta.models import Etiqueta, Tesauro, jsonSubdits
 from rusc.usuari.models import UserProfile
-from cela.forms import *
+
+from django.contrib.auth.models import  User
+from django.contrib.auth import authenticate, login
 
 
 def ruscView(request):
 
     celas = Cela.objects.exclude(tipus='X')
     notif=[]
-
     if request.user.is_authenticated():
         notif = request.user.notifications.unread()
 

@@ -1,31 +1,24 @@
-
 <!DOCTYPE html>
 {% load staticfiles %}
 <html lang="en">
 
 <head>
-
     {% block PREheaders %}{% endblock %}
     {% include 'headers.html' %}
     {% block headers %}{% endblock %}
-
     {% include 'autocomplete_light/static.html' %}
     <title>{% block title %}{% endblock %}</title>
 </head>
-
 
 <body>
 
     <style>
         #add_user {
-
             background: #af0100;
             color: #ffffff;
             font-weight: bold;
             border-radius: 30px;
-
         }
-
     </style>
 
      <div id="sidebar">
@@ -39,11 +32,6 @@
     <div id="div_header" >
         <div id="div_menu1">
 
-                <a href="#">Mes Vists</a>/
-                <a href="#">Proximitat</a>/
-                <a href="#">Valoració</a>/
-                <a href="#">Mes Comentats</a>/
-                <a href="#">Prox.Social</a>
                 {{ cela_context.pregunta }}
 
                <h3><a href="{% url 'forum' %}">{{ cela.pregunta }}</a>  <small>{{ cela.descripcio|truncatechars:140 }}</small>

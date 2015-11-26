@@ -29,36 +29,52 @@
             if (etqProp.length > 0) {
                 var div_proposta_etq = document.getElementById("div_proposta_etq");
                 $("#div_proposta_etq").empty();
+                var jaProposades = {};
+                //Recogemos las oopciones selecionadas
+                var selected = $(".etiquetes option").filter(':selected');
+
+                //Les etiquetes proposades ja al Select2
+                var data = $(".etiquetes").select2('data');
+                if (data.length> 0 ){
+                    for(j=0; j<data.length; j++){
+                        //alert(data[j].text);
+                        jaProposades[data[j].text]= ""
+                    }
+                }
 
                 for (i = 0; i < etqProp.length; i++) {
-                    if (etqProp[i] in {{etiquetas|safe}}) {
+                    if (etqProp[i] in {{etiquetas|safe}} && (!(etqProp[i] in jaProposades))) {
+                        //Afegim la etiqueta proposada al dicionari
+                        jaProposades[etqProp[i]] ="";
+                        //regogemos las etiquetas de la cela
+                        $dict = {{etiquetas|safe}};
 
-                            var icon = document.createElement("span");
-                            icon.className = "glyphicon glyphicon-tag";
+                        btnetq = document.createElement('input');
+                        btnetq.className = "btn btn-default btn-xs";
+                        btnetq.name = "etq_prp_" + i;
+                        btnetq.type = "button";
+                        btnetq.value = etqProp[i];
+                        btnetq.id = $dict[etqProp[i]];
+                        btnetq.onclick = function(event){
+                            //alert("Has pres el botó "+event.target.id);
+                            var select = $('.etiquetes');
+                            var option = $('<option></option>').
+                                 attr('selected', true).
+                                 text(event.target.value).
+                                 val(event.target.id);
+                            /* insert the option (which is already 'selected'!) into the select */
+                            option.appendTo(select);
+                            /* Let select2 do whatever it likes with this */
+                            select.trigger('change');
+                            //Un cop pres, l'amagem.
+                            document.getElementById(event.target.id).classList.add('hide');
+                        };
 
-                            btnetq = document.createElement('input');
-                            btnetq.className = "btn btn-default btn-xs";
-                            btnetq.name = "etq_prp_" + i;
-                            btnetq.type = "button";
-                            $dict = {{etiquetas|safe}};
-                            btnetq.value = etqProp[i];
-                            btnetq.id = $dict[etqProp[i]];
-                            btnetq.onclick = function(event){
-                                var select = $('.etiquetes');
-                                var option = $('<option></option>').
-                                     attr('selected', true).
-                                     text(event.target.value).
-                                     val(event.target.id);
-                                /* insert the option (which is already 'selected'!) into the select */
-                                option.appendTo(select);
-                                /* Let select2 do whatever it likes with this */
-                                select.trigger('change');
-                                //alert("Has pres el botó "+event.target.id);
-                            };
+                        var icon = document.createElement("span");
+                        icon.className = "control glyphicon glyphicon-tag";
 
-
-                            icon.appendChild(btnetq);
-                            div_proposta_etq.appendChild(icon);
+                        btnetq.appendChild(icon);
+                        div_proposta_etq.appendChild(btnetq);
                     }
                 }
 

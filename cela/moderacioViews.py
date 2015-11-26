@@ -8,12 +8,6 @@ from rusc.post.models import Post
 from rusc.usuari.models import UserProfile
 
 
-
-
-
-
-
-
 #Vista per acceptar o rebutjar post, en cas de acceptació tornem a la mateixa pagina
 #En cas de negació enviém un missatge al usuari per tal de donar la explicació de per que rebutjem el post
 def acceptarRebutjarPost(request,pkpost, action):
@@ -44,14 +38,18 @@ def acceptarRebutjarPost(request,pkpost, action):
              description=  descripcio , target = post.cela)
 
     post.save()
-    notif_messages.add_message(request, notif_messages.INFO, "Moderació realitzada" , 'success')
+    notif_messages.add_message(request, notif_messages.INFO, "Moderació realitzada", 'success')
     return render(request, "moderacio/mode_post.html", {'posts':posts} )
 
 def peticioAcces(request):
     cela = get_cela(request)
     if not request.user.is_authenticated():
         return redirect('auth_login')
-    perfilusuari, created =  UserProfile.objects.get_or_create(user=request.user,estat='E')
+    else:
+        perfilusuari, created = UserProfile.objects.get_or_create(user=request.user,cela= cela)
+        if created:
+            perfilusuari.estat = 'E'
+            perfilusuari.save()
     return HttpResponse(" has solicitat acces.")
 
 
@@ -82,7 +80,7 @@ def usuaris_cela(request):
 
     ChekUsuariCellAdmin(request)
     cela = get_cela(request)
-    usuaris = UserProfile.objects.filter(cela=cela )
+    usuaris = UserProfile.objects.filter(cela=cela)
 
     frm_users = request.POST.getlist('chk_usuaris')
     acction =  request.POST.get('slc_modaction')

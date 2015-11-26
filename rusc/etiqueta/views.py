@@ -52,21 +52,21 @@ def nometiquetaview(request,nometq,nomcela):
     else:
         voted= []
 
-    tesauros_forts = Tesauro.objects.filter(etq1=etiqueta).exclude(etq2=etiqueta)
-    tesauros_debils = Tesauro.objects.filter(etq2=etiqueta).exclude(etq1=etiqueta)
+    tesauros_forts = Tesauro.objects.filter(etq1 = etiqueta).exclude(etq2 = etiqueta)
+    tesauros_debils = Tesauro.objects.filter(etq2 = etiqueta).exclude(etq1 = etiqueta)
     d = folksonomia(posts_relacionats)
     sorted_rel = sorted(d, key=d.get) #ordenem les etiquetes relacionades per post segons numero de vincles
 
     tesauro = {}
-    tesauro['relacio']= d
-    sinonims= list(Tesauro.objects.filter(etq1=etiqueta,tipo='S').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='S').values_list('etq1__nom', flat=True))
-    antonims =list(Tesauro.objects.filter(etq1=etiqueta,tipo='A').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='A').values_list('etq1__nom', flat=True))
-    associat = list(Tesauro.objects.filter(etq1=etiqueta,tipo='B').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='B').values_list('etq1__nom', flat=True))
-    tesauro['sinonims']= sinonims
-    tesauro['antonims']= antonims
-    tesauro['associat']= associat
-    tesauro['conte']= Tesauro.objects.filter(etq1=etiqueta).values_list('etq2__nom', flat=True)
-    tesauro['contingut']= Tesauro.objects.filter(etq2=etiqueta).values_list('etq1__nom', flat=True)
+    tesauro['relacio'] = d
+    sinonims = list(Tesauro.objects.filter(etq1 = etiqueta, tipo='S').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='S').values_list('etq1__nom', flat=True))
+    antonims = list(Tesauro.objects.filter(etq1 = etiqueta, tipo='A').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='A').values_list('etq1__nom', flat=True))
+    associat = list(Tesauro.objects.filter(etq1 = etiqueta, tipo='B').values_list('etq2__nom', flat=True)) + list (Tesauro.objects.filter(etq2=etiqueta,tipo='B').values_list('etq1__nom', flat=True))
+    tesauro['sinonims'] = sinonims
+    tesauro['antonims'] = antonims
+    tesauro['associat'] = associat
+    tesauro['conte'] = Tesauro.objects.filter(etq1=etiqueta).values_list('etq2__nom', flat=True)
+    tesauro['contingut'] = Tesauro.objects.filter(etq2=etiqueta).values_list('etq1__nom', flat=True)
 
 
 

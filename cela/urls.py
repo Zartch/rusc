@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 
-from cela import views, moderacioViews
+from cela import moderacioViews, views
 
 
 urlpatterns = patterns('',

@@ -9,6 +9,8 @@ from cela.models import Cela
 
 
 
+
+
 # from post.views import get_reel_etq
 
 

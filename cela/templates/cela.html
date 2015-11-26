@@ -14,7 +14,7 @@
             <ul>
             {% for etq in llistat_etq %}
                 <li>
-                    <a href="{% url "rusc.etiqueta" etq.pk %}" class="btn btn-default btn-xs">
+                    <a href="{% url "etiqueta" etq.pk %}" class="btn btn-default btn-xs">
                         <span class='glyphicon glyphicon-tag'>
                         {{ etq.nom }}
                     </a>
