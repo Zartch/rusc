@@ -10,15 +10,6 @@ from cela.models import get_cela
 from rusc.post.models import Post, Vote
 from rusc.etiqueta.models import Etiqueta
 
-
-
-
-
-
-
-
-
-
 #vista peer mostrar els post en estat de moderacio del usuari
 def moderacioPostView(request):
     cela = get_cela(request)
