@@ -41,6 +41,7 @@ urlpatterns = [
     url('^inbox/notifications/', include('notifications.urls', namespace="notifications")),
     url(r'^faq/', include('rusc.faq.urls')),
     url(r'^linkMeta/', include('linksMeta.urls')),
+    url(r'^resums/', include('rusc.resums.urls')),
 
     #url(r'^boot/', include('etiqueta.urls')),
     # url(r'^', views.ruscView),

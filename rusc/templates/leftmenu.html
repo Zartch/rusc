@@ -267,12 +267,18 @@ nav.sidebar ul.level1 ul.level2 li a {
               </a>
             </li>
 
-{#            <li>#}
-{#              <a class='expandable' href='{% url 'resums' %}' title='Resums'>#}
-{#                <span class='glyphicon glyphicon-education collapsed-element'></span>#}
-{#                <span class='expanded-element'>Zona Resums</span>#}
-{#              </a>#}
-{#            </li>#}
+
+            <li class='active'>
+               <a class='expandable active' href="{% url 'resums'  %}"  title='Resums'>
+                   <span class='glyphicon glyphicon-education collapsed-element'></span>
+                   <span class='expanded-element'>Zona Resums</span>
+               </a>
+                   <ul class='level2'>
+                       <li>
+                           <a  href='{% url 'nou_resum'  %}' title='Traffic'>Nou Resum</a>
+                       </li>
+                    </ul>
+            </li>
 
 {#            <li>#}
 {#              <a class='expandable' href='{% url 'convidar_usu_cela' %}' title='Convidar'>#}

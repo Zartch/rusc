@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block headers %}
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/select2.js' %}"></script>
+
+{#    <script>#}
+{##}
+{#        $(document).ready(function() {#}
+{#            $('.datepickerFrom').datepicker();#}
+{#            $('.datepickerTo').datepicker();#}
+{##}
+{#            $(".selectorEtqs").select2({data:data});#}
+{#            $(".selectorUsers").select2({data:data});#}
+{##}
+{#        });#}
+{#    </script>#}
+{% endblock  %}
+{% block content %}
+        <script>
+            var etqs = {{ etqs|safe }};
+            var users = {{ users|safe }};
+            $(document).ready(function() {
+                $('.datepickerFrom').datepicker();
+                $('.datepickerTo').datepicker();
+
+                $(".selectorEtqs").select2({data:etqs});
+                $(".selectorUsers").select2({data:users});
+
+            });
+        </script>
+
+      <form id="formResums" method="post" action="" class="form">
+        {% csrf_token %}
+
+        <p>Etiquetes:</p>
+        <select class="selectorEtqs form-control" name="sel_etqs" multiple="multiple">
+        </select>
+        <br/>
+        <p >Usuari:</p>
+        <select class="selectorUsers form-control" name="sel_users" multiple="multiple">
+        </select>
+        <br/>
+        <p>Rango Fechas:</p>
+        <input type="text" class="datepickerFrom" name="dtfrom" />
+        <input type="text" class="datepickerTo" name="dtTO" />
+
+        <p class="submit"><input type="submit" class="btn btn-primary" value="OK"></p>
+    </form>
+
+    <div class="borrador_resumen">
+        {% if borrador %}
+            <textarea style="resize:vertical;height:auto;" class="form-control" name="text_resum">{{ borrador }}</textarea>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

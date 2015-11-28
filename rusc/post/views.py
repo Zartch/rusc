@@ -312,46 +312,4 @@ class VoteFormView(JSONFormMixin, VoteFormBaseView):
 def get_reel_etq(etq):
     return Post.objects.filter(etiquetes= etq)
 
-def view_resums(request):
-    etqResum = Etiqueta.objects.get_or_create(nom='Resum', tipologia= 'S', cela= get_cela(request) )
-    resums = Post.objects.filter(etiquetes__nom = 'Resum')
 
-    return render(request, "forum.html", {'posts':resums})
-
-
-import http.client as httplib
-from urllib.parse import urlparse
-
-def split_url(url):
-    parse_object = urlparse(url)
-    return parse_object.netloc, parse_object.path
-
-def verify_url(domain, path):
-        try:
-            conn = httplib.HTTPConnection(domain)
-            conn.request('HEAD', path)
-            response = conn.getresponse()
-            conn.close()
-        except:
-            return False
-
-
-def link_verify(request):
-
-
-    # linkv=[]
-        # array.array('i')
-    linkv={}
-    links = request.POST.getlist('links[]')
-    # validate = URLValidator()
-    # linkv.append("http://www.google.es")
-    # linkv.append("http://www.youtube.com")
-    i=0
-    for link in links:
-        url = link
-        domain, path = split_url(url)
-        if(verify_url(domain, path) is not False):
-                if(i<4):
-                    linkv[i]=link
-                    i=i+1
-    return HttpResponse(json.dumps(linkv), content_type='application/json')

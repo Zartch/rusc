@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'cela',
     'rusc.faq',
     'cela.moderaciomodels',
+    'rusc.resums',
 
 
 
