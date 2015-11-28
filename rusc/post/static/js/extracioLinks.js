@@ -6,9 +6,9 @@ $( document ).ready(function() {
 
     /* Script per convertir el multifield en select2*/
     $(".etiquetes").select2({tags: true});
-    $('.select2-search__field').on("keydown", function(e) {
-        $(".etiquetes").select2({data:[{id:0,text:"enhancement"}]});
-    });
+    //$('.select2-search__field').on("keydown", function(e) {
+    //    $(".etiquetes").select2({data:[{id:0,text:"enhancement"}]});
+    //});
 
     //*****Extració de links*****///
     $(".id_text").keyup(function(e) {

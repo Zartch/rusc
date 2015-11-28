@@ -75,6 +75,7 @@ class Post(models.Model):
 
     #Busquem el inici del arbre per a mostrar la conversa útil per a respondre
     #ToDo Millorar aquest algoritme per que mostri només un resultat significant no infinit (per exemple, mentre el titol continui sent igual)
+    #torna la primary key
     def get_root(self):
         if self.pare == None:
             return self.pk
@@ -83,7 +84,7 @@ class Post(models.Model):
             while comment_root.pare != None:
                 comment_root = comment_root.pare
             return comment_root.pk
-
+    #torna el objecte pare
     def get_root_object(self):
         if self.pare == None:
             return self
@@ -117,6 +118,22 @@ class Post(models.Model):
         self.rank_score = votes / pow((item_hour_age+2), GRAVITY)
         self.save()
 
+    #retorna els participants del fil de conversa
+    def participants(self):
+        particip = []
+        post = self.pare
+        Post.objects.filter()
+
+        children = list(post.children.all())
+        branch = bool(children)
+        yield branch, self
+        for child in children:
+            for next in child.as_tree():
+                particip.append(child.autor)
+                yield next
+        particip.append(child.autor)
+        yield branch
+        return particip
 
 
 def post_post_save(sender, instance, created, *args, **kwargs):
@@ -161,6 +178,7 @@ def folksonomia(posts):
             else:
                 d[etq.nom]= 1
     return d
+
 
 # from django.db.models.signals import post_save
 # def post_handler(sender, instance, created, **kwargs):
