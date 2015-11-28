@@ -46,13 +46,12 @@ def recursCreateView(request):
     #https://docs.djangoproject.com/en/1.8/topics/http/file-uploads/
     formRecurs = RecursForm(request.POST or None, request= request)
 
-
-
     if formRecurs.is_valid():
         data = formRecurs.cleaned_data
         #handle_uploaded_file(request.FILES['file'])
 
-
+        #creem el post del recurs
+        post_x = Post.objects.create(titol=data['url'], autor = request.user,  text="Discussio del recurs: "+ data['descripcio'], cela=get_cela(request))
 
         try:
             aj = request.FILES['adjunt']
@@ -60,18 +59,22 @@ def recursCreateView(request):
                                         url=data['url'],
                                         cela= cela,
                                         autor=request.user,
-                                        adjunt=request.FILES['adjunt'])
+                                        adjunt=request.FILES['adjunt'],
+                                        post_debat = post_x)
+
         except MultiValueDictKeyError:
             rec = Recurs.objects.create(descripcio=data['descripcio'],
                                         url=data['url'],
                                         cela= cela,
-                                        autor=request.user)
-
+                                        autor=request.user,
+                                        post_debat = post_x)
+        #Associem el recurs al debat
+        post_x.recursos.add(rec)
+        post_x.save()
 
         #Recollim les variables per a crear les etiquetes  asociales al recurs
         #etqAdd = request.POST.get('etiquetes-autocomplete', 0)
         etqlist = request.POST.getlist('etiquetes', 0)
-
 
         #le añadimos los tags al objeto una vez salvado
         if type(etqlist) is list:
@@ -99,13 +102,6 @@ def recursCreateView(request):
 
 
         notif_messages.add_message(request, notif_messages.INFO, "Has creat un nou recurs", 'success')
-
-        #creem el post del recurs
-        post_x = Post.objects.create(titol=rec.url, autor = request.user,  text="Discussio del recurs: "+ rec.descripcio, cela=get_cela(request))
-        post_x.recursos.add(rec)
-        rec.post_debat = post_x
-
-
 
     return render(request, 'recurs/recurs_form.html',
                   {'formRecurs': formRecurs, 'request':request})
