@@ -15,4 +15,6 @@ class tesauroAdmin(admin.ModelAdmin):
     list_display = ('pk','etq1','etq2','tipo')
     search_fields = ['etq1','etq2','tipo']
     list_filter = ['etq1','etq2','tipo']
+
+
 admin.site.register(Tesauro, tesauroAdmin)

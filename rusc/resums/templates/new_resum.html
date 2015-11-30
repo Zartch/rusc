@@ -28,6 +28,12 @@
                 $(".selectorUsers").select2({data:users});
 
             });
+            function autoSize(ele)
+            {
+               ele.style.height = 'auto';
+               var newHeight = (ele.scrollHeight > 32 ? ele.scrollHeight : 32);
+               ele.style.height = newHeight.toString() + 'px';
+            }
         </script>
 
       <form id="formResums" method="post" action="" class="form">
@@ -50,7 +56,7 @@
 
     <div class="borrador_resumen">
         {% if borrador %}
-            <textarea style="resize:vertical;height:auto;" class="form-control" name="text_resum">{{ borrador }}</textarea>
+            <textarea onfocus="autoSize(this)" class="form-control" name="text_resum">{{ borrador }}</textarea>
         {% endif %}
     </div>
 
