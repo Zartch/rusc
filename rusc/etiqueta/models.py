@@ -17,13 +17,15 @@ from cela.models import Cela
 class Etiqueta(models.Model):
 
     TIPO_TIPOLOGIA = (
-        ('S', 'Sistema'),
-        ('M', 'Moderacion'),
-        ('E', 'Etiqueta'),
+        ('S', 'Sistema'),#
+        ('M', 'Moderacion'),#Para los grupos de recursos
+        ('Z', 'AreaContexto'),# Zona de aportación, contexto y otras
+        ('E', 'Etiqueta'), #Las etiquetas en general
         ('O', 'Objecte'), #persona o cosa
-        ('A', 'Adjectiu'),
-        ('T', 'Temps'),
-        ('L', 'Lloc'),
+        ('A', 'Adjectiu'), #Adjetivaciones
+        ('T', 'Temps'), #tiempo
+        ('L', 'Lloc'), #Lugar
+        ('P', 'Profesion')
     )
 
     ESTAT_MODERACIO = (
