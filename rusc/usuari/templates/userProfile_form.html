@@ -4,6 +4,14 @@
     <link href="{% static 'css/django-admin-widgets.css' %}" rel="stylesheet">
     <script  src="{% static 'js/django-admin.multiselect.js' %}" ></script>
     <script  src="{% static 'js/m2m.js' %}" ></script>
+    <script src="{% static 'js/jquery.formset.js' %}"></script>
+    <script src="{% static 'js/custom-formset.js' %}"></script>
+
+    <script src="{% static 'js/jquery.oembed.js' %}"></script>
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/select2.js' %}"></script>
+
+
 {% endblock %}
 {#todo Les subscripcions disponibles només han de ser las de la cela#}
 {%  block content %}
@@ -16,10 +24,31 @@
         {% else %}
             <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="120" width="120">
         {% endif %}
+
+        {% for userInfo_form in info_formset %}
+            <div class="userInfo_form">
+                {{ userInfo_form.etq }}
+                {{ userInfo_form.visible }}
+            </div>
+        {% endfor %}
+        {{ info_formset.management_form }}
         {{ form.as_p }}
+
+        <table>
+        <tbody>
     </form>
-
-
     <script type="text/javascript">addEvent(window, "load", function(e) { SelectFilter.init("id_subscripcions", "subscripcions", 0, "/media/"); });</script>
+
+    <script>
+        $('.userInfo_form').formset({
+            addText: 'add Info',
+            deleteText: 'remove'
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+          $(".etiquetes").select2({tags:true});
+        });
+    </script>
 
 {% endblock %}

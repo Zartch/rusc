@@ -9,6 +9,9 @@ from rusc.usuari.forms import userProfileGeneralForm, userProfileForm
 from cela.models import get_cela
 from rusc.post.models import Post, Vote
 from rusc.etiqueta.models import Etiqueta
+from django.forms.formsets import BaseFormSet
+from django.forms.formsets import formset_factory
+from rusc.usuari.forms import userInfoForm
 
 #vista peer mostrar els post en estat de moderacio del usuari
 def moderacioPostView(request):
@@ -63,13 +66,18 @@ def viewuserprofile(request,pk):
     voted = Vote.objects.filter(voter=request.user)
     voted = voted.values_list('post_id', flat=True)
 
+    #info_formset =  formset_factory(userInfoForm, formset= BaseFormSet)
+    from functools import partial, wraps
+    info_formset = formset_factory(wraps(userInfoForm)(partial(userInfoForm, request=request)))
+
     return render(request, 'perfil_view.html', {'usuari': usuari, 'nMiss': posts_publicats.count(), 'nRes':respostes_publicades.count(), 'antig':usuari.date_joined,
-                                                'posts':posts_publicats,'etiquetes':etiquetes, 'profile': profile, 'voted':voted })
+                                                'posts':posts_publicats,'etiquetes':etiquetes, 'profile': profile, 'voted':voted, 'info_formset':info_formset })
 
 class UserProfileUpdateView(UpdateView):
     model = UserProfile
     form_class = userProfileForm
     template_name = "userProfile_form.html"
+
 
     def get_object(self, queryset=None):
        queryset = UserProfile.objects.filter(user=self.request.user, cela= get_cela(self.request)).first()
@@ -78,6 +86,9 @@ class UserProfileUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UserProfileUpdateView, self).get_context_data(**kwargs)
         context['cela'] = get_cela(self.request)
+        from functools import partial, wraps
+        info_formset = formset_factory(wraps(userInfoForm)(partial(userInfoForm, request=self.request)),extra = 3)
+        context['info_formset'] = info_formset
         return context
 
     def form_valid(self, form):

@@ -2,8 +2,7 @@ __author__ = 'Zartch'
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-
-from rusc.usuari.models import UserProfile
+from rusc.usuari.models import UserProfile, UserInfo
 
 
 class UserProfileInline(admin.StackedInline):
@@ -14,7 +13,6 @@ class UserProfileInline(admin.StackedInline):
 # Define a new User admin
 class UserProfileAdmin(UserAdmin):
     inlines = (UserProfileInline, )
-
 
 # Re-register UserAdmin
 admin.site.unregister(User)
@@ -27,4 +25,10 @@ class UsuariAdmin(admin.ModelAdmin):
     list_filter = ['user']
     filter_horizontal = ('subscripcions',)
 
+class UserInfoAdmin(admin.ModelAdmin):
+    list_display = ('usr','etq','visible')
+    search_fields = ['usr','etq']
+    list_filter = ['usr','etq','visible']
+
+admin.site.register(UserInfo, UserInfoAdmin)
 admin.site.register(UserProfile, UsuariAdmin)

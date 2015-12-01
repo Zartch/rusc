@@ -4,6 +4,7 @@ from django.db import models
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
+from rusc.etiqueta.models import Etiqueta
 
 from rusc.post.models import Post
 from cela.models import Cela
@@ -50,6 +51,7 @@ class UserProfile(models.Model):
     #Aquest camp serveix per a guardarnos el email dels usuaris convidats que encara no estan
     #registrats a RUSC. Quan es registrin sels incloura directament a la cela
     email_p = models.EmailField(blank=True)
+    etiquetes = models.ManyToManyField(Etiqueta,through='UserInfo', blank=True)
 
 
     class Meta:
@@ -71,9 +73,16 @@ class UserProfile(models.Model):
 
         return result
 
+#Etiquetas relacionades amb els usuaris amb un cam per mostrarles a la resta o no
+class UserInfo(models.Model):
+    usr = models.ForeignKey(UserProfile)
+    etq = models.ForeignKey(Etiqueta)
+    visible = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.etq.nom + str(self.visible)
 
 from registration.signals import user_registered
-
 def user_registered_callback(sender, user, request, **kwargs):
     cela_pk = request.session.get('cell', 'NoCell')
     #Preguntem si el e-mail ja está associat a algún userprofile per afergir les celes
