@@ -5,14 +5,7 @@ from django.db.models import Q
 from django.template.defaultfilters import slugify
 
 from cela.models import Cela
-
-
-
-
-
-
-# from post.views import get_reel_etq
-
+import django_filters
 
 class Etiqueta(models.Model):
 
@@ -78,6 +71,12 @@ class Etiqueta(models.Model):
         return self.nom
 
 
+class EtiquetaFilter(django_filters.FilterSet):
+    class Meta:
+        model = Etiqueta
+        fields = ['nom', 'tipologia', 'descripcio','wiki']
+
+
 
 def jsonSubdits(etq, maxRec = 10):
     json = {}
@@ -116,7 +115,6 @@ class Tesauro(models.Model):
         return self.etq1.nom + self.etq2.nom + self.tipo
 
 
-import django_filters
 class TesauroFilter(django_filters.FilterSet):
     class Meta:
         model = Tesauro

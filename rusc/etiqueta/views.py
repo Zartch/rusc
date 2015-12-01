@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-
-from .models import Etiqueta
+from django.core.urlresolvers import reverse_lazy
+from rusc.etiqueta.forms import tesauroForm, newEtiquetaForm
+from django.contrib import messages as notif_messages
+from django.core.urlresolvers import reverse
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django_tables2   import RequestConfig
+from rusc.etiqueta.models import TesauroFilter,Tesauro
+from rusc.etiqueta.tables import tesauroTable, etiquetaTable
 from rusc.post.models import Post,Vote, folksonomia
+from rusc.etiqueta.models import Etiqueta, EtiquetaFilter
 from cela.models import Cela, get_cela
-from rusc.etiqueta.forms import tesauroForm
 
 
 def etiquetaview(request,etq):
@@ -75,8 +81,6 @@ def nometiquetaview(request,nometq,nomcela):
                                             'tesauro':tesauro})
 
 
-
-
 def todoview(request):
     cela = get_cela(request)
     etiqueta = Etiqueta.objects.filter(nom='ToDo', cela = cela)
@@ -95,14 +99,78 @@ def feinafeta(request,pkpost):
     return render(request,"toDo.html", {'posts':posts})
 
 
-from django.contrib import messages as notif_messages
-from django.core.urlresolvers import reverse
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+class EtiquetaCreateView(CreateView):
+    model = Etiqueta
+    form_class = newEtiquetaForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EtiquetaCreateView, self).get_context_data(**kwargs)
+        cela = get_cela(self.request)
+        listado_etq = EtiquetaFilter(self.request.GET, queryset=Etiqueta.objects.filter(cela = cela))
+        table = etiquetaTable(listado_etq)
+        RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
+        context['table_etiquetes'] = table
+
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super(EtiquetaCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    def get_success_url(self):
+        notif_messages.add_message(self.request, notif_messages.INFO, "Has creat una nova relacio", 'success')
+        return reverse('etiqueta_nova')
+
+    def form_valid(self, form):
+        form.instance.cela = get_cela(self.request)
+        form.save()
+        return super(EtiquetaCreateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        notif_messages.add_message(self.request, notif_messages.INFO, "corregeix els errors indicats", 'warning')
+        return super(EtiquetaCreateView, self).form_invalid(form)
+
+class etiquetaUpdateView(UpdateView):
+    model = Etiqueta
+    form_class = newEtiquetaForm
 
 
-from rusc.etiqueta.models import TesauroFilter,Tesauro
-from rusc.etiqueta.tables import tesauroTable
-from django_tables2   import RequestConfig
+    def get_context_data(self, **kwargs):
+        context = super(etiquetaUpdateView, self).get_context_data(**kwargs)
+        cela = get_cela(self.request)
+        listado_etq = EtiquetaFilter(self.request.GET, queryset=Etiqueta.objects.filter(cela = cela))
+        table = etiquetaTable(listado_etq)
+        RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
+        context['table_etiquetes'] = table
+        return context
+
+    def form_valid(self, form):
+        notif_messages.add_message(self.request, notif_messages.INFO, "Has modificat la etiqueta", 'success')
+        return super(etiquetaUpdateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        notif_messages.add_message(self.request, notif_messages.INFO, "corregeix els errors indicats", 'warning')
+        return super(etiquetaUpdateView, self).form_invalid(form)
+
+    def get_success_url(self):
+        notif_messages.add_message(self.request, notif_messages.INFO, "etiqueta modificada correctament", 'success')
+        return reverse('etiqueta_nova')
+
+    def get_form_kwargs(self):
+        kwargs = super(etiquetaUpdateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+class etiquetaDeleteView(DeleteView):
+    model = Etiqueta
+    success_url = reverse_lazy('etiqueta_nova')
+
+    def get_form_kwargs(self):
+        kwargs = super(etiquetaDeleteView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
 
 class tesauroCreateView(CreateView):
     model = Tesauro
@@ -117,13 +185,11 @@ class tesauroCreateView(CreateView):
         table = tesauroTable(listado)
         RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
         context['table'] = table
-
         return context
 
     def get_success_url(self):
         notif_messages.add_message(self.request, notif_messages.INFO, "Has creat una nova relacio", 'success')
         return reverse('tesauro_nou')
-
 
     def form_invalid(self, form):
         notif_messages.add_message(self.request, notif_messages.INFO, "corregeix els errors indicats", 'warning')
@@ -170,7 +236,7 @@ class tesauroUpdateView(UpdateView):
         return kwargs
 
 
-from django.core.urlresolvers import reverse_lazy
+
 
 class tesauroDeleteView(DeleteView):
     model = Tesauro

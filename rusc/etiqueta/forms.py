@@ -13,24 +13,22 @@ class etiquetaForm(forms.ModelForm):
         model = Etiqueta
         exclude = {"tipologia"}
 
-class newEtiquetaForm(forms.Form):
+class newEtiquetaForm(forms.ModelForm):
 
-    etiquetes = forms.ModelChoiceField(queryset="", initial="")
+    class Meta:
+        model = Etiqueta
+        exclude = {"slug", "datahora", "relacio","cela"}
+        widgets = {}
 
-    def clean(self):
-        super(newEtiquetaForm, self).clean() #if necessary
-        if 'etiquetes' in self._errors:
-            del self._errors['etiquetes']
-        return self.cleaned_data
-
-    def __init__(self, *args, **kwargs):
+    def __init__(self, instance, *args, **kwargs):
             self.request = kwargs.pop('request')
             super(newEtiquetaForm, self).__init__(*args, **kwargs)
-            self.fields['etiquetes'].required = False
-            self.fields['etiquetes'].queryset = Etiqueta.objects.filter(cela= get_cela(self.request))
-            self.fields['etiquetes'].widget.attrs['class'] = 'etiquetes'
-            self.fields['etiquetes'].widget.attrs['style'] = 'width: 100%'
-            self.fields['etiquetes'].widget.attrs['multiple'] = 'multiple'
+            #cela = forms.ch(widget=forms.HiddenInput(), initial=123)
+            # self.fields['etiquetes'].required = False
+            # self.fields['etiquetes'].queryset = Etiqueta.objects.filter(cela= get_cela(self.request))
+            # self.fields['etiquetes'].widget.attrs['class'] = 'etiquetes'
+            # self.fields['etiquetes'].widget.attrs['style'] = 'width: 100%'
+            # self.fields['etiquetes'].widget.attrs['multiple'] = 'multiple'
 
 
 
@@ -52,4 +50,6 @@ class tesauroForm(forms.ModelForm):
         self.fields['etq1'].widget.attrs['class'] = 'id_etq1'
         self.fields['etq2'].widget.attrs['class'] = 'id_etq2'
         self.fields['tipo'].widget.attrs['class'] = 'form-control'
+
+
 
