@@ -44,19 +44,32 @@ def resumCreateView(request):
             dtTo = datetime.today()
 
         recursos = []
+        recursos_str=""
         for e in etq:
-            recursos.append(Recurs.objects.filter(etiquetes=e, datahora__range=(dtfrom,dtTo)))
+            qs = Recurs.objects.filter(etiquetes=e, datahora__range=(dtfrom,dtTo))
+            for r in qs:
+                recursos_str += " http://51.254.96.92:8000/recurs/"+str(r.pk) + "  " + str(r) + " \n"
+            recursos.append(qs)
         for u in usr:
-            recursos.append(Recurs.objects.filter(post_debat__autor=u, datahora__range=(dtfrom,dtTo)))
+            qs = Recurs.objects.filter(post_debat__autor=u, datahora__range=(dtfrom,dtTo))
+            for r in qs:
+                recursos_str += " http://51.254.96.92:8000/recurs/"+str(r.pk)+ "  " + str(r) + " \n"
+            recursos.append(qs)
         list(set(recursos))
         
         #created_at__range=(start_date, end_date)
         posts = []
+        posts_str = ""
         for e in etq:
             qs = Post.objects.filter(etiquetes=e, datahora__range=(dtfrom,dtTo))
+            for p in qs:
+                posts_str += " http://51.254.96.92:8000/forum/post/" + str(p.pk)+ "  " + str(p) + " \n"
             posts.append(qs)
         for u in usr:
-            posts.append(Post.objects.filter(autor=u, datahora__range=(dtfrom,dtTo)))
+            qs = Post.objects.filter(autor=u, datahora__range=(dtfrom,dtTo))
+            for p in qs:
+                posts_str += " http://51.254.96.92:8000/forum/post/" + str(p.pk)+ "  " + str(p) + " \n"
+            posts.append(qs)
         list(set(posts))
 
         #relaciones entre usuarios
@@ -65,11 +78,13 @@ def resumCreateView(request):
         #Dado un hilo, todos los usuarios que han participado en su deiscusión
         #relaciones entre hilos
 
+
+
         borrador =  "Parametros usados: "+ "\n" \
                   + "Etiquetas: "+ str(etq)+ "\n" \
                   + "Usuarios: "+str(usr)+ "\n" \
-                  + "posts: \n " + str(posts) + "\n" \
-                  + "recuros: \n"+ str(recursos)
+                  + "posts: \n " + posts_str + "\n" \
+                  + "recuros: \n"+ recursos_str
 
         return  render(request, 'new_resum.html', {'cela':cela,'etqs':etiquetas, 'users': usuaris, 'borrador':borrador})
 
