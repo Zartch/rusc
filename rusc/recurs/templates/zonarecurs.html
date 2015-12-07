@@ -6,29 +6,49 @@
 {% endblock %}
 {% block content %}
     <a href="{%  url 'crearecurs' %}" class="btn btn-primary btn-lg">Nou Recurs</a>
+    <style>
+    .zona_context{
+        background-color: #0099ff;
+        width: 50%;
+        height: 50%;
+        border:3px solid black;
+        margin: 10px;
+    }
 
-<div id="content">
-    <div class="columns">
-    <ul>
-    {% for zona in zona_recursos %}
-        <li>
-            <div class="thumbnail" >
-                <div class="caption">
-                    <h3><a href="zona/{{ zona.pk }}" > {{ zona.nom }} </a></h3>
-                    <p>{{ zona.descripcio }}</p>
-                </div>
+    </style>
+
+        {% for zonaContx in zonas_context %}
+            <div class="zona_context"  >
+                    <div class="caption">
+                         <h3>{{ zonaContx.nom }}</h3>
+                        <p>{{ zonaContx.descripcio }}</p>
+                    </div>
+
+            <div id="content">
+            <div class="columns">
+            <ul>
+            {% for zona in zona_recursos %}
+                <li>
+                    <div class="thumbnail" >
+                        <div class="caption">
+                            <h3><a href="zona/{{ zona.pk }}" > {{ zona.nom }} </a></h3>
+                            <p>{{ zona.descripcio }}</p>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
             </div>
-        </li>
-    {% endfor %}
-        <li>
-            <div class="thumbnail" >
-                <div class="caption">
-                    <h3><a href="{% url 'recursos' %}" > Tots els Recursos </a></h3>
-                    <p>{{ zona.descripcio }}</p>
-                </div>
             </div>
-        </li>
-    </ul>
-    </div>
-</div>
+         </div>
+        {% endfor %}
+
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3><a href="{% url 'recursos' %}" > Tots els Recursos </a></h3>
+                <p>{{ zona.descripcio }}</p>
+            </div>
+        </div>
+
+
 {% endblock %}
