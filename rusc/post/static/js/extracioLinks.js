@@ -4,8 +4,7 @@
 
 $( document ).ready(function() {
 
-    /* Script per convertir el multifield en select2*/
-    $(".etiquetes").select2({tags: true});
+
     //$('.select2-search__field').on("keydown", function(e) {
     //    $(".etiquetes").select2({data:[{id:0,text:"enhancement"}]});
     //});
@@ -15,7 +14,7 @@ $( document ).ready(function() {
         //Define variables
         var links = new Array;
         var text = $('#id_text').val();
-        var regexp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        var regexp = /(\b(https?|ftp|file|www):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         var url;
         e.preventDefault();
 

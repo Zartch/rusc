@@ -14,6 +14,9 @@
 {% block content %}
     <script type="text/javascript">
     $( document ).ready(function() {
+        /* Script per convertir el multifield en select2*/
+        $(".etiquetes").select2({tags: true});
+        /* Script per proposar les etiquetes si apareix la una paraula  que previament ja sigui una etiqueta al text*/
         $('.id_text').on("keydown", function (e) {
             var etqProp = new Array;
             var paraula;
