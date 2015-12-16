@@ -7,13 +7,6 @@ from rusc.recurs.models import Recurs
 from rusc.etiqueta.models import Etiqueta
 from cela.models import Cela
 
-
-
-
-
-
-
-
 #classe que gestiona(manager) els vots dels diferents posts. camp 'with_votes' del post
 from django.db.models import Count
 from django.utils.timezone import now

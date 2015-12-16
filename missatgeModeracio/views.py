@@ -1,14 +1,10 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from notifications import notify
 from django.shortcuts import get_object_or_404
-
 from rusc.post.models import Post
 from rusc.recurs.models import Recurs
 from rusc.etiqueta.models import Etiqueta
-
-
-
-
 
 #Vista de la missatgeria entre admin-user de la moderació
 #El contentType Definirá si es un Post, un Recurs, ¿o una etiqueta?

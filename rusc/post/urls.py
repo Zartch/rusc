@@ -1,6 +1,6 @@
+# -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required as auth
-
 from rusc.post.views import postCreateView, VoteFormView
 from rusc.post import views
 

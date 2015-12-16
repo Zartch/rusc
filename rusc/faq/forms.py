@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from rusc.faq.models import Pregunta
 from django.contrib.auth.models import User

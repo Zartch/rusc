@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import micawber
 from django.http import HttpResponse
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from cela.models import get_cela
 
 def cela_context(request):

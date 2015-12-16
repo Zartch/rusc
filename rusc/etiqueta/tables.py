@@ -1,8 +1,7 @@
+# -*- coding: utf-8 -*-
 import django_tables2 as tables
 from django_tables2.utils import A  # alias for Accessor
-
 from rusc.etiqueta.models import Tesauro, Etiqueta
-
 
 TEMPLATEEDIT_tesauro = '''
    <a href="{% url 'mod_tesauro' record.pk  %}"> Edit </a>

@@ -1,4 +1,4 @@
-__author__ = 'zartch'
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from cela.models import get_cela
 from rusc.etiqueta.models import Etiqueta

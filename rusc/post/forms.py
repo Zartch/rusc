@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 from django import forms
-
 from rusc.post.models import Post,Vote
 from cela.models import get_cela
 from rusc.etiqueta.models import Etiqueta

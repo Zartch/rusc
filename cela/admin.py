@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
-
 from cela.models import Cela
 
 # Register your models here.

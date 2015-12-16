@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView
 from django.core.urlresolvers import reverse
 from django.contrib import messages as notif_messages
-
 from rusc.faq.models import Pregunta
 from cela.models import get_cela
 from rusc.faq.forms import faqForm

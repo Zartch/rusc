@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf.urls import url
 
 from rusc.usuari.views import perfilview,viewuser, UserProfileUpdateView,index,viewuserprofile, moderacioPostView

@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
-
 from rusc.etiqueta.models import Etiqueta, Tesauro
 
 # Register your models here.
