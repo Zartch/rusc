@@ -12,9 +12,9 @@ class Cela(models.Model):
 
     #Privada no surt a les cerques, Registrats si
     TIPUS_CELA = (
-        ('P','Publica'),
-        ('X','Privada'), #Acceptan peticións de ingres Moderadors
-        ('R','Registrats'), #Acceptan tots
+        ('P','Visible'),
+        ('X','Invisible'), #Acceptan peticións de ingres Moderadors
+        ('R','Supervisada'), #Acceptan tots
     )
 
     TIPUS_MODERACIO = (
