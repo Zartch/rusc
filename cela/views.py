@@ -54,8 +54,11 @@ class celaCreateView(CreateView):
 
     #Si creem una xarxa s'afegeixen moderadors, s'ha de crear el user profile, per a que el moderador no s'hagi d'acceptar a si mateix
     def get_success_url(self):
+
         for mod in self.object.moderadors.all():
             UserProfile.objects.get_or_create(user=mod, cela=self.object)
+        self.object.moderadors.add(self.request.user)
+
         notif_messages.add_message(self.request, notif_messages.INFO, "Has creat una nova cela", 'success')
         return reverse('cela', args=[self.object.pk] )
 

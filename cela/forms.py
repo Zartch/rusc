@@ -12,9 +12,8 @@ class celaForm(forms.ModelForm):
 
     class Meta:
         model = Cela
-        exclude = {'slug'}
-        widgets = {
-            'moderadors': autocomplete_light.MultipleChoiceWidget('UserAutocomplete'),}
+        exclude = {'slug', 'moderadors'}
+        #widgets = {'moderadors': autocomplete_light.MultipleChoiceWidget('UserAutocomplete'),}
 
     def __init__(self, *args, **kwargs):
         super(celaForm, self).__init__(*args, **kwargs)

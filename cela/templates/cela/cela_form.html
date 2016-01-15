@@ -1,6 +1,14 @@
 {% extends "baseRusc.html" %}
+{% load staticfiles %}
 {%  block content %}
     <form action="" method="post">{% csrf_token %}
+        <div>
+            Al crear una red aceptas las siguientes condiciones de uso
+            <a href="{% static 'Docs/acceptacion/Doc1' %}" class="btn  btn-default  btn-xs">
+                <span class='glyphicon glyphicon-file'>
+            </span>
+            </a>
+        </div>
         {{ form.as_p }}
         <input type="submit" value="Create new Cell" class="btn-primary btn-lg" />
     </form>

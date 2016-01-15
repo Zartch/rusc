@@ -62,7 +62,10 @@ def get_cela(request):
 
     return cela
 
-
+#http://www.b-list.org/weblog/2006/nov/02/django-tips-auto-populated-fields/
+# class cela_manager(models.Manager):
+#     def new_cela_user(self, user):
+#         new_cela = self.model(moderador = user)
 
 
 def cela_post_save(sender, instance, created, *args, **kwargs):
