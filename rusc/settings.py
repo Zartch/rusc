@@ -14,6 +14,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RECAPTCHA_PUBLIC_KEY = '6LcGZxUTAAAAAJ_hzaJalWBv4ksgM7A7lKSWApyI'
+RECAPTCHA_PRIVATE_KEY = '6LcGZxUTAAAAAOzV54WA6vC5gNDZz7xd6JoFki_M'
 
 
 # Quick-start development settings - unsuitable for production
@@ -56,6 +58,7 @@ INSTALLED_APPS = (
     'django_filters',
     'django_tables2',
     'django_messages',
+    'captcha',
     'notifications',
     'registration',
     'autocomplete_light',
