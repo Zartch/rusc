@@ -77,9 +77,6 @@ def resumCreateView(request):
         #dado un recurso, todos los usuarios que han participado en su discusión
         #Dado un hilo, todos los usuarios que han participado en su deiscusión
         #relaciones entre hilos
-
-
-
         borrador =  "Parametros usados: "+ "\n" \
                   + "Etiquetas: "+ str(etq)+ "\n" \
                   + "Usuarios: "+str(usr)+ "\n" \
