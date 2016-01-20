@@ -6,7 +6,7 @@ from django.contrib import messages as notif_messages
 from django.core.urlresolvers import reverse
 
 from cela.forms import celaForm
-from cela.models import get_cela, Cela
+from cela.models import get_cela, Cela, Tema
 from rusc.post.models import Post,folksonomia
 from rusc.etiqueta.models import Etiqueta, Tesauro, jsonSubdits
 from rusc.usuari.models import UserProfile
@@ -54,10 +54,23 @@ class celaCreateView(CreateView):
 
     #Si creem una xarxa s'afegeixen moderadors, s'ha de crear el user profile, per a que el moderador no s'hagi d'acceptar a si mateix
     def get_success_url(self):
+        mod = self.request.user
+        #Afegim al usuari que ha creat la xarxa com a moderador
+        self.object.moderadors.add(mod)
+        #creem el userprofile de el moderador
+        UserProfile.objects.get_or_create(user=mod, cela=self.object)
 
-        for mod in self.object.moderadors.all():
-            UserProfile.objects.get_or_create(user=mod, cela=self.object)
-        self.object.moderadors.add(self.request.user)
+        #Enviem el mail amb la informació de la cela y el enllaç als documents:
+        cuerpo = " Estás recibiendo este mail por que acabas de crear una red \n " \
+                 " A partir de ahora la red : "+self.object.pregunta + " estará disponible en el siguiente enlace:\n" \
+                 " m1l3.net/rusc/" + str(self.object.id) + "\n"+\
+                 " Los siguientes documentos, son muy importantes. Leetelos o el coco vendrá y te comerá\n"+ \
+                 " Enlace al documento de '' http://m1l3.net/static/Docs/acceptacion/Doc.txt' \n"+ \
+                 " Enlace al documento de '' http://m1l3.net/static/Docs/acceptacion/Doc.txt' \n"+ \
+                 " Enlace al documento de '' http://m1l3.net/static/Docs/acceptacion/Doc.txt' \n"
+
+        send_mail("Nueva red " + self.object.pregunta, cuerpo , "root@gmail.com", [self.request.user.email] )
+
 
         notif_messages.add_message(self.request, notif_messages.INFO, "Has creat una nova cela", 'success')
         return reverse('cela', args=[self.object.pk] )
@@ -65,6 +78,15 @@ class celaCreateView(CreateView):
     def form_invalid(self, form):
         notif_messages.add_message(self.request, notif_messages.INFO, "corregeix els errors indicats", 'warning')
         return super(celaCreateView, self).form_invalid(form)
+
+    def form_valid(self, form):
+        #hem de crear els temas abans de la creació del objecte
+
+        temas = form.data.getlist("temas")
+        for nom_tema in temas:
+            Tema.objects.get_or_create(nom = nom_tema)
+
+        return super(celaCreateView, self).form_valid(form)
 
 class celaUpdateView(UpdateView):
     model = Cela

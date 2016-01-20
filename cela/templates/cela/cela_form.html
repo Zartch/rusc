@@ -1,15 +1,38 @@
 {% extends "baseRusc.html" %}
 {% load staticfiles %}
+
+{% block headers %}
+
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/select2.js' %}"></script>
+
+{% endblock  %}
+
 {%  block content %}
+
+    <script type="text/javascript">
+    $( document ).ready(function() {
+        /* Script per convertir el multifield en select2*/
+        $("#id_temas").select2({tags: true});
+        });
+    </script>
     <form action="" method="post">{% csrf_token %}
         <div>
-            Al crear una red aceptas las siguientes condiciones de uso
-            <a href="{% static 'Docs/acceptacion/Doc.txt' %}" class="btn  btn-default  btn-xs">
-                <span class='glyphicon glyphicon-file'>
-            </span>
-            </a>
+            <p>Al crear una red aceptas las siguientes condiciones de uso</p>
+            <ul>
+                <li>
+                    <a href="{% static 'Docs/acceptacion/Doc.txt' %}" >Terminos y condiciones</a>
+                </li>
+                <li>
+                    <a href="{% static 'Docs/acceptacion/Doc.txt' %}" >Doc 1</a>
+                </li>
+                <li>
+                    <a href="{% static 'Docs/acceptacion/Doc.txt' %}" download>Doc 2</a>
+                </li>
+            </ul>
+
         </div>
         {{ form.as_p }}
-        <input type="submit" value="Create new Cell" class="btn-primary btn-lg" />
+        <input type="submit" value="Crear nueva Red" class="btn-primary btn-lg" />
     </form>
 {% endblock %}

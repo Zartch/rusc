@@ -8,6 +8,14 @@ from django.contrib import messages as notif_messages
 from django.template.defaultfilters import slugify
 
 
+class Tema(models.Model):
+    nom = models.CharField(max_length=100)
+    slug = models.CharField(blank=True, max_length=100)
+
+    def __str__(self):
+            return self.nom
+
+
 class Cela(models.Model):
 
     #Privada no surt a les cerques, Registrats si
@@ -21,16 +29,23 @@ class Cela(models.Model):
 
     )
 
-    pregunta = models.CharField(max_length=70)
+    pregunta = models.CharField(max_length=70,verbose_name=('Titol'))
     slug = models.CharField(blank=True, max_length=100)
     datacreacio = models.DateTimeField(auto_now_add=True)
-    #etiquetes = models.ManyToManyField('Etiqueta', blank=True)
+
     moderadors = models.ManyToManyField(User)
     descripcio= models.TextField()
     tipus = models.CharField(max_length=1,choices=TIPUS_CELA, default='P')
 
+    dato_veri = models.TextField(verbose_name=('Dato verificable por el administrador')) #Dato Verificable, lusiangel style
+    temas = models.ManyToManyField(Tema, blank=True)
+
+
     def __str__(self):
         return self.pregunta
+
+    def get_temas(self):
+        return ",".join([str(p) for p in self.temas.all()])
 
     def get_absolute_url(self):
         return reverse('cela', args=[self.pk] )
