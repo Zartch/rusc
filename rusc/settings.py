@@ -14,8 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RECAPTCHA_PUBLIC_KEY = '6LcGZxUTAAAAAJ_hzaJalWBv4ksgM7A7lKSWApyI'
-RECAPTCHA_PRIVATE_KEY = '6LcGZxUTAAAAAOzV54WA6vC5gNDZz7xd6JoFki_M'
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -32,6 +31,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+)
 
 
 # Don't use the django-registration available from PyPI. It does not support Django 1.7 and it appears it never will. The repo maintainer has abdicated and the project appears unmaintained.
@@ -55,14 +61,30 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    #Apps 3's
+    #tablas
     'django_filters',
     'django_tables2',
+    #mensajes
     'django_messages',
+    #chaptcha
     'captcha',
+    #notifications
     'notifications',
-    'registration',
+    #registro/usuarios
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    #autocomplete
     'autocomplete_light',
+
+    #Oembed Links
     'micawber.contrib.mcdjango',
+    #'registration',
+
+    #Propios PVC
     'missatgeModeracio',
     'rusc.post',
     'rusc.etiqueta',
@@ -73,6 +95,16 @@ INSTALLED_APPS = (
     'rusc.faq',
     'cela.moderaciomodels',
     'rusc.resums',
+
+
+
+    # ... include the providers you want to enable:
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.instagram',
+    # 'allauth.socialaccount.providers.openid',
+    # 'allauth.socialaccount.providers.vk',
+
 
 
 
@@ -103,16 +135,17 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                "django.core.context_processors.i18n",
                 'django.contrib.messages.context_processors.messages',
                 'django_messages.context_processors.inbox',
                 'rusc.context_processors.notifications_user',
                 'cela.context_processors.cela_context',
                 'rusc.context_processors.perfil_usuari',
-
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'rusc.wsgi.application'
 
@@ -141,7 +174,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
@@ -150,11 +182,23 @@ STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static').replace('\\','/'),] #os
 #STATICFILES_DIRS = "/webapps/rusc"
 STATIC_ROOT = "/webapps/rusc"
 
+RECAPTCHA_PUBLIC_KEY = '6Lew1xUTAAAAAGnODN2cfHt-owEVdy0BNGZTQZdE'
+RECAPTCHA_PRIVATE_KEY = '6Lew1xUTAAAAALvG-5V142bJkUPU9GDLci13wA1T'
+RECAPTCHA_USE_SSL = True     # Defaults to False
+
+SITE_ID = 3
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'cela.forms.AllauthSignupForm'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+#Para que los mails solo se vean en consola:
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'scaladeirsvc@gmail.com'
+EMAIL_HOST_PASSWORD = 'ppcefdwfayrhrwrb'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

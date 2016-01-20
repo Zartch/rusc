@@ -12,9 +12,15 @@
     <script src="{% static 'js/select2.js' %}"></script>
 
 
+
 {% endblock %}
 {#todo Les subscripcions disponibles només han de ser las de la cela#}
 {%  block content %}
+   <script>
+        $(document).ready(function() {
+          $(".etiquetes").select2({tags:true});
+        });
+    </script>
     <h3><b>Configuració específica de cel·la</b></h3><br>
 
     <form action="" enctype="multipart/form-data" method="post" >{% csrf_token %}
@@ -25,29 +31,36 @@
             <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="120" width="120">
         {% endif %}
 
+
+
+
+        <div class="row">
+            <div class="col-md-1">Etiqueta personal</div>
+            <div class="col-md-1"> visible </div>
+        </div>
+
         {% for userInfo_form in info_formset %}
             <div class="userInfo_form">
-                {{ userInfo_form.etq }}
-                {{ userInfo_form.visible }}
+            <div class="row">
+                <div class="col-md-1">{{ userInfo_form.etq }}</div>
+                <div class="col-md-1">{{ userInfo_form.visible }}</div>
             </div>
+            </div>
+
         {% endfor %}
+
+
         {{ info_formset.management_form }}
         {{ form.as_p }}
 
-        <table>
-        <tbody>
-    </form>
-    <script type="text/javascript">addEvent(window, "load", function(e) { SelectFilter.init("id_subscripcions", "subscripcions", 0, "/media/"); });</script>
 
-    <script>
+    </form>
+{#    <script type="text/javascript">addEvent(window, "load", function(e) { SelectFilter.init("id_subscripcions", "subscripcions", 0, "/media/"); });</script>#}
+
+        <script>
         $('.userInfo_form').formset({
-            addText: 'add Info',
-            deleteText: 'remove'
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-          $(".etiquetes").select2({tags:true});
+            addText: 'Añadir información personal',
+            deleteText: 'Eliminar'
         });
     </script>
 

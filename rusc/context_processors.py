@@ -12,8 +12,9 @@ def notifications_user(request):
     ret = request.user.notifications.all()
     for r in ret:
         userp = UserProfile.objects.filter(pk= r.actor_object_id).first()
-        if userp.avatar:
-            r.url = userp.avatar.url
+        if userp:
+            if userp.avatar:
+                r.url = userp.avatar.url
 
     return { 'notifications_user' : ret}
 

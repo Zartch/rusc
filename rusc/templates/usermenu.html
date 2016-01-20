@@ -134,7 +134,7 @@
 
 
      <a href="{% url 'mi_perfil' %}"><span class='glyphicon glyphicon-user'></span> &nbsp;{{ user.username }}</a>
-     <a href="{% url 'auth_logout' %}?next=/rusc/"><span class="glyphicon glyphicon-log-out"></span></a><br />
+     <a href="{% url 'account_logout' %}?next=/rusc/"><span class="glyphicon glyphicon-log-out"></span></a><br />
     {% inbox_count as unread_mes_count %}
     {% if unread_mes_count > 0 %}
         <span id="unread_mes_count">{{ unread_mes_count }}</span>
@@ -205,8 +205,8 @@
 
 
 {% else %}
-    <a href="{% url 'auth_login' %}"><span class="glyphicon glyphicon-log-in"></span></a> /
-    <a href="{% url 'registration_register' %}">Register</a>
+    <a href="{% url 'account_login' %}"><span class="glyphicon glyphicon-log-in"></span></a> /
+    <a href="{% url 'account_signup' %}">Register</a>
 {% endif %}
 
 

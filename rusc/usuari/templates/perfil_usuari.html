@@ -2,25 +2,31 @@
 {% load static %}
 {% block content %}
 
-    <h3>Configuració de   <b>{{ user.username }}</b></h3>
+    <h3>Perfil de <b>{{ user.username }}</b></h3>
     {% if perfilusuari.avatar %}
         <img src="{{ perfilusuari.avatar.url }}" alt="avatar" height="120" width="120">
     {% else %}
         <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="120" width="120">
     {% endif %}
 
-    {{ user }}<br />
-    {{ perfilusuari.website }}<br />
-    {{ perfilusuari.usuari }}<br />
+     <div>
+      <strong>Menu:</strong>
+      <ul>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+            <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        {% else %}
+            <li><a href="{% url 'account_login' %}">Sign In</a></li>
+            <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+    </div>
 
 
 
-    <form action="" method="post">{% csrf_token %}
-        {{ form_user.as_p }}
-        <input type="submit" class="btn btn-primary" value="A totes" onClick="return confirm('Copiar a totes les celes?')" />
-    </form>
     <br />
     <br />
+    {% if up %}
     <div class="table-responsive">
         <table class="table">
             <tr>
@@ -36,5 +42,9 @@
             {% endfor %}
         </table>
     </div>
+    {%  else %}
+        <p>Encara no estás subscrit a cap RSVC <a href="#">Busca</a> o <a href="{% url 'cela_nova' %}">Crea</a> una xarxa</p>
+    {% endif %}
+
 
 {% endblock %}
