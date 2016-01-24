@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django import forms
-import autocomplete_light
+
 
 from rusc.etiqueta.models import Etiqueta, Tesauro
 from cela.models import get_cela
 
-autocomplete_light.register(Etiqueta, search_fields=('nom', ))
+
 
 class etiquetaForm(forms.ModelForm):
     class Meta:

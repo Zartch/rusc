@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
-#from etiqueta.models import Etiqueta
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages as notif_messages
@@ -50,13 +49,13 @@ class Cela(models.Model):
     def get_absolute_url(self):
         return reverse('cela', args=[self.pk] )
 
-    def get_etiquetes(self):
-        posts = self.posts.all()
-        etiquetes = set()
-        for post in posts:
-            for etq in post.etiquetes.all():
-                etiquetes.add(etq)
-        return etiquetes
+    # def get_etiquetes(self):
+    #     posts = self.posts.all()
+    #     etiquetes = set()
+    #     for post in posts:
+    #         for etq in post.etiquetes.all():
+    #             etiquetes.add(etq)
+    #     return etiquetes
 
 
 

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth.models import User
-import autocomplete_light
 
 from cela.models import Cela
 
 
-autocomplete_light.register(User, search_fields=('username', ))
 
 class celaForm(forms.ModelForm):
 

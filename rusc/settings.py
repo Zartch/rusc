@@ -78,7 +78,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     #autocomplete
-    'autocomplete_light',
+    #'autocomplete_light',
 
     #Oembed Links
     'micawber.contrib.mcdjango',
