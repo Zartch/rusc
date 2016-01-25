@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block headers %}
+
+
+{% endblock %}
+{%  block content %}
+
+<form action="" method="post">{% csrf_token %}
+    <p>Seguro que quieres eliminar "{{ object }}"?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+
+
+{% endblock %}>

@@ -26,7 +26,7 @@
 }
 
 .selector .selector-available h2, .selector-chosen h2 {
-    background: white url(/static/images/admin/nav-bg.gif) bottom left repeat-x;
+    background: white url(/rusc/static/images/admin/nav-bg.gif) bottom left repeat-x;
     color: #666;
 }
 
@@ -80,23 +80,23 @@
 }
 
 .selector-add {
-    background: url(/static/images/admin/selector-icons.gif) 0 -161px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) 0 -161px no-repeat;
     cursor: default;
     margin-bottom: 2px;
 }
 
 .active.selector-add {
-    background: url(/static/images/admin/selector-icons.gif) 0 -187px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) 0 -187px no-repeat;
     cursor: pointer;
 }
 
 .selector-remove {
-    background: url(/static/images/admin/selector-icons.gif) 0 -109px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) 0 -109px no-repeat;
     cursor: default;
 }
 
 .active.selector-remove {
-    background: url(/static/images/admin/selector-icons.gif) 0 -135px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) 0 -135px no-repeat;
     cursor: pointer;
 }
 
@@ -122,22 +122,22 @@ a.active.selector-chooseall:hover, a.active.selector-clearall:hover {
 }
 
 a.selector-chooseall {
-    background: url(/static/images/admin/selector-icons.gif) right -263px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) right -263px no-repeat;
     cursor: default;
 }
 
 a.active.selector-chooseall {
-    background: url(/static/images/admin/selector-icons.gif) right -289px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) right -289px no-repeat;
     cursor: pointer;
 }
 
 a.selector-clearall {
-    background: url(/static/images/admin/selector-icons.gif) left -211px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) left -211px no-repeat;
     cursor: default;
 }
 
 a.active.selector-clearall {
-    background: url(/static/images/admin/selector-icons.gif) left -237px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) left -237px no-repeat;
     cursor: pointer;
 }
 
@@ -183,22 +183,22 @@ a.active.selector-clearall {
 }
 
 .stacked .selector-add {
-    background: url(/static/images/admin/selector-icons.gif) 0 -57px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) 0 -57px no-repeat;
     cursor: default;
 }
 
 .stacked .active.selector-add {
-    background: url(/static/images/admin/selector-icons.gif) 0 -83px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) 0 -83px no-repeat;
     cursor: pointer;
 }
 
 .stacked .selector-remove {
-    background: url(/static/images/admin/selector-icons.gif) 0 -5px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) 0 -5px no-repeat;
     cursor: default;
 }
 
 .stacked .active.selector-remove {
-    background: url(/static/images/admin/selector-icons.gif) 0 -31px no-repeat;
+    background: url(/rusc/static/images/admin/selector-icons.gif) 0 -31px no-repeat;
     cursor: pointer;
 }
 
@@ -307,7 +307,7 @@ span.clearable-file-input label {
     color: #666;
     padding: 2px 3px;
     text-align: center;
-    background: #e1e1e1 url(/static/images/admin/nav-bg.gif) 0 50% repeat-x;
+    background: #e1e1e1 url(/rusc/static/images/admin/nav-bg.gif) 0 50% repeat-x;
     border-bottom: 1px solid #ddd;
 }
 
@@ -375,7 +375,7 @@ span.clearable-file-input label {
     position: absolute;
     font-weight: bold;
     font-size: 12px;
-    background: #C9DBED url(/static/images/admin/default-bg.gif) bottom left repeat-x;
+    background: #C9DBED url(/rusc/static/images/admin/default-bg.gif) bottom left repeat-x;
     padding: 1px 4px 2px 4px;
     color: white;
 }
@@ -398,12 +398,12 @@ span.clearable-file-input label {
     margin: 0 !important;
     padding: 0 !important;
     font-size: 10px;
-    background: #e1e1e1 url(/static/images/admin/nav-bg.gif) 0 50% repeat-x;
+    background: #e1e1e1 url(/rusc/static/images/admin/nav-bg.gif) 0 50% repeat-x;
     border-top: 1px solid #ddd;
 }
 
 .calendar-cancel:hover {
-    background: #e1e1e1 url(/static/images/admin/nav-bg-reverse.gif) 0 50% repeat-x;
+    background: #e1e1e1 url(/rusc/static/images/admin/nav-bg-reverse.gif) 0 50% repeat-x;
 }
 
 .calendar-cancel a {
@@ -439,7 +439,7 @@ ul.orderer li {
     border-width: 0 1px 1px 0;
     white-space: nowrap;
     overflow: hidden;
-    background: #e2e2e2 url(/static/images/admin/nav-bg-grabber.gif) repeat-y;
+    background: #e2e2e2 url(/rusc/static/images/admin/nav-bg-grabber.gif) repeat-y;
 }
 
 ul.orderer li:hover {
@@ -471,7 +471,7 @@ ul.orderer li.selected {
 }
 
 ul.orderer li.deleted {
-    background: #bbb url(/static/images/admin/deleted-overlay.gif);
+    background: #bbb url(/rusc/static/images/admin/deleted-overlay.gif);
 }
 
 ul.orderer li.deleted a:link, ul.orderer li.deleted a:visited {
@@ -479,7 +479,7 @@ ul.orderer li.deleted a:link, ul.orderer li.deleted a:visited {
 }
 
 ul.orderer li.deleted .inline-deletelink {
-    background-image: url(/static/images/admin/inline-restore.png);
+    background-image: url(/rusc/static/images/admin/inline-restore.png);
 }
 
 ul.orderer li.deleted:hover, ul.orderer li.deleted a.selector:hover {
@@ -491,7 +491,7 @@ ul.orderer li.deleted:hover, ul.orderer li.deleted a.selector:hover {
 .inline-deletelink {
     float: right;
     text-indent: -9999px;
-    background: transparent url(/static/images/admin/inline-delete.png) no-repeat;
+    background: transparent url(/rusc/static/images/admin/inline-delete.png) no-repeat;
     width: 15px;
     height: 15px;
     border: 0px none;
@@ -530,11 +530,11 @@ ul.orderer li.deleted:hover, ul.orderer li.deleted a.selector:hover {
 }
 
 .editinline tr.deleted {
-    background: #ddd url(/static/images/admin/deleted-overlay.gif);
+    background: #ddd url(/rusc/static/images/admin/deleted-overlay.gif);
 }
 
 .editinline tr.deleted .inline-deletelink {
-    background-image: url(/static/images/admin/inline-restore.png);
+    background-image: url(/rusc/static/images/admin/inline-restore.png);
 }
 
 .editinline tr.deleted td:hover {
@@ -565,13 +565,13 @@ ul.orderer li.deleted:hover, ul.orderer li.deleted a.selector:hover {
 .editinline-stacked .inline-splitter {
     float: left;
     width: 9px;
-    background: #f8f8f8 url(/static/images/admin/inline-splitter-bg.gif) 50% 50% no-repeat;
+    background: #f8f8f8 url(/rusc/static/images/admin/inline-splitter-bg.gif) 50% 50% no-repeat;
     border-right: 1px solid #ccc;
 }
 
 .editinline-stacked .controls {
     clear: both;
-    background: #e1e1e1 url(/static/images/admin/nav-bg.gif) top left repeat-x;
+    background: #e1e1e1 url(/rusc/static/images/admin/nav-bg.gif) top left repeat-x;
     padding: 3px 4px;
     font-size: 11px;
     border-top: 1px solid #ddd;
