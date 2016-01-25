@@ -17,8 +17,10 @@
 {%  block content %}
    <script>
         $(document).ready(function() {
-          $(".etiquetes").select2({tags:true});
+          $(".etiquetes").select2({tags:true, allowClear: true,placeholder: "Etiqueta personal"});
+          $("#id_mailConf").select2({tags:true});
         });
+
     </script>
     <h3><b>Configuració específica de cel·la</b></h3><br>
 
@@ -45,7 +47,6 @@
                     <div class="col-md-1">{{ userInfo_form.visible }}</div>
                 </div>
             </div>
-
         {% endfor %}
 
 
@@ -59,7 +60,11 @@
    <script>
         $('.userInfo_form').formset({
             addText: 'Añadir información personal',
-            deleteText: 'Eliminar'
+            deleteText: 'Eliminar',
+            added: function (row) {
+                    $(".etiquetes").select2({tags:true, allowClear: true,placeholder: "Etiqueta personal"});
+            }
+
         });
     </script>
 

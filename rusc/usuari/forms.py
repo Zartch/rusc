@@ -20,6 +20,11 @@ class userProfileForm(forms.ModelForm):
     # querrySet = Post.objects.filter().values_list("pk","titol")
     # subscripcions = forms.MultipleChoiceField(choices= querrySet,widget=forms.SelectMultiple(attrs={'class':'form-control'}))
 
+    def clean(self):
+        super(userProfileForm, self).clean() #if necessary
+        if 'mailConf' in self._errors:
+            del self._errors['mailConf']
+
     class Meta:
         model = UserProfile
         exclude = {"cela", "user", "estat","email_p"}
@@ -52,21 +57,31 @@ import django_select2
 class userInfoForm(forms.Form):
     etq = forms.ChoiceField(widget=forms.Select(attrs={'class':'regDropDown'}))
     visible = forms.BooleanField(initial=True)
+    #home = forms.BooleanField(initial=False)
 
+    chivato = 0
     class Meta:
         model = UserInfo
         exclude = {"usr"}
-    import django_select2
-    def __init__(self, request, *args, **kwargs):
+    #el request y el selected los pasamos cuando insatnciamos el form
+    def __init__(self, request, selected, *args, **kwargs):
         super(userInfoForm, self).__init__(*args, **kwargs)
         #self.fields['etq'].widget.attrs['class'] = 'form-control'
         try:
             cho = []
+            cho.append(['',''])
             for etq in Etiqueta.objects.filter(cela= get_cela(request)):
                 cho.append([etq.pk,etq.nom])
             self.fields['etq'] = forms.ChoiceField(choices= cho)
             self.fields['etq'].widget.attrs['class'] = 'etiquetes'
-        except:
+            self.initial['etq'] = ''
+            #selected es un array que nos dirá el estado
+            if len(selected) > 0:
+                self.initial['etq'] = selected[-1][0]
+                self.initial['visible'] = selected[-1][1]
+                selected.pop()
+
+        except  Exception as e:
             self.fields['etq'] = forms.ChoiceField(choices=[[1,1],[2,2],[3,3] ])
 
 

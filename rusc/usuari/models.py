@@ -52,7 +52,7 @@ class UserProfile(models.Model):
     #registrats a RUSC. Quan es registrin sels incloura directament a la cela
     email_p = models.EmailField(blank=True)
     etiquetes = models.ManyToManyField(Etiqueta,through='UserInfo', blank=True)
-
+    dato_veri = models.CharField(max_length=150, blank=True)
 
     class Meta:
         unique_together = (("cela", "user"),)
