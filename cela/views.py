@@ -91,7 +91,8 @@ class celaCreateView(CreateView):
 class celaUpdateView(UpdateView):
     model = Cela
     form_class = celaForm
-    template_name = "moderacio/cela_admin_form.html"
+    template_name = "cela/cela_form.html"
+    #template_name = "moderacio/cela_admin_form.html"
 
     def form_valid(self, form):
         notif_messages.add_message(self.request, notif_messages.INFO, "Has modificat una cela", 'success')
@@ -308,7 +309,7 @@ def VisualCelas(request):
         d.clear()
 
 
-        for etq in cela.get_etiquetes():
+        for etq in Etiqueta.objects.filter(cela = cela):
             d.append(etq.slug)
         if len(d) > 0:
             s['musicians'] = d.copy()
