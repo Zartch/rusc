@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.template.defaultfilters import slugify
 
-from cela.models import Cela
+from cela.models import Cela, TipoEtiqueta
 import django_filters
 
 class Etiqueta(models.Model):
@@ -30,7 +30,8 @@ class Etiqueta(models.Model):
     moderacio= models.CharField(max_length=1,choices=ESTAT_MODERACIO, default='E')
     nom = models.CharField(max_length=100)
     slug = models.CharField(blank=True, max_length=100)
-    tipologia = models.CharField(max_length=1, choices=TIPO_TIPOLOGIA, default='E')
+    #tipologia = models.CharField(max_length=1, choices=TIPO_TIPOLOGIA, default='E')
+    tipologia = models.ForeignKey(TipoEtiqueta, null=True)
     descripcio = models.TextField(verbose_name=('descripció'), blank=True) #Será un enllaç a la wikipedia
     wiki = models.URLField(blank=True, default="")
     #usuari = models.ForeignKey(User)
@@ -40,6 +41,7 @@ class Etiqueta(models.Model):
     #Cam per a reflexar un valor que podrá ser considerat com un camp de el model,
     #Les estiquees que es creein amb paraula:valor es separaran en nom i valor
     #valor = models.CharField(max_length=25, blank=True)
+
 
     def get_list_tesauros(self):
         tesauros = Tesauro.objects.filter(Q(etq1=self)|Q(etq2=self))

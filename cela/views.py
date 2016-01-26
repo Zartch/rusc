@@ -5,7 +5,7 @@ from notifications import notify
 from django.contrib import messages as notif_messages
 from django.core.urlresolvers import reverse
 
-from cela.forms import celaForm
+from cela.forms import celaForm, celaModForm
 from cela.models import get_cela, Cela, Tema
 from rusc.post.models import Post,folksonomia
 from rusc.etiqueta.models import Etiqueta, Tesauro, jsonSubdits
@@ -27,6 +27,7 @@ def ruscView(request):
 def celaview(request,cela):
     request.session["cell"] = cela
     celax = Cela.objects.filter(pk=cela).first()
+
     if (celax.tipus == 'P'):
         extensVar = "base.html"
     else:
@@ -34,13 +35,21 @@ def celaview(request,cela):
 
     llistat_usuaris = UserProfile.objects.filter(cela = celax)
     llistat_etq = Etiqueta.objects.filter(cela=celax)
+    llistat_temas = celax.temas.all()
 
-    #todo afegir automaticament com a moderador el usuari que está creant la cela
     if request.user.is_authenticated():
-       if  UserProfile.objects.filter(user = request.user, cela=celax.pk).exists():
-          return redirect('forum')
+        up =  UserProfile.objects.filter(user = request.user, cela=celax.pk)
+        if  up.exists():
+           if up.first().estat == 'A':
+            return redirect('forum')
 
-    return render(request, "cela.html", {'extensVar':extensVar, 'llistat_usuaris':llistat_usuaris, 'llistat_etq':llistat_etq})
+    #formulari per las preguntes de perfil personal obligatori
+    infoRequired = []
+    for dato in celax.personal.all():
+        infoRequired.append(dato)
+
+    return render(request, "cela.html", {'extensVar':extensVar, 'llistat_usuaris':llistat_usuaris, 'llistat_etq':llistat_etq,
+                                         'infoRequired':infoRequired, 'llistat_temas':llistat_temas})
 
 #la seguent funció serveix per a canviarli la cela on es troba l'usuari i redireccionarlo
 #a la URL que se li hagi passat a la funció
@@ -90,7 +99,7 @@ class celaCreateView(CreateView):
 
 class celaUpdateView(UpdateView):
     model = Cela
-    form_class = celaForm
+    form_class = celaModForm
     template_name = "cela/cela_form.html"
     #template_name = "moderacio/cela_admin_form.html"
 

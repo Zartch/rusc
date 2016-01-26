@@ -8,6 +8,22 @@
     <h1>{{ cela.pregunta }}</h1>
     <br />
     <h4>{{ cela.descripcio }}</h4>
+
+    <div id="content">
+        <h3>Temas</h3>
+            <div class="columns">
+            <ul>
+            {% for tema in llistat_temas %}
+                <li>
+                    <span class='glyphicon glyphicon-tag btn btn-primary btn-xs'>
+                        {{ tema.nom }}
+                    </span>
+                </li>
+            {% endfor %}
+
+            </ul>
+            </div>
+    </div>
     <div id="content">
         <h3>Etiquetas</h3>
             <div class="columns">
@@ -16,7 +32,7 @@
                 <li>
                     <a href="{% url "etiqueta" etq.pk %}" class="btn btn-default btn-xs">
                         <span class='glyphicon glyphicon-tag'>
-                        {{ etq.nom }}
+                        {{ etq.nom }}</span>
                     </a>
                 </li>
             {% endfor %}
@@ -34,7 +50,7 @@
                 <li>
                     <a href="{% url "perfil_user" user.pk %}" class="btn btn-default btn-xs">
                         <span class='glyphicon glyphicon-user'>
-                        {{ user.user }}
+                        {{ user.user }}</span>
                     </a>
                 </li>
             {% endfor %}
@@ -43,14 +59,22 @@
         </ul>.
     </div>
 
-{#    #Todo Modificar això per tal de que sigui choerent:#}
-{#    si el usuari es membre de la cela pot entrar,#}
-{#    si no ho es y es publica pot entrar, #}
-{#    si el usuari no es mebre i es publica pot entrar#}
-{#    si el usuari no es mebre i es registrada no pot entrar#}
-{#    si el usuari no es mebre i es Privada, no es pot veure la informació #}
+
     {% if cela.tipus != 'P' %}
-        Solicitar entrada acceso a la red: <a href="{% url 'acces_cela' %}" class="btn btn-primary">Solicitar Acceso</a>
+        <form id="formInfo" method="post" action="{% url 'acces_cela' %}" class="form" >{% csrf_token %}
+        <p>Per tal de solicitar accés a aquesta xarxa es necessari omplir aquestes dades:</p>
+            <div class="table-responsive">
+                <table class="table">
+                    {% for dato in infoRequired %}
+                        <tr>
+                            <td><label>{{ dato }}</label></td><td><input type="text" name="txt_{{ dato }}" /> </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+                    <p class="submit"><input type="submit" class="btn btn-primary" value="Solicitar acceso"></p>
+        </form>
+{#        Solicitar entrada acceso a la red: <a href="{% url 'acces_cela' %}" class="btn btn-primary">Solicitar Acceso</a>#}
     {% else %}
         <a href="{% url 'forum' %}" class="btn btn-primary" > Entrar </a>
     {% endif %}

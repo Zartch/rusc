@@ -3,10 +3,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages as notif_messages
 from notifications import notify
-
+from rusc.etiqueta.models import Etiqueta
 from cela.models import get_cela
 from rusc.post.models import Post
-from rusc.usuari.models import UserProfile
+from rusc.usuari.models import UserProfile, UserInfo
 
 
 #Vista per acceptar o rebutjar post, en cas de acceptació tornem a la mateixa pagina
@@ -42,16 +42,36 @@ def acceptarRebutjarPost(request,pkpost, action):
     notif_messages.add_message(request, notif_messages.INFO, "Moderació realitzada", 'success')
     return render(request, "moderacio/mode_post.html", {'posts':posts} )
 
+
 def peticioAcces(request):
     cela = get_cela(request)
+
     if not request.user.is_authenticated():
         return redirect('auth_login')
-    else:
-        perfilusuari, created = UserProfile.objects.get_or_create(user=request.user,cela= cela)
-        if created:
-            perfilusuari.estat = 'E'
-            perfilusuari.save()
-    return HttpResponse(" has solicitat acces.")
+
+    #Recogemos los datos minimos relacionados con la cela
+    datos = cela.personal.all()
+
+    #Creamos el perfil de suario para agregarle las informaciones personales
+
+    perfilusuari, created = UserProfile.objects.get_or_create(user=request.user,cela= cela)
+    perfilusuari.estat = 'E'
+    perfilusuari.save()
+
+    if request.POST:
+        for dato in datos:
+            etq = request.POST.get("txt_"+str(dato)+"")
+            if etq == '':
+                #Devolver error de form
+                pass
+            else:
+                e, created = Etiqueta.objects.get_or_create(cela = cela, nom = etq, tipologia = dato)
+                UserInfo.objects.get_or_create(usr = perfilusuari, etq = e)
+
+
+
+
+    return HttpResponse("{% extends 'baseRusc.html' %} {%  block content %}has solicitat acces.{% endblock %}")
 
 
 def moderacioPostView(request):

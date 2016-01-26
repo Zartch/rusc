@@ -11,9 +11,11 @@
 {%  block content %}
 
     <script type="text/javascript">
-    $( document ).ready(function() {
-        /* Script per convertir el multifield en select2*/
-        $("#id_temas").select2({tags: true});
+        $( document ).ready(function() {
+            /* Script per convertir el multifield en select2*/
+            $("#id_temas").select2({tags: true});
+            $("#id_moderadors").select2();
+            $("#id_personal").select2();
         });
     </script>
     <form action="" method="post">{% csrf_token %}

@@ -137,7 +137,7 @@ class UserProfileUpdateView(UpdateView):
                 try:
                     e = Etiqueta.objects.get(id = etq)
                 except:
-                    e = Etiqueta.objects.create(nom = etq, tipologia = 'P',moderacio='E', cela = cela )
+                    e = Etiqueta.objects.create(nom = etq,moderacio='E', cela = cela )
                 #El chek devuelve  on o nada
                 if visible == 'on':
                     visible = True
