@@ -17,6 +17,9 @@
         <img src="{% static "images/pulpo.gif" %}" alt="avatar" height="120" width="120">
     {% endif %}
     <br />
+    {% for info in userInfo %}
+        {{ info }} <br />
+    {% endfor %}
 
 
     <h3>Estadisticas</h3>

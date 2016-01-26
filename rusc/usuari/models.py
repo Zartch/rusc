@@ -57,6 +57,9 @@ class UserProfile(models.Model):
     class Meta:
         unique_together = (("cela", "user"),)
 
+    def get_etq(self):
+        return ",".join([str(p) for p in self.etiquetes.all()])
+
     def __str__(self):
         return self.user.username
 

@@ -25,6 +25,7 @@
                     <th>User</th>
                     <th>LastName</th>
                     <th>Web</th>
+                    <th>Etq</th>
                 </tr>
             </thead>
         {% for usuari in usuaris %}
@@ -33,13 +34,16 @@
                     <input type="checkbox" name="chk_usuaris" value="{{ usuari.pk }}" />
                 </td>
                 <td>
-                    <b><a href="{% url 'perfil' usuari.pk  %}"> {{ usuari.user.username }}</a></b>
+                    <b><a href="{% url 'perfil_user' usuari.pk  %}"> {{ usuari.user.username }}</a></b>
                 </td>
                 <td>
                      {{ usuari.user.last_name }}
                 </td>
                 <td>
                     {{ usuari.website }}
+                </td>
+                <td>
+                    {{ usuari.get_etq }}
                 </td>
             </tr>
         {% endfor %}

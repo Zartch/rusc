@@ -26,6 +26,7 @@
                     <th>User</th>
                     <th>LastName</th>
                     <th>Web</th>
+                    <th>etq</th>
                     <th>Estat</th>
                     <th>TipusS</th>
                     <th>MailC</th>
@@ -41,6 +42,9 @@
                 </td>
                 <td>
                      {{ usuari.user.last_name }}
+                </td>
+                <td>
+                    {{ usuari.get_etq }}
                 </td>
                 <td>
                     {{ usuari.website }}

@@ -50,14 +50,16 @@ def viewuser(request,pk):
 
 from itertools import chain
 def viewuserprofile(request,pk):
+    cela = get_cela(request)
     if not request.user.is_authenticated():
         return redirect('auth_login')
 
-    usuari = User.objects.filter(pk=pk).first()
-    profile = UserProfile.objects.filter(user__pk=pk, cela=get_cela(request)).first()
+    profile = UserProfile.objects.filter(pk=pk, cela=get_cela(request)).first()
+    usuari = profile.user
+    userInfo = UserInfo.objects.filter(usr = profile).exclude(visible = False)
 
-    posts_publicats = Post.objects.filter(autor=usuari, pare = None)
-    respostes_publicades = Post.objects.filter(autor=usuari).exclude(pare = None)
+    posts_publicats = Post.objects.filter(autor=usuari, pare = None, cela = cela)
+    respostes_publicades = Post.objects.filter(autor=usuari, cela = cela).exclude(pare = None)
     etiquetes1 = Etiqueta.objects.filter(post= posts_publicats)
     etiquetes2 = Etiqueta.objects.filter(post= respostes_publicades)
 
@@ -69,8 +71,8 @@ def viewuserprofile(request,pk):
     #info_formset =  formset_factory(userInfoForm, formset= BaseFormSet)
     from functools import partial, wraps
     info_formset = formset_factory(wraps(userInfoForm)(partial(userInfoForm, request=request)))
-
-    return render(request, 'perfil_view.html', {'usuari': usuari, 'nMiss': posts_publicats.count(), 'nRes':respostes_publicades.count(), 'antig':usuari.date_joined,
+    #'antig':usuari.date_joined,
+    return render(request, 'perfil_view.html', {'usuari': usuari, 'nMiss': posts_publicats.count(), 'nRes':respostes_publicades.count(),'userInfo':userInfo,
                                                 'posts':posts_publicats,'etiquetes':etiquetes, 'profile': profile, 'voted':voted, 'info_formset':info_formset })
 
 class UserProfileUpdateView(UpdateView):

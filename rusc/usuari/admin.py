@@ -20,7 +20,7 @@ admin.site.register(User, UserAdmin)
 
 
 class UsuariAdmin(admin.ModelAdmin):
-    list_display = ('user','website','avatar','cela','estat','email_p')
+    list_display = ('user','website','avatar','cela','estat','email_p','get_etq')
     search_fields = ['user']
     list_filter = ['user']
     filter_horizontal = ('subscripcions',)

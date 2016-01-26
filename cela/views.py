@@ -72,7 +72,7 @@ class celaCreateView(CreateView):
         #Enviem el mail amb la informació de la cela y el enllaç als documents:
         cuerpo = " Estás recibiendo este mail por que acabas de crear una red \n " \
                  " A partir de ahora la red : "+self.object.pregunta + " estará disponible en el siguiente enlace:\n" \
-                 " m1l3.net/rusc/" + str(self.object.id) + "\n"+\
+                 " m1l3.net/rusc/" + str(self.object.id) + "/\n"+\
                  " Los siguientes documentos, son muy importantes. Leetelos o el coco vendrá y te comerá\n"+ \
                  " Enlace al documento de '' http://m1l3.net/static/Docs/acceptacion/Doc.txt' \n"+ \
                  " Enlace al documento de '' http://m1l3.net/static/Docs/acceptacion/Doc.txt' \n"+ \
