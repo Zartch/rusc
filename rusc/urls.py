@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^faq/', include('rusc.faq.urls')),
     url(r'^linkMeta/', include('linksMeta.urls')),
     url(r'^resums/', include('rusc.resums.urls')),
+    url(r'^ficha/', include('rusc.ficha.urls')),
 
 
     #url(r'^boot/', include('etiqueta.urls')), usuari/perfil/

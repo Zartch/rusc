@@ -67,22 +67,19 @@ class userInfoForm(forms.Form):
     def __init__(self, request, selected, *args, **kwargs):
         super(userInfoForm, self).__init__(*args, **kwargs)
         #self.fields['etq'].widget.attrs['class'] = 'form-control'
-        try:
-            cho = []
-            cho.append(['',''])
-            for etq in Etiqueta.objects.filter(cela= get_cela(request)):
-                cho.append([etq.pk,etq.nom])
-            self.fields['etq'] = forms.ChoiceField(choices= cho)
-            self.fields['etq'].widget.attrs['class'] = 'etiquetes'
-            self.initial['etq'] = ''
-            #selected es un array que nos dirá el estado
-            if len(selected) > 0:
-                self.initial['etq'] = selected[-1][0]
-                self.initial['visible'] = selected[-1][1]
-                selected.pop()
 
-        except  Exception as e:
-            self.fields['etq'] = forms.ChoiceField(choices=[[1,1],[2,2],[3,3] ])
+        cho = []
+        cho.append(['',''])
+        for etq in Etiqueta.objects.filter(cela= get_cela(request)):
+            cho.append([etq.pk,etq.nom])
+        self.fields['etq'] = forms.ChoiceField(choices= cho)
+        self.fields['etq'].widget.attrs['class'] = 'etiquetes'
+        self.initial['etq'] = ''
+        #selected es un array que nos dirá el estado
+        if len(selected) > 0:
+            self.initial['etq'] = selected[-1][0]
+            self.initial['visible'] = selected[-1][1]
+            selected.pop()
 
 
 

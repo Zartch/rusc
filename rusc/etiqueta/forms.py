@@ -16,7 +16,7 @@ class newEtiquetaForm(forms.ModelForm):
 
     class Meta:
         model = Etiqueta
-        exclude = {"slug", "datahora", "relacio","cela"}
+        exclude = {"slug", "datahora", "relacio","cela","ficha"}
         widgets = {}
 
     def __init__(self, instance, *args, **kwargs):

@@ -6,6 +6,8 @@ from django.template.defaultfilters import slugify
 
 from cela.models import Cela, TipoEtiqueta
 import django_filters
+#from rusc.ficha.models import Ficha
+
 
 class Etiqueta(models.Model):
 
@@ -38,9 +40,11 @@ class Etiqueta(models.Model):
     datahora =models.DateTimeField(auto_now_add=True)
     cela = models.ForeignKey(Cela,blank=True)
     relacio = models.ManyToManyField('Etiqueta', through='Tesauro', blank=True)
-    #Cam per a reflexar un valor que podrá ser considerat com un camp de el model,
-    #Les estiquees que es creein amb paraula:valor es separaran en nom i valor
-    #valor = models.CharField(max_length=25, blank=True)
+    #Campos adicionales que tendrán que contener los recursos:
+    #solo las etiquetas de tipo M tendrán fichas
+    ficha = models.ManyToManyField('Ficha', related_name = 'datosAdicionales')
+
+
 
 
     def get_list_tesauros(self):
@@ -77,8 +81,6 @@ class EtiquetaFilter(django_filters.FilterSet):
     class Meta:
         model = Etiqueta
         fields = ['nom', 'tipologia', 'descripcio','wiki']
-
-
 
 def jsonSubdits(etq, maxRec = 10):
     json = {}
@@ -121,6 +123,21 @@ class TesauroFilter(django_filters.FilterSet):
     class Meta:
         model = Tesauro
         fields = ['etq1', 'etq2', 'tipo']
+
+
+class Ficha(models.Model):
+    etq = models.ForeignKey(Etiqueta, related_name='ficha_etq') #Etiqueta tipo M
+    tipo = models.ForeignKey(TipoEtiqueta) #El dato obligatorio
+    descrip = models.CharField(max_length=80) #Dato para cambiar el nombre
+    obliatorio = models.BooleanField(default=False)
+    hint = models.CharField(max_length=80) #explicación del campo
+
+    def __str__(self):
+        return " Ficha: '" + self.etq + "'" + " :"+ self.tipo
+
+
+
+
 
 
 def etiqueta_post_save(sender, instance, created, *args, **kwargs):

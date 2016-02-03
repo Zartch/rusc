@@ -8,6 +8,9 @@ from rusc.etiqueta.models import Etiqueta
 from cela.models import Cela
 from missatgeModeracio.models import ModComment
 
+from rusc.etiqueta.models import Ficha
+
+
 
 class Recurs(models.Model):
 
@@ -36,6 +39,8 @@ class Recurs(models.Model):
 
     entradilla = models.TextField(blank=False)
     cuerpo = models.TextField(blank=True)
+
+    datosFicha = models.ManyToManyField(Etiqueta, related_name='datosFicha')
 
     def __str__(self):
         return self.url
