@@ -199,7 +199,7 @@ def postCreateView(request, pk=None):
             numFormset = numFormset +1
 
 
-#Enviem les notificacions als usuaris subscrits
+        #Enviem les notificacions als usuaris subscrits
         if f.get_root() == f.pk:
             verbn = 'creat'
         else:
@@ -213,7 +213,7 @@ def postCreateView(request, pk=None):
 
             #Enviem el mail als subscrits, que tinguin activada la opció del mail
             up = UserProfile.objects.filter(user=usr, cela = f.cela).exclude(mailConf='N').first()
-            #enviarMailPost(f,up.user.email)
+            enviarMailPost(f,up.user.email)
 
 
         #Un cop hem creat o respós a un comentari, redirigim a la pagina del debat

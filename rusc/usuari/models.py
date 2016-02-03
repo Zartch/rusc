@@ -44,7 +44,7 @@ class UserProfile(models.Model):
     website = models.URLField(null=True)
     avatar = models.FileField(upload_to='profiles/%Y/%m/%d', null=True, validators=[validate_image])
     subscripcions = models.ManyToManyField(Post,blank=True, related_name="subscripcions")
-    tipusSubscripcio = models.CharField(max_length=1,choices= TIPUS_SUBSCRIPCIO,default='S')
+    tipusSubscripcio = models.CharField(max_length=1,choices= TIPUS_SUBSCRIPCIO,default='T')
     cela= models.ForeignKey(Cela)
     estat = models.CharField(max_length=1, choices=ESTAT_SUBSCRIPCIO, default='A')
     mailConf = models.CharField(max_length=1,choices=ENVIAMENT_MAIL,default='E')

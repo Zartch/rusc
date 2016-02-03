@@ -25,16 +25,17 @@ class Recurs(models.Model):
 
     moderacio= models.CharField(max_length=1,choices=ESTAT_MODERACIO, default='E')
     url = models.TextField()
-    descripcio = models.TextField(blank=True, default="")
-    #usuari = models.ForeignKey(User) El usuari que ha creat el recurs esta al post relacionat
+    descripcio = models.TextField(blank=True, default="") # titol
     etiquetes = models.ManyToManyField(Etiqueta,blank=True)
     datahora = models.DateTimeField(auto_now_add=True)
     autor =  models.CharField(max_length=100,blank=True, default='')
     cela = models.ForeignKey(Cela,blank=True)
     post_debat = models.ForeignKey("post.Post",verbose_name="recurs",  null=True)
     adjunt = models.FileField(upload_to='documents/%Y/%m/%d', null=True, validators=[validate_file])
-
     missModeracio = generic.GenericRelation(ModComment)
+
+    entradilla = models.TextField(blank=False)
+    cuerpo = models.TextField(blank=True)
 
     def __str__(self):
         return self.url

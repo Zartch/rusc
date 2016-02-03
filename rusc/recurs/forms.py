@@ -4,12 +4,18 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 from rusc.etiqueta.models import Etiqueta
 from cela.models import get_cela
+from rusc.recurs.models import Recurs
 
-
-class RecursForm(forms.Form):
+class RecursForm(forms.ModelForm):
     """
     Form for individual user links
     """
+
+    class Meta:
+        model = Recurs
+        exclude = {"moderacio", "datahora", "autor", "cela", "post_debat", "missModeracio"}
+        widgets = {}
+
     descripcio = forms.CharField(
                     max_length=100,
                     widget=forms.TextInput(attrs={
@@ -25,7 +31,8 @@ class RecursForm(forms.Form):
     #etiquetes =  autocomplete_light.MultipleChoiceField('EtiquetaAutocomplete')
     etiquetes = forms.ModelChoiceField(queryset="", initial="")
     adjunt = forms.FileField()
-
+    entradilla = forms.Textarea()
+    cuerpo = forms.Textarea()
 
     def clean(self):
         super(RecursForm, self).clean() #if necessary
@@ -58,3 +65,6 @@ class RecursForm(forms.Form):
         self.fields['etiquetes'].widget.attrs['class'] = 'etiquetes'
         self.fields['etiquetes'].widget.attrs['style'] = 'width: 100%'
         self.fields['etiquetes'].widget.attrs['multiple'] = 'multiple'
+
+        self.fields['entradilla'].widget.attrs['class'] = 'form-control'
+        self.fields['cuerpo'].widget.attrs['class'] = 'form-control'

@@ -52,7 +52,7 @@ def recursCreateView(request):
         #handle_uploaded_file(request.FILES['file'])
 
         #creem el post del recurs
-        post_x = Post.objects.create(titol=data['url'], autor = request.user,  text="Discussio del recurs: "+ data['descripcio'], cela=get_cela(request))
+        post_x = Post.objects.create(titol=data['descripcio'], autor = request.user,  text="Discussio del recurs: \n "+ data['entradilla'], cela=get_cela(request))
 
         try:
             aj = request.FILES['adjunt']
