@@ -4,7 +4,7 @@ from django.contrib import messages as notif_messages
 from django.utils.datastructures import MultiValueDictKeyError
 
 from .models import Recurs
-from rusc.etiqueta.models import Etiqueta
+from rusc.etiqueta.models import Etiqueta, Ficha
 from cela.models import get_cela
 from rusc.post.models import Post
 from rusc.recurs.forms import RecursForm
@@ -30,9 +30,10 @@ def zonarecurs(request):
     cela = get_cela(request)
     zona_recursos = Etiqueta.objects.filter(tipologia='M',cela= cela)
     # noti = {'text':"RecursView", 'type':"succes"}
+    etq = Etiqueta.objects.filter(tipologia='M', cela = cela)
 
     zonas_context = Etiqueta.objects.filter(tipologia='Z')
-    return render(request, "zonarecurs.html",{'zona_recursos': zona_recursos, 'zonas_context':zonas_context})
+    return render(request, "zonarecurs.html",{'zona_recursos': zona_recursos, 'zonas_context':zonas_context, 'etiquetes':etq})
 
 
 def zonaview(request,pkzona):
@@ -41,6 +42,10 @@ def zonaview(request,pkzona):
     return render(request, "zona.html",{'recursos': recursos})
 
 def recursCreateView(request):
+    idficha = request.REQUEST['ddl_ficha']
+    etqFicha = Etiqueta.objects.get(pk = idficha)
+    fichas = Ficha.objects.filter(etq = etqFicha)
+
     if not request.user.is_authenticated():
             return redirect('auth_login')
     cela= get_cela(request)
@@ -105,6 +110,6 @@ def recursCreateView(request):
         notif_messages.add_message(request, notif_messages.INFO, "Has creat un nou recurs", 'success')
 
     return render(request, 'recurs/recurs_form.html',
-                  {'formRecurs': formRecurs, 'request':request})
+                  {'formRecurs': formRecurs, 'request':request, 'fichas':fichas})
 
 

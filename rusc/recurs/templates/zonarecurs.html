@@ -5,7 +5,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'llistasResponsive.css' %}">
 {% endblock %}
 {% block content %}
-    <a href="{%  url 'crearecurs' %}" class="btn btn-primary btn-lg">Nou Recurs</a>
+    <form action="{%  url 'crearecurs' %}">
+        <select name="ddl_etiquetes" id="etiquetes" style="width: 160px" >
+            {% for etq in etiquetes %}
+                 <option value="{{ etq.pk }}">{{ etq }}</option>
+            {% endfor %}
+        </select>
+    <input type="submit" value="Nou Recurs" class="btn-primary btn-lg" />
+    </form>
+{#    <a href="{%  url 'crearecurs' %}" class="btn btn-primary btn-lg">Nou Recurs</a>#}
     <style>
     .zona_context{
         background-color: #0099ff;

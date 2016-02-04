@@ -6,9 +6,7 @@
     <script src="{% static 'js/select2.js' %}"></script>
     <script>
         $( document ).ready(function() {
-
             $(".etiquetes").select2({tags: true});
-
         });
     </script>
 
@@ -16,6 +14,16 @@
 {%  block content %}
     <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
         {{ formRecurs.as_p }}
+        <div class="table-responsive">
+            <table class="table">
+            {% for campo in fichas %}
+                 <tr>
+                    <td><label>{{ campo.tipo }}</label></td><td><input type="text" name="txt_{{ campo.tipo }}" /> </td>
+                 </tr>
+            {% endfor %}
+            </table>
+        </div>
+
         <input type="submit" value="Create new Resource" class="btn-primary btn-lg" />
     </form>
 {% endblock %}

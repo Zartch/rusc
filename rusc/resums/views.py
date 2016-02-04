@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from cela.models import get_cela
+from cela.models import get_cela, TipoEtiqueta
 from rusc.etiqueta.models import Etiqueta
 from rusc.usuari.models import UserProfile
 from rusc.post.models import Post
@@ -8,7 +8,8 @@ from rusc.recurs.models import Recurs
 from datetime import datetime
 
 def view_resums(request):
-    etqResum = Etiqueta.objects.get_or_create(nom='Resum', tipologia= 'S', cela= get_cela(request) )
+    tipo = TipoEtiqueta.objects.get_or_create(primary = 'S')
+    etqResum = Etiqueta.objects.get_or_create(nom='Resum', tipologia = tipo, cela= get_cela(request) )
     resums = Post.objects.filter(etiquetes__nom = 'Resum')
 
     return render(request, "forum.html", {'posts':resums})

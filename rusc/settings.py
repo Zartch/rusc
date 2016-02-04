@@ -179,7 +179,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static').replace('\\','/'),] #os.path.join(BASE_DIR, 'rusc/static'),)
+#STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static').replace('\\','/'),] #os.path.join(BASE_DIR, 'rusc/static'),)
 #STATICFILES_DIRS = "/webapps/rusc"
 STATIC_ROOT = "/webapps/rusc"
 

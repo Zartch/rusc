@@ -13,7 +13,7 @@ class RecursForm(forms.ModelForm):
 
     class Meta:
         model = Recurs
-        exclude = {"moderacio", "datahora", "autor", "cela", "post_debat", "missModeracio"}
+        exclude = {"moderacio", "datahora", "autor", "cela", "post_debat", "missModeracio","datosFicha"}
         widgets = {}
 
     descripcio = forms.CharField(
