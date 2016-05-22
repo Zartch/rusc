@@ -8,7 +8,7 @@ from rusc.recurs.models import Recurs
 from datetime import datetime
 
 def view_resums(request):
-    tipo = TipoEtiqueta.objects.get_or_create(primary = 'S')
+    tipo, created = TipoEtiqueta.objects.get_or_create(primary = 'S')
     etqResum = Etiqueta.objects.get_or_create(nom='Resum', tipologia = tipo, cela= get_cela(request) )
     resums = Post.objects.filter(etiquetes__nom = 'Resum')
 
