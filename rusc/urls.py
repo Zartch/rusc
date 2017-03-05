@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^cela/', include('cela.urls')),
     url(r'^rusc/', include('cela.urls')),
     url(r'^usuari/', include('rusc.usuari.urls')),
-    url(r'^autocomplete/', include('autocomplete_light.urls')),
+    # url(r'^autocomplete/', include('autocomplete_light.urls')),
 
     url(r'^busk/', include('buscador.urls')),
     url(r'^recurs/', include('rusc.recurs.urls')),

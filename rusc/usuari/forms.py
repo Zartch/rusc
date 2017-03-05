@@ -53,7 +53,7 @@ class userProfileGeneralForm(forms.ModelForm):
         model = UserProfile
         exclude = {"cela", "user", "estat","subscripcions","email_p","website", "etiquetes"}
 
-import django_select2
+
 class userInfoForm(forms.Form):
     etq = forms.ChoiceField(widget=forms.Select(attrs={'class':'regDropDown'}))
     visible = forms.BooleanField(initial=True)
