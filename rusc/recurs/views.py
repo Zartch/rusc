@@ -37,9 +37,9 @@ def zonarecurs(request):
 
 
 def zonaview(request,pkzona):
-
+    etq_zona = Etiqueta.objects.get(id = pkzona)
     recursos = Recurs.objects.filter(etiquetes=pkzona,cela= get_cela(request)).exclude(moderacio='R')
-    return render(request, "zona.html",{'recursos': recursos})
+    return render(request, "zona.html",{'recursos': recursos, 'etq_zona':etq_zona})
 
 def recursCreateView(request):
     idficha = request.REQUEST['ddl_ficha']

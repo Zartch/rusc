@@ -1,0 +1,8 @@
+<div class="zona">
+    <h4 class="tzona col-md-12">{{ zona }}</h4>
+    <div class="contenedor_secciones">
+        {% for seccion in secciones %}
+            {% include 'seccion.html' %}
+        {% endfor %}
+    </div>
+</div>

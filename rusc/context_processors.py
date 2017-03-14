@@ -1,6 +1,8 @@
 __author__ = 'Zartch'
 from cela.models import get_cela
 from rusc.usuari.models import UserProfile
+from rusc.etiqueta.models import Etiqueta
+
 
 def notifications_user(request):
     if not request.user.is_authenticated():
@@ -11,12 +13,13 @@ def notifications_user(request):
 
     ret = request.user.notifications.all()
     for r in ret:
-        userp = UserProfile.objects.filter(pk= r.actor_object_id).first()
+        userp = UserProfile.objects.filter(pk=r.actor_object_id).first()
         if userp:
             if userp.avatar:
                 r.url = userp.avatar.url
 
-    return { 'notifications_user' : ret}
+    return {'notifications_user': ret}
+
 
 def perfil_usuari(request):
     if not request.user.is_authenticated():
@@ -26,10 +29,22 @@ def perfil_usuari(request):
         return ''
 
     user = request.user
-    cela=get_cela(request)
+    cela = get_cela(request)
     if cela:
         userprofile = UserProfile.objects.filter(cela=get_cela(request), user=user).first()
-        return { 'perfilusuari' : userprofile}
+        return {'perfilusuari': userprofile}
     else:
         return ''
 
+
+def mapa_xarxa(request):
+    cela = get_cela(request)
+
+    if cela != '0':
+
+        etq_zona = Etiqueta.objects.zona(cela=cela)
+        zonas = {}
+        for zona in etq_zona:
+            zonas[zona] = zona.get_subdits()
+
+        return {'zonas': zonas}

@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<div id="content">
+    <link rel="stylesheet" href="{% static 'css/mapa.css' %}">
+    <div id="mapa_main" class="col-md-12 drop-shadow">
+        <div class="contenedor_zonas row">
+{#            <h4 class="tcreacion_contexto">Area de creación contexto</h4>#}
+            {% for zona , secciones  in zonas.items %}
+                {% include 'zona_mapa.html' %}
+            {% endfor %}
+        </div>
+        <div class="contenedor_debate row">
+            <a href="{% url 'forum' %}">
+            <div id="mapa_debate" class="center" style="background-image: url('{% static 'imgs/zona_debate_flechas.svg' %}')" >
+                <p id="text_debat" class="">DEBATE</p>
+            </div>
+                </a>
+        </div>
+        <div class="contenedor_resumen row">
+            <div class="zona_resumen">
+                <h4 class="tzona_resumen col-md-12">Zona Resumenes</h4>
+
+                <div class="contenedor_secciones">
+                    {% for seccion in secciones_resumen %}
+                        {% include 'seccion.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

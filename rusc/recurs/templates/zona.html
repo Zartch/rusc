@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% csrf_token %}
 {% block content %}
+
+    <h3>{{ etq_zona.nom }}</h3>
     {% for recurs in recursos %}
         <div class="row">
             <div class="col-md-4" >
                 <a href="/recurs/{{ recurs.pk }}" > {{ recurs.url }} </a>
             </div>
         </div>
+    {% empty %}
+        *Todavia no hay recursos en esta sección:  {{ etq_zona.nom }}
     {% endfor %}
 {% endblock %}

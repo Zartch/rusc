@@ -9,6 +9,15 @@ import django_filters
 #from rusc.ficha.models import Ficha
 
 
+class EtiquetaManager(models.Manager):
+
+    def zona(self,cela):
+        return self.filter(tipologia = 'Z', cela= cela)
+
+    def seccion(self, cela, zona):
+        return self.filter(tipologia = 'M', cela= cela)
+
+
 class Etiqueta(models.Model):
 
     TIPO_TIPOLOGIA = (
@@ -44,8 +53,13 @@ class Etiqueta(models.Model):
     #solo las etiquetas de tipo M tendrán fichas
     ficha = models.ManyToManyField('Ficha', related_name = 'datosAdicionales')
 
+    objects = EtiquetaManager()
 
+    def __str__(self):
+        return 'a'
 
+    def __unicode__(self):
+        return 'b'
 
     def get_list_tesauros(self):
         tesauros = Tesauro.objects.filter(Q(etq1=self)|Q(etq2=self))

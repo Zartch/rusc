@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        #content {
+            padding: 40px;
+        }
+
+        #mapa_main {
+            min-height: 250px;
+            min-width: 250px;
+        }
+
+        .drop-shadow {
+            height: 98%;
+            position: relative;
+            float: left;
+            padding: 1em;
+            margin-left: 10px;
+            background: #fff;
+            -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        }
+
+        .center {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            margin-top: 0.5%;
+            text-align: center
+        }
+
+{#        #mapa_debate {#}
+{#            height: 250px;#}
+{#            width: 300px;#}
+{#            background-image: url("iconos/zona_debate.svg");#}
+{#            background-size: contain;#}
+{#            background-repeat: no-repeat;#}
+{#        }#}
+        #mapa_debate {
+            height: 130px;
+            width: 400px;
+            background-image: url("iconos/zona_debate_flechas.svg");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        #text_debat {
+            padding-top: 51px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .contenedor_zonas {
+            padding: 2px;
+            text-align: center;
+        }
+
+        .zona {
+            border-radius: 0px;
+            border: 2px solid #73AD21;
+            padding: 0px;
+            min-width: 200px;
+            min-height: 100px;
+            max-height: 350px;
+            max-width: 400px;
+            display: inline-block;
+            vertical-align: top;
+            overflow: auto;
+        }
+
+        .tzona {
+
+            background-color: #168500;
+            color: #fff;
+            min-height: 25px;
+            overflow: auto;
+            padding-top: 4px;
+            vertical-align: top;
+            margin-top: 0px;
+
+        }
+
+        .contenedor_secciones {
+            padding: 2px;
+            text-align: center;
+        }
+
+        .seccion {
+            padding: 3px;
+            margin: 1px;
+            min-height: 10px;
+            min-width: 10px;
+            border: 1px solid black;
+            display: inline-block;
+            border-radius: 10px;
+            background-color: #5cb85c;
+
+        }
+        .tseccion{
+            width: 100%;
+            height: auto;
+        }
+
+        .seccion2{
+            background-color: #f9f9f9;
+            border: 1px solid black;
+            font-size: 15px;
+            min-height: 50px;
+            line-height: 1.4;
+            padding: 10px;
+            text-align: center;
+            min-width: 10px;
+            margin: 1px;
+            display: inline-block;
+        }
+
+        .contenedor_resumen{
+            padding: 2px;
+            text-align: center;
+        }
+
+        .zona_resumen {
+            border-radius: 0px;
+            border: 2px solid #ad981a;
+            padding: 0px;
+            min-width: 200px;
+            min-height: 100px;
+            max-height: 350px;
+            max-width: 400px;
+            display: inline-block;
+            vertical-align: top;
+            overflow: auto;
+        }
+
+        .tzona_resumen {
+
+            background-color: #ad981a;
+            color: #fff;
+            min-height: 25px;
+            overflow: auto;
+            padding-top: 4px;
+            vertical-align: top;
+            margin-top: 0px;
+
+        }
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+<div id="content">
+    <div id="mapa_main" class="col-md-12 drop-shadow">
+        <div class="contenedor_zonas row">
+            <div class="zona">
+                <h4 class="tzona col-md-12">Zona Aportaciones</h4>
+
+                <div class="contenedor_secciones">
+                    <div class="seccion2 btn ">
+                        <h5 class="tseccion">Talleres</h5>
+                    </div>
+                    <div class="seccion2 btn">
+                        <h5 class="tseccion">Entrevistas</h5>
+                    </div>
+                    <div class="seccion">
+                        <h5 class="tseccion">Documentos</h5>
+                    </div>
+                    <div class="seccion">
+                        <h5 class="tseccion">Analisis</h5>
+                    </div>
+                    <div class="seccion">
+                        <h5 class="tseccion">Propuestas</h5>
+                    </div>
+                   <div class="seccion">
+                        <h5 class="tseccion">Experiencias</h5>
+                    </div>
+                   <div class="seccion">
+                        <h5 class="tseccion">Informes</h5>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="zona">
+                <h4 class="tzona col-md-12">Zona Servicios</h4>
+                <div class="contenedor_secciones">
+                    <div class="seccion">
+                        <h5 class="tseccion">Bibliografia</h5>
+                    </div>
+                    <div class="seccion">
+                        <h5 class="tseccion">Congresos</h5>
+                    </div>
+                    <div class="seccion">
+                        <h5 class="tseccion">Papers</h5>
+                    </div>
+                    <div class="seccion">
+                        <h5 class="tseccion">Estudio de Casos</h5>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="contenedor_debate row">
+            <div id="mapa_debate" class="center">
+                <p id="text_debat" class="">DEBATE</p>
+            </div>
+        </div>
+        <div class="contenedor_resumen row">
+            <div class="zona_resumen">
+                <h4 class="tzona_resumen col-md-12">Zona Resumenes</h4>
+                <div class="contenedor_secciones">
+                    <div class="seccion">
+                        <h5 class="tseccion">Bibliografia</h5>
+                    </div>
+                    <div class="seccion">
+                        <h5 class="tseccion">Congresos</h5>
+                    </div>
+                    <div class="seccion">
+                        <h5 class="tseccion">Papers</h5>
+                    </div>
+                    <div class="seccion">
+                        <h5 class="tseccion">Estudio de Casos</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

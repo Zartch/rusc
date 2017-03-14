@@ -96,8 +96,7 @@ INSTALLED_APPS = (
     'cela.moderaciomodels',
     'rusc.resums',
     'rusc.ficha',
-
-
+    'rusc.mapa',
 
     # ... include the providers you want to enable:
     # 'allauth.socialaccount.providers.facebook',
@@ -105,9 +104,6 @@ INSTALLED_APPS = (
     # 'allauth.socialaccount.providers.instagram',
     # 'allauth.socialaccount.providers.openid',
     # 'allauth.socialaccount.providers.vk',
-
-
-
 
 )
 
@@ -142,6 +138,7 @@ TEMPLATES = [
                 'rusc.context_processors.notifications_user',
                 'cela.context_processors.cela_context',
                 'rusc.context_processors.perfil_usuari',
+                'rusc.context_processors.mapa_xarxa',
             ],
         },
     },
@@ -179,7 +176,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static').replace('\\','/'),] #os.path.join(BASE_DIR, 'rusc/static'),)
+STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static').replace('\\','/'),] #os.path.join(BASE_DIR, 'rusc/static'),)
 #STATICFILES_DIRS = "/webapps/rusc"
 STATIC_ROOT = "/webapps/rusc"
 

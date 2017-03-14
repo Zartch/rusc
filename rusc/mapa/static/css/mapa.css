@@ -1,0 +1,143 @@
+{% load staticfiles %}
+
+#content {
+    padding: 40px;
+}
+
+#mapa_main {
+    min-height: 250px;
+    min-width: 250px;
+}
+
+.drop-shadow {
+    height: 98%;
+    position: relative;
+    float: left;
+    padding: 1em;
+    margin-left: 10px;
+    background: #fff;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.center {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 0.5%;
+    text-align: center
+}
+
+#mapa_debate {
+    height: 130px;
+    width: 400px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#text_debat {
+    padding-top: 51px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.contenedor_zonas {
+    padding: 2px;
+    text-align: center;
+}
+
+.zona {
+    border-radius: 0px;
+    border: 2px solid #73AD21;
+    padding: 0px;
+    min-width: 200px;
+    min-height: 100px;
+    max-height: 350px;
+    max-width: 400px;
+    display: inline-block;
+    vertical-align: top;
+    overflow: auto;
+}
+
+.tzona {
+
+    background-color: #168500;
+    color: #fff;
+    min-height: 25px;
+    overflow: auto;
+    padding-top: 4px;
+    vertical-align: top;
+    margin-top: 0px;
+
+}
+
+.contenedor_secciones {
+    padding: 2px;
+    text-align: center;
+}
+
+.seccion {
+    padding: 3px;
+    margin: 1px;
+    min-height: 10px;
+    min-width: 10px;
+    border: 1px solid black;
+    display: inline-block;
+    border-radius: 10px;
+    background-color: #5cb85c;
+
+}
+
+.tseccion {
+    width: 100%;
+    height: auto;
+}
+
+.seccion2 {
+    background-color: #f9f9f9;
+    border: 1px solid black;
+    font-size: 15px;
+    min-height: 50px;
+    line-height: 1.4;
+    padding: 10px;
+    text-align: center;
+    min-width: 10px;
+    margin: 1px;
+    display: inline-block;
+}
+
+.contenedor_resumen {
+    padding: 2px;
+    text-align: center;
+}
+
+.zona_resumen {
+    border-radius: 0px;
+    border: 2px solid #ad981a;
+    padding: 0px;
+    min-width: 200px;
+    min-height: 100px;
+    max-height: 350px;
+    max-width: 400px;
+    display: inline-block;
+    vertical-align: top;
+    overflow: auto;
+}
+
+.tzona_resumen {
+
+    background-color: #ad981a;
+    color: #fff;
+    min-height: 25px;
+    overflow: auto;
+    padding-top: 4px;
+    vertical-align: top;
+    margin-top: 0px;
+
+}
+
+
+
