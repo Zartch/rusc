@@ -1,0 +1,14 @@
+# -*- coding: utf-8 -*-
+from django.contrib import admin
+
+from xarxa.recurs.models import Recurs
+
+# Register your models here.
+
+class recursAdmin(admin.ModelAdmin):
+    list_display = ('url','moderacio','cela')
+    search_fields = ['url']
+    list_filter = ['url']
+    filter_horizontal = ('etiquetes',)
+
+admin.site.register(Recurs, recursAdmin)

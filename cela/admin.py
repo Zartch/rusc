@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
+
 from cela.models import Cela, Tema, TipoEtiqueta
+
 
 # Register your models here.
 

@@ -4,15 +4,13 @@ from django.views.generic.edit import CreateView, UpdateView
 from notifications import notify
 from django.contrib import messages as notif_messages
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import  User
 
 from cela.forms import celaForm, celaModForm
 from cela.models import get_cela, Cela, Tema
-from rusc.post.models import Post,folksonomia
-from rusc.etiqueta.models import Etiqueta, Tesauro, jsonSubdits
-from rusc.usuari.models import UserProfile
-
-from django.contrib.auth.models import  User
-from django.contrib.auth import authenticate, login
+from xarxa.post.models import Post,folksonomia
+from xarxa.etiqueta.models import Etiqueta, Tesauro, jsonSubdits
+from xarxa.usuari.models import UserProfile
 
 
 def ruscView(request):

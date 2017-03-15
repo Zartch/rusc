@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.contrib.auth.models import User
 
 from cela.models import Cela
 #Form para la creación de la Red

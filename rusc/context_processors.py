@@ -1,7 +1,7 @@
 __author__ = 'Zartch'
 from cela.models import get_cela
-from rusc.usuari.models import UserProfile
-from rusc.etiqueta.models import Etiqueta
+from xarxa.usuari.models import UserProfile
+from xarxa.etiqueta.models import Etiqueta
 
 
 def notifications_user(request):

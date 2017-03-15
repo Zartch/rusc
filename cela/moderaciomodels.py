@@ -2,7 +2,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from rusc.post.models import Post
+from xarxa.post.models import Post
+
 
 
 

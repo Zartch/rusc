@@ -3,10 +3,16 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages as notif_messages
 from notifications import notify
-from rusc.etiqueta.models import Etiqueta
+
+from xarxa.etiqueta.models import Etiqueta
 from cela.models import get_cela
-from rusc.post.models import Post
-from rusc.usuari.models import UserProfile, UserInfo
+from xarxa.post.models import Post
+from xarxa.usuari.models import UserProfile, UserInfo
+
+
+
+
+
 
 
 #Vista per acceptar o rebutjar post, en cas de acceptació tornem a la mateixa pagina

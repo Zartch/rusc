@@ -85,18 +85,18 @@ INSTALLED_APPS = (
     #'registration',
 
     #Propios PVC
-    'missatgeModeracio',
-    'rusc.post',
-    'rusc.etiqueta',
-    'rusc.recurs',
-    'rusc.usuari',
-    'buscador',
     'cela',
-    'rusc.faq',
+    'xarxa.missatgeModeracio',
+    'xarxa.post',
+    'xarxa.etiqueta',
+    'xarxa.recurs',
+    'xarxa.usuari',
+    'xarxa.buscador',
+    'xarxa.faq',
     'cela.moderaciomodels',
-    'rusc.resums',
-    'rusc.ficha',
-    'rusc.mapa',
+    'xarxa.resums',
+    'xarxa.ficha',
+    'xarxa.mapa',
 
     # ... include the providers you want to enable:
     # 'allauth.socialaccount.providers.facebook',

@@ -31,22 +31,22 @@ urlpatterns = [
     url(r'^accounts/profile/$', RedirectView.as_view(url='/usuari/perfil')),
 
     url(r'^admin/', include(admin.site.urls), name="admin"),
-    url(r'^forum/', include('rusc.post.urls')),
+    url(r'^forum/', include('xarxa.post.urls')),
     url(r'^cela/', include('cela.urls')),
     url(r'^rusc/', include('cela.urls')),
-    url(r'^usuari/', include('rusc.usuari.urls')),
+    url(r'^usuari/', include('xarxa.usuari.urls')),
     # url(r'^autocomplete/', include('autocomplete_light.urls')),
 
-    url(r'^busk/', include('buscador.urls')),
-    url(r'^recurs/', include('rusc.recurs.urls')),
-    url(r'^etiqueta/', include('rusc.etiqueta.urls')),
-    url(r'^missatgeModeracio/', include('missatgeModeracio.urls')),
+    url(r'^busk/', include('xarxa.buscador.urls')),
+    url(r'^recurs/', include('xarxa.recurs.urls')),
+    url(r'^etiqueta/', include('xarxa.etiqueta.urls')),
+    url(r'^missatgeModeracio/', include('xarxa.missatgeModeracio.urls')),
     url(r'^messages/', include('django_messages.urls')),
     url('^inbox/notifications/', include('notifications.urls', namespace="notifications")),
-    url(r'^faq/', include('rusc.faq.urls')),
+    url(r'^faq/', include('xarxa.faq.urls')),
     url(r'^linkMeta/', include('linksMeta.urls')),
-    url(r'^resums/', include('rusc.resums.urls')),
-    url(r'^ficha/', include('rusc.ficha.urls')),
+    url(r'^resums/', include('xarxa.resums.urls')),
+    url(r'^ficha/', include('xarxa.ficha.urls')),
 
 
     #url(r'^boot/', include('etiqueta.urls')), usuari/perfil/

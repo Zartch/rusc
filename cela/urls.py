@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 
-from cela import moderacioViews, views
+from cela import views, moderacioViews
 
 
 urlpatterns = patterns('',
