@@ -178,7 +178,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static').replace('\\','/'),] #os.path.join(BASE_DIR, 'rusc/static'),)
 #STATICFILES_DIRS = "/webapps/rusc"
-STATIC_ROOT = "/webapps/rusc"
+#STATIC_ROOT = "/webapps/rusc"
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 RECAPTCHA_PUBLIC_KEY = '6Lew1xUTAAAAAGnODN2cfHt-owEVdy0BNGZTQZdE'
 RECAPTCHA_PRIVATE_KEY = '6Lew1xUTAAAAALvG-5V142bJkUPU9GDLci13wA1T'
