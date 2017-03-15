@@ -24,16 +24,16 @@
     <br />
     <br />
 
-
-    {% for cela in celas %}
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail" >
-          <div class="caption">
-            <h3><a href="{% url 'cela'  cela.pk  %}" > {{ cela.pregunta }} </a></h3>
-            <p>{{ cela.descripcio }}</p>
-          </div>
-        </div>
-      </div>
-    {% endfor %}
+{{  celas }}
+{#    {% for cela in celas %}#}
+{#      <div class="col-sm-6 col-md-4">#}
+{#        <div class="thumbnail" >#}
+{#          <div class="caption">#}
+{#            <h3><a href="{% url 'cela'  cela.pk  %}" > {{ cela.pregunta }} </a></h3>#}
+{#            <p>{{ cela.descripcio }}</p>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    {% endfor %}#}
 
 {% endblock %}
