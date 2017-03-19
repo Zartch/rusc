@@ -64,8 +64,9 @@
                 {% block content %}
                 {% endblock %}
             </div>
-
-            {% include 'mapa.html' %}
+            {% if zonas %}
+                {% include 'mapa.html' %}
+            {% endif %}
         </div>
         <!-- /#page-content-wrapper -->
 
