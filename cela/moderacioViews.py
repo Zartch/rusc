@@ -77,7 +77,7 @@ def peticioAcces(request):
 
 
 
-    return HttpResponse("{% extends 'baseRusc.html' %} {%  block content %}has solicitat acces.{% endblock %}")
+    return HttpResponse("has solicitat acces. Ara el moderador ha de acceptar la teva solicitud")
 
 
 def moderacioPostView(request):
