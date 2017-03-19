@@ -106,12 +106,14 @@ class EtiquetaCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(EtiquetaCreateView, self).get_context_data(**kwargs)
-        cela = get_cela(self.request)
-        listado_etq = EtiquetaFilter(self.request.GET, queryset=Etiqueta.objects.filter(cela = cela))
-        table = etiquetaTable(listado_etq)
-        RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
-        context['table_etiquetes'] = table
-
+        try:
+            cela = get_cela(self.request)
+            listado_etq = EtiquetaFilter(self.request.GET, queryset=Etiqueta.objects.filter(cela = cela))
+            table = etiquetaTable(listado_etq)
+            RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
+            context['table_etiquetes'] = table
+        except ValueError:
+            pass
         return context
 
     def get_form_kwargs(self):
