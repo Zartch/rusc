@@ -33,6 +33,7 @@
     </form>
     <h3>Relacións a la xarxa</h3>
     {% load render_table from django_tables2 %}
-    {% render_table table %}
-
+    {% if table %}
+        {% render_table table %}
+    {% endif %}
 {% endblock %}

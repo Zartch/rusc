@@ -181,13 +181,16 @@ class tesauroCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(tesauroCreateView, self).get_context_data(**kwargs)
-        cela = get_cela(self.request)
-        context['llista_tesauros'] = Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela)
-        context['llista_etiquetes'] = Etiqueta.objects.filter(cela= cela)
-        listado = TesauroFilter(self.request.GET, queryset=Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela))
-        table = tesauroTable(listado)
-        RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
-        context['table'] = table
+        try:
+            cela = get_cela(self.request)
+            context['llista_tesauros'] = Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela)
+            context['llista_etiquetes'] = Etiqueta.objects.filter(cela= cela)
+            listado = TesauroFilter(self.request.GET, queryset=Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela))
+            table = tesauroTable(listado)
+            RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
+            context['table'] = table
+        except ValueError:
+            pass
         return context
 
     def get_success_url(self):
