@@ -58,10 +58,10 @@ class Etiqueta(models.Model):
     objects = EtiquetaManager()
 
     def __str__(self):
-        return 'a'
+        return self.nom
 
     def __unicode__(self):
-        return 'b'
+        return self.nom
 
     def get_list_tesauros(self):
         tesauros = Tesauro.objects.filter(Q(etq1=self)|Q(etq2=self))
