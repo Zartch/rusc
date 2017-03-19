@@ -19,7 +19,8 @@
     </div>
     <h3>Etiquetes</h3>
     {% load render_table from django_tables2 %}
-    {% render_table table_etiquetes %}
-
+    {% if table_etiquetes %}
+        {% render_table table_etiquetes %}
+    {% endif %}
 
 {% endblock %}
