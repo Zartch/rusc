@@ -48,3 +48,4 @@ def mapa_xarxa(request):
             zonas[zona] = zona.get_subdits()
 
         return {'zonas': zonas}
+    return ''
