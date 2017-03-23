@@ -10,7 +10,9 @@ from cela.models import Cela, TipoEtiqueta
 
 #from rusc.ficha.models import Ficha
 
-
+##Docu
+## algo
+## Fin docu
 class EtiquetaManager(models.Manager):
 
     def zona(self,cela):
@@ -55,7 +57,8 @@ class Etiqueta(models.Model):
     #solo las etiquetas de tipo M tendrán fichas
     ficha = models.ManyToManyField('Ficha', related_name = 'datosAdicionales')
 
-    objects = EtiquetaManager()
+    objects = models.Manager()
+    manager = EtiquetaManager()
 
     def __str__(self):
         return self.nom
@@ -149,7 +152,7 @@ class Ficha(models.Model):
     hint = models.CharField(max_length=80) #explicación del campo
 
     def __str__(self):
-        return " Ficha: '" + self.etq + "'" + " :"+ self.tipo
+        return " Ficha: '" + str(self.etq) + "'" + " :"+ str(self.tipo)
 
 
 

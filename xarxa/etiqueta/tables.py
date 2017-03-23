@@ -36,7 +36,7 @@ class etiquetaTable(tables.Table):
     nom = tables.Column('nom')
     tipologia = tables.Column('tipologia')
     descripcio = tables.Column('descripcio')
-    wiki = tables.URLColumn('wiki')
+    wiki = tables.URLColumn()
     Edit = tables.TemplateColumn(TEMPLATEEDIT_etq)
     Delete = tables.TemplateColumn(TEMPLATEDELETE_etq)
 

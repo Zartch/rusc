@@ -108,9 +108,12 @@ class EtiquetaCreateView(CreateView):
         context = super(EtiquetaCreateView, self).get_context_data(**kwargs)
         try:
             cela = get_cela(self.request)
-            listado_etq = EtiquetaFilter(self.request.GET, queryset=Etiqueta.objects.filter(cela = cela))
-            table = etiquetaTable(listado_etq)
-            RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
+            #listado_etq = EtiquetaFilter(self.request.GET, queryset=Etiqueta.objects.filter(cela = cela))
+            # table = etiquetaTable(listado_etq)
+            # RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
+            # context['table_etiquetes'] =table
+            table = etiquetaTable(Etiqueta.objects.filter(cela = cela))
+            RequestConfig(self.request, paginate={'per_page': 25}).configure(table)
             context['table_etiquetes'] = table
         except ValueError:
             pass
@@ -134,6 +137,8 @@ class EtiquetaCreateView(CreateView):
         notif_messages.add_message(self.request, notif_messages.INFO, "corregeix els errors indicats", 'warning')
         return super(EtiquetaCreateView, self).form_invalid(form)
 
+
+# from xarxa.etiqueta.forms import etiquetaForm
 class etiquetaUpdateView(UpdateView):
     model = Etiqueta
     form_class = newEtiquetaForm
@@ -142,9 +147,13 @@ class etiquetaUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(etiquetaUpdateView, self).get_context_data(**kwargs)
         cela = get_cela(self.request)
-        listado_etq = EtiquetaFilter(self.request.GET, queryset=Etiqueta.objects.filter(cela = cela))
-        table = etiquetaTable(listado_etq)
-        RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
+        # listado_etq = EtiquetaFilter(self.request.GET, queryset=Etiqueta.objects.filter(cela = cela))
+        # table = etiquetaTable(listado_etq)
+        # RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
+        # context['table_etiquetes'] = table
+
+        table = etiquetaTable(Etiqueta.objects.filter(cela=cela))
+        RequestConfig(self.request, paginate={'per_page': 25}).configure(table)
         context['table_etiquetes'] = table
         return context
 
@@ -185,8 +194,8 @@ class tesauroCreateView(CreateView):
             cela = get_cela(self.request)
             context['llista_tesauros'] = Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela)
             context['llista_etiquetes'] = Etiqueta.objects.filter(cela= cela)
-            listado = TesauroFilter(self.request.GET, queryset=Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela))
-            table = tesauroTable(listado)
+            # listado = TesauroFilter(self.request.GET, queryset=Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela))
+            table = tesauroTable(Tesauro.objects.filter(etq1__cela = cela, etq2__cela = cela))
             RequestConfig(self.request,paginate={"per_page": 25}).configure(table)
             context['table'] = table
         except ValueError:

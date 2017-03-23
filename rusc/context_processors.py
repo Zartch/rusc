@@ -42,7 +42,7 @@ def mapa_xarxa(request):
 
     if cela != '0':
 
-        etq_zona = Etiqueta.objects.zona(cela=cela)
+        etq_zona = Etiqueta.manager.zona(cela=cela)
         zonas = {}
         for zona in etq_zona:
             zonas[zona] = zona.get_subdits()
