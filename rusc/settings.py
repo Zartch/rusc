@@ -95,8 +95,8 @@ INSTALLED_APPS = (
     'xarxa.faq',
     'cela.moderaciomodels',
     'xarxa.resums',
-    'xarxa.ficha',
     'xarxa.mapa',
+    'xarxa.ficha'
 
     # ... include the providers you want to enable:
     # 'allauth.socialaccount.providers.facebook',

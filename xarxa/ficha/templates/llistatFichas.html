@@ -1,26 +1,27 @@
 {% extends "base.html" %}
-{%  load staticfiles %}
+{% load i18n %}
+{% block title %}
+    {% trans 'Listado Fichas' %}
+{% endblock %}
+{% load staticfiles %}
 {% block headers %}
 {% endblock %}
 
 {% block content %}
 
+    <h2>{% trans 'Listado Fichas' %}</h2>
+
+    <a href="novaFicha.html" class="btn btn-primary"> Nueva Ficha</a>
 
     <div class="row">
-        <div class="col-md-2"><h4>ETQ</h4></div>
-        <div class="col-md-2"><h4>TIPO</h4></div>
-        <div class="col-md-2"><h4>DESC</h4></div>
-        <div class="col-md-2"><h4>OBLI</h4></div>
-        <div class="col-md-2"><h4>HINT</h4></div>
+        <div class="col-md-3"><h4>Nombre</h4></div>
+        <div class="col-md-6"><h4>Descripción</h4></div>
     </div>
 
-    {%  for ficha in fichas %}
+    {% for ficha in fichas %}
         <div class="row">
-            <div class="col-md-2">{{ ficha.etq }}</div>
-            <div class="col-md-2">{{ ficha.tipo }}</div>
-            <div class="col-md-2">{{ ficha.descrip }}</div>
-            <div class="col-md-2">{{ ficha.obliatorio }}</div>
-            <div class="col-md-2">{{ ficha.hint }}</div>
+            <div class="col-md-3">{{ ficha.nom }}</div>
+            <div class="col-md-6">{{ ficha.descripcion }}</div>
         </div>
     {% endfor %}
 {% endblock %}

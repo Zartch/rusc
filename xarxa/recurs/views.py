@@ -4,7 +4,8 @@ from django.contrib import messages as notif_messages
 from django.utils.datastructures import MultiValueDictKeyError
 
 from xarxa.recurs.models import Recurs
-from xarxa.etiqueta.models import Etiqueta, Ficha
+from xarxa.etiqueta.models import Etiqueta
+from xarxa.ficha.models import Ficha
 from cela.models import get_cela
 from xarxa.post.models import Post
 from xarxa.recurs.forms import RecursForm

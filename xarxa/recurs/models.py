@@ -7,7 +7,7 @@ from django.contrib.contenttypes import generic
 from xarxa.etiqueta.models import Etiqueta
 from cela.models import Cela
 from xarxa.missatgeModeracio.models import ModComment
-from xarxa.etiqueta.models import Ficha
+from xarxa.ficha.models import Ficha
 
 
 class Recurs(models.Model):

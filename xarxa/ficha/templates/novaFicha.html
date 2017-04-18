@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{%  load i18n %}
+{% block title %}
+    {% trans 'Nueva Ficha' %}
+{% endblock %}
 {%  load staticfiles %}
 {% block headers %}
 
@@ -17,47 +21,47 @@
 
 {% block content %}
         <script>
-            $( document ).ready(function() {
-                $("#etiquetes").select2();
-            });
+
         </script>
+
+    <h3>{% trans 'Nueva Ficha' %}</h3>
 
 
         <form action="" enctype="multipart/form-data" method="post" >{% csrf_token %}
-            <p><i>*Només pot existir una ficha per cada etiqueta de tipus 'M'</i></p>
-            <h4>FICHA SOBRE LA ETIQUETA:</h4>
-            <select name="ddl_ficha" id="etiquetes" style="width: 160px">
-                {% for etq in options %}
-                     <option value="{{ etq.pk }}">{{ etq }}</option>
-                {% endfor %}
-            </select>
+            <h4>FICHA:</h4>
+            <input name="nom_ficha" type="text" placeholder="Nombre ficha" required>
 
-            <div class="row">
-                    <div class="col-md-2"><h4>Tipologia Dato</h4></div>
-                    <div class="col-md-2"><h4>Descripcion</h4></div>
-                    <div class="col-md-2"><h4>Obligatorio</h4></div>
-                    <div class="col-md-2"><h4>Ayuda</h4></div>
-            </div>
-            {% for ficha_form in fichas_formset %}
-                <div class="ficha_form">
-                    <div class="row">
-                        <div class="col-md-2">{{ ficha_form.tipo }}</div>
-                        <div class="col-md-2">{{ ficha_form.descrip }}</div>
-                        <div class="col-md-2">{{ ficha_form.obliatorio }}</div>
-                        <div class="col-md-2">{{ ficha_form.hint }}</div>
-                    </div>
-                </div>
-            {% endfor %}
-            {{ fichas_formset.management_form }}
+            <table>
+                <thead>
+                    <tr>
+                        <td>{% trans 'Nombre Campo' %}</td>
+                        <td>{% trans 'Obligatorio' %}</td>
+                        <td>{% trans 'Ayuda Campo' %}</td>
+                        <td>{% trans 'Eliminar' %}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for ficha_form in fichas_formset %}
+                    <tr class="ficha_form">
+                        <td>{{ ficha_form.descrip }}</td>
+                        <td>{{ ficha_form.obliatorio }}</td>
+                        <td>{{ ficha_form.hint }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    {{ fichas_formset.management_form }}
+                </tfoot>
+            </table>
+
         <br/>
             <input type="submit" class="btn btn-primary btn-lg" value="NovaFicha" />
         </form>
-
-
        <script>
         $('.ficha_form').formset({
             addText: 'Añadir información a la Ficha',
-            deleteText: 'Eliminar'
+            deleteText: '<span class="glyphicon glyphicon-remove"></span>'
 
         });
     </script>
