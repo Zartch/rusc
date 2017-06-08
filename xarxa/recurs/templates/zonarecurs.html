@@ -5,14 +5,21 @@
     <link rel="stylesheet" type="text/css" href="{% static 'llistasResponsive.css' %}">
 {% endblock %}
 {% block content %}
-    <form action="{%  url 'crearecurs' %}">
-        <select name="ddl_ficha" id="etiquetes" style="width: 160px" >
-            {% for ficha in fiches %}
-                 <option value="{{ ficha.pk }}">{{ ficha }}</option>
-            {% endfor %}
-        </select>
-    <input type="submit" value="Nou Recurs" class="btn-primary btn-lg" />
-    </form>
+    <h4>Zona Recursos</h4>
+    <p>Escoge una ficha para crear un recurso</p>
+
+    {% if fiches %}
+        <form action="{%  url 'crearecurs' %}">
+            <select name="ddl_ficha" id="etiquetes" style="width: 160px" >
+                {% for ficha in fiches %}
+                     <option value="{{ ficha.pk }}">{{ ficha }}</option>
+                {% endfor %}
+            </select>
+        <input type="submit" value="Nou Recurs" class="btn-primary btn-lg" />
+        </form>
+    {% else %}
+        <p>Es Necesario crear una <a href="{% url 'fichaNew' %}">ficha</a> para poder crear un nuevo recurso</p>
+    {% endif %}
 {#    <a href="{%  url 'crearecurs' %}" class="btn btn-primary btn-lg">Nou Recurs</a>#}
     <style>
     .zona_context{

@@ -13,7 +13,7 @@
 {% endblock %}
 {%  block content %}
     <h4>Creación de recuros</h4>
-    <p>Escoge una ficha para crear un recurso, para asociar un recurso a una zona, tendrás quie ponerle la etiqueta que lleva su nombre..</p>
+    <p>para asociar un recurso a una zona, tendrás quie ponerle la etiqueta que lleva su nombre..</p>
     <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
         {{ formRecurs.as_p }}
         <div class="table-responsive">
