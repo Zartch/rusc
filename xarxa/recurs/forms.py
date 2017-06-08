@@ -30,7 +30,7 @@ class RecursForm(forms.ModelForm):
                     }),
                     required=False)
     #etiquetes =  autocomplete_light.MultipleChoiceField('EtiquetaAutocomplete')
-    etiquetes = forms.ModelChoiceField(queryset="", initial="")
+    etiquetes = forms.ModelChoiceField(queryset=Etiqueta.objects.all().exclude(tipologia='Z'), initial="")
     adjunt = forms.FileField()
     entradilla = forms.Textarea()
     cuerpo = forms.Textarea()
