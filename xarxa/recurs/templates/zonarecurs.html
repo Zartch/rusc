@@ -6,9 +6,9 @@
 {% endblock %}
 {% block content %}
     <form action="{%  url 'crearecurs' %}">
-        <select name="ddl_etiquetes" id="etiquetes" style="width: 160px" >
-            {% for etq in etiquetes %}
-                 <option value="{{ etq.pk }}">{{ etq }}</option>
+        <select name="ddl_ficha" id="etiquetes" style="width: 160px" >
+            {% for ficha in fiches %}
+                 <option value="{{ ficha.pk }}">{{ ficha }}</option>
             {% endfor %}
         </select>
     <input type="submit" value="Nou Recurs" class="btn-primary btn-lg" />
@@ -25,31 +25,31 @@
 
     </style>
 
-        {% for zonaContx in zonas_context %}
-            <div class="zona_context"  >
-                    <div class="caption">
-                         <h3>{{ zonaContx.nom }}</h3>
-                        <p>{{ zonaContx.descripcio }}</p>
-                    </div>
-
-            <div id="content">
-            <div class="columns">
-            <ul>
-            {% for zona in zona_recursos %}
-                <li>
-                    <div class="thumbnail" >
-                        <div class="caption">
-                            <h3><a href="zona/{{ zona.pk }}" > {{ zona.nom }} </a></h3>
-                            <p>{{ zona.descripcio }}</p>
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-            </ul>
-            </div>
-            </div>
-         </div>
-        {% endfor %}
+{#        {% for zonaContx in zonas_context %}#}
+{#            <div class="zona_context"  >#}
+{#                    <div class="caption">#}
+{#                         <h3>{{ zonaContx.nom }}</h3>#}
+{#                        <p>{{ zonaContx.descripcio }}</p>#}
+{#                    </div>#}
+{##}
+{#            <div id="content">#}
+{#            <div class="columns">#}
+{#            <ul>#}
+{#            {% for zona in zona_recursos %}#}
+{#                <li>#}
+{#                    <div class="thumbnail" >#}
+{#                        <div class="caption">#}
+{#                            <h3><a href="zona/{{ zona.pk }}" > {{ zona.nom }} </a></h3>#}
+{#                            <p>{{ zona.descripcio }}</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </li>#}
+{#            {% endfor %}#}
+{#            </ul>#}
+{#            </div>#}
+{#            </div>#}
+{#         </div>#}
+{#        {% endfor %}#}
 
         <div class="thumbnail" >
             <div class="caption">

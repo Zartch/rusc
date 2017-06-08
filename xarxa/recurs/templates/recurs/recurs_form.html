@@ -18,7 +18,7 @@
             <table class="table">
             {% for campo in fichas %}
                  <tr>
-                    <td><label>{{ campo.tipo }}</label></td><td><input type="text" name="txt_{{ campo.tipo }}" /> </td>
+                    <td><label>{{ campo.descrip }}</label></td><td><input title="{{ campo.hint }}" type="text" name="txt_{{ campo.pk }}" {% if campo.obliatorio %}required{% endif %}/> </td>
                  </tr>
             {% endfor %}
             </table>

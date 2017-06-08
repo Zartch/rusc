@@ -14,14 +14,16 @@
     <a href="novaFicha.html" class="btn btn-primary"> Nueva Ficha</a>
 
     <div class="row">
-        <div class="col-md-3"><h4>Nombre</h4></div>
-        <div class="col-md-6"><h4>Descripción</h4></div>
+        <div class="col-md-2"><h4>{%  trans 'Nombre' %}</h4></div>
+        <div class="col-md-5"><h4>{% trans 'Descripción' %}</h4></div>
+        <div class="col-md-5"><h4>{% trans 'Campos' %}</h4></div>
     </div>
 
     {% for ficha in fichas %}
         <div class="row">
-            <div class="col-md-3">{{ ficha.nom }}</div>
-            <div class="col-md-6">{{ ficha.descripcion }}</div>
+            <div class="col-md-2">{{ ficha.nom }}</div>
+            <div class="col-md-5">{{ ficha.descripcion }}</div>
+            <div class="col-md-5">{{ ficha.campos.all }}</div>
         </div>
     {% endfor %}
 {% endblock %}

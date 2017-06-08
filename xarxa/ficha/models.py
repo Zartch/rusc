@@ -17,7 +17,7 @@ class Ficha(models.Model):
 
 class CamposFicha(models.Model):
 
-    ficha = models.ForeignKey(Ficha)
+    ficha = models.ForeignKey(Ficha, related_name='campos')
     descrip = models.CharField(max_length=80) #Dato para cambiar el nombre
     obliatorio = models.BooleanField(default=False)
     hint = models.CharField(max_length=80, blank=True, default='') #explicación del campo

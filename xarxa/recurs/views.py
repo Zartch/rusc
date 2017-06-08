@@ -16,7 +16,8 @@ def recursview(request,pk):
     cela = get_cela(request)
     recurs = Recurs.objects.filter(pk=pk,cela= cela).exclude(moderacio='R').first()
     posts_relacionats = Post.objects.filter(recursos = recurs)
-    return render(request, "recurs.html",{'recurs': recurs, 'posts_relacionats':posts_relacionats , 'posts_debat': recurs.post_debat})
+    return render(request, "recurs.html",{'recurs': recurs, 'posts_relacionats':posts_relacionats ,
+                                          'posts_debat': recurs.post_debat})
 
 def recursosview(request):
 
@@ -31,10 +32,12 @@ def zonarecurs(request):
     cela = get_cela(request)
     zona_recursos = Etiqueta.objects.filter(tipologia='M',cela= cela)
     # noti = {'text':"RecursView", 'type':"succes"}
-    etq = Etiqueta.objects.filter(tipologia='M', cela = cela)
+    # etq = Etiqueta.objects.filter(tipologia='M', cela = cela)
+    fiches = Ficha.objects.filter(cela = cela)
 
     zonas_context = Etiqueta.objects.filter(tipologia='Z')
-    return render(request, "zonarecurs.html",{'zona_recursos': zona_recursos, 'zonas_context':zonas_context, 'etiquetes':etq})
+    return render(request, "zonarecurs.html",{'zona_recursos': zona_recursos,
+                                              'zonas_context':zonas_context, 'fiches':fiches})
 
 
 def zonaview(request,pkzona):
@@ -44,9 +47,8 @@ def zonaview(request,pkzona):
 
 def recursCreateView(request):
     idficha = request.REQUEST['ddl_ficha']
-    etqFicha = Etiqueta.objects.get(pk = idficha)
-    fichas = Ficha.objects.filter(etq = etqFicha)
-
+    ficha = Ficha.objects.get(pk = idficha)
+    camposficha = ficha.campos.all()
     if not request.user.is_authenticated():
             return redirect('auth_login')
     cela= get_cela(request)
@@ -111,6 +113,6 @@ def recursCreateView(request):
         notif_messages.add_message(request, notif_messages.INFO, "Has creat un nou recurs", 'success')
 
     return render(request, 'recurs/recurs_form.html',
-                  {'formRecurs': formRecurs, 'request':request, 'fichas':fichas})
+                  {'formRecurs': formRecurs, 'request':request, 'fichas':camposficha})
 
 
