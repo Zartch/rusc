@@ -40,14 +40,15 @@ def fichaCreateView(request):
     if request.POST:
         with transaction.atomic():
             nom = request.POST.get('nom_ficha')
-            f = Ficha.objects.create(cela=cela, nom=nom)
+            desc_ficha = request.POST.get('desc_ficha') or ''
+            f = Ficha.objects.create(cela=cela, nom=nom,descripcion = desc_ficha)
 
 
             numforms = int(request._post.get("form-TOTAL_FORMS"))
             while (numforms > 0):
                 numforms -= 1
                 descrip = request._post.get("form-"+str(numforms)+"-descrip")
-                obliatorio = request._post.get("form-"+str(numforms)+"-obliatorio")
+                obliatorio = request._post.get("form-"+str(numforms)+"-obliatorio") or False
                 hint = request._post.get("form-"+str(numforms)+"-hint")
 
                 CamposFicha.objects.create(ficha = f, obliatorio=obliatorio, hint=hint, descrip=descrip)
