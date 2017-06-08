@@ -12,6 +12,8 @@
 
 {% endblock %}
 {%  block content %}
+    <h4>Creación de recuros</h4>
+    <p>Escoge una ficha para crear un recurso, para asociar un recurso a una zona, tendrás quie ponerle la etiqueta que lleva su nombre..</p>
     <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
         {{ formRecurs.as_p }}
         <div class="table-responsive">
@@ -20,6 +22,9 @@
                  <tr>
                     <td><label>{{ campo.descrip }}</label></td><td><input title="{{ campo.hint }}" type="text" name="txt_{{ campo.pk }}" {% if campo.obliatorio %}required{% endif %}/> </td>
                  </tr>
+            {% empty %}
+
+
             {% endfor %}
             </table>
         </div>
